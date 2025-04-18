@@ -5,15 +5,10 @@ namespace App\Actions\Jetstream;
 use App\Models\User;
 use Laravel\Jetstream\Contracts\DeletesUsers;
 
-class DeleteUser implements DeletesUsers
-{
-    /**
-     * Delete the given user.
-     */
-    public function delete(User $user): void
-    {
+class DeleteUser implements DeletesUsers{
+    public function delete(User $user){
         $user->deleteProfilePhoto();
-        $user->tokens->each->delete();
+        $user->token->each->delete();
         $user->delete();
     }
 }

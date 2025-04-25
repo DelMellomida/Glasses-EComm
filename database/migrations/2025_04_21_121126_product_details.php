@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_details', function (Blueprint $table) {
-            $table->id('Product_ID')->primary();
-            $table->string('Product_Name')->nullable();
-            $table->string('Product_Description')->nullable();
-            $table->integer('Price')->default(0);
+        Schema::create('products', function (Blueprint $table) {
+            $table->id('product_id')->primary();
+            $table->string('product_name')->nullable();
+            $table->string('product_description')->nullable();
+            $table->string('category')->nullable();
+            $table->integer('price')->default(0);
+            $table->integer('stock_quantity')->default(0);
+            $table->unsignedBigInteger('product_image_id')->nullable();
+
+            $table->foreign('product_image_id')->references('product_image_id')->on('product_images')->onDelete('cascade');
             $table->timestamps();
         });        
     }

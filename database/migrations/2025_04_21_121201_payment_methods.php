@@ -18,7 +18,7 @@ return new class extends Migration
                 'Debit Card', 
                 'Gcash'
             ])->primary();
-            $table->enum('Available', ['Yes', 'No'])->default('Yes');
+            $table->enum('available', ['Yes', 'No'])->default('Yes');
             $table->timestamps();
         });        
     }

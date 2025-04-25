@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->id('Purchase_ID')-> primary();
-            $table->integer('Order_ID')->default(0);
-            $table->unsignedBigInteger('user_id');
-            $table->string('Product_ID')->nullable();
-            $table->integer('Quantity')->default(0);
-            $table->string('Payment_Type')->nullable();
+            $table->id('purchase_id')-> primary();
+            $table->integer('order_id')->default(0);
+            $table->foreign('user_id')->references('user_id')->on('product_images')->onDelete('cascade');
+            $table->string('product_id')->reference('product_id')->on('products')->onDelete('cascade');
+            $table->integer('quantity')->default(0);
+            $table->string('payment_type')->nullable();
             $table->timestamps();
 
-            $table->index('Order_ID');
-            $table->index('Product_ID');
+            $table->index('order_id');
+            $table->index('product_id');
 
-            $table->foreign('Order_ID')->references('Order_ID')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
         });
     }
 

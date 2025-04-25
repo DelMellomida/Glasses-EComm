@@ -65,4 +65,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getUsers() {
+        return self::where('type', 'user')->get();
+    }
+
+    public function getAdmins() {
+        return self::where('type', 'admin')->get();
+    }
 }

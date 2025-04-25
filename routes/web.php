@@ -29,6 +29,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/list-users', [AdminController::class, 'listUsers'])->name('admin.list-users');
     Route::get('/admin/list-admins', [AdminController::class, 'listAdmins'])->name('admin.list-admins');
 
-    Route::get('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
+    Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });

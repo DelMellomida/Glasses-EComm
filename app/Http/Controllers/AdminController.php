@@ -45,10 +45,7 @@ class AdminController extends Controller
     public function changeUserRole(Request $request, $id)
     {
         $request->validate([
-            'role' => 'required|in:user,admin'
-        ]);
-        Log::info('User role updated', [
-            "message" => "working here",
+            'type' => 'required|in:user,admin'
         ]);
 
         $user = User::findOrFail($id);
@@ -56,8 +53,8 @@ class AdminController extends Controller
             $user->type = $request->input('type');
             $user->save();
             Log::info('User role updated', [
-                'user_id' => $user->id,
-                'new_role' => $request->input('type'),
+                'id' => $user->id,
+                'type' => $request->input('type'),
             ]);
 
             return response()->json(['message' => 'User role updated successfully'], 200);

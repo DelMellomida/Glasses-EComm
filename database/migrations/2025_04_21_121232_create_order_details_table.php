@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id('purchase_id')-> primary();
-            $table->integer('order_id')->default(0);
-            $table->foreign('user_id')->references('user_id')->on('product_images')->onDelete('cascade');
+
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('user_id');
+            
             $table->string('product_id')->reference('product_id')->on('products')->onDelete('cascade');
             $table->integer('quantity')->default(0);
             $table->string('payment_type')->nullable();
@@ -23,6 +25,7 @@ return new class extends Migration
             $table->index('order_id');
             $table->index('product_id');
 
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
         });
     }

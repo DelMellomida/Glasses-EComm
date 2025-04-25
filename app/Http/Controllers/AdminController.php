@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 
@@ -46,11 +47,19 @@ class AdminController extends Controller
         $request->validate([
             'role' => 'required|in:user,admin'
         ]);
+        Log::info('User role updated', [
+            "message" => "working here",
+        ]);
 
         $user = User::findOrFail($id);
         if ($user) {
             $user->type = $request->input('type');
             $user->save();
+            Log::info('User role updated', [
+                'user_id' => $user->id,
+                'new_role' => $request->input('type'),
+            ]);
+
             return response()->json(['message' => 'User role updated successfully'], 200);
         }
         return response()->json(['message' => 'User not found'], 404);

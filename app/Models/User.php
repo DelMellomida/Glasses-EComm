@@ -73,4 +73,9 @@ class User extends Authenticatable
     public function getAdmins() {
         return self::where('type', 'admin')->get();
     }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetails::class);
+    }
 }

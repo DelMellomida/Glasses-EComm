@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('branch_address')->nullable();
             $table->string('branch_phone')->nullable();
             $table->string('branch_email')->nullable();
-            $table->string('branch_manager')->nullable();
             $table->timestamps();
         });
     }

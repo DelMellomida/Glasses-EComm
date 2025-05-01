@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             
-            $table->string('product_id')->reference('product_id')->on('products')->onDelete('cascade');
             $table->integer('quantity')->default(0);
             $table->string('payment_type')->nullable();
             $table->timestamps();
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->index('order_id');
             $table->index('product_id');
 
+            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
         });

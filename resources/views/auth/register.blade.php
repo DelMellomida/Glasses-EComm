@@ -1,3 +1,5 @@
+<x-nav-guest></x-nav-guest>
+    
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">

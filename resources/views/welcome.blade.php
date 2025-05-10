@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -19,7 +19,9 @@
             </style>
         @endif
     </head>
+
     <body class="bg-[#FDFDFC] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        <x-nav-guest></x-nav-guest>
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6">
         @if (Route::has('login'))
             <nav class="flex items-center justify-end gap-4">

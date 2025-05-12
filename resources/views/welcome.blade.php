@@ -21,7 +21,7 @@
     </head>
 
     <body class="bg-[#FDFDFC] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <x-nav-guest></x-nav-guest>
+        <x-nav-guest></x-nav-guest> <!-- may problema sa body class nag interfere sa nav -->
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6">
         @if (Route::has('login'))
             <nav class="flex items-center justify-end gap-4">

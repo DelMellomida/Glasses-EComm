@@ -1,4 +1,4 @@
-<x-nav-guest></x-nav-guest>
+<x-nav-user></x-nav-user>
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">

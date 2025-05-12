@@ -1,4 +1,4 @@
-<nav class="fixed w-full z-20 top-0 start-0" style="background-color: #0f7b99; padding-left: 3rem;">
+<nav class="fixed w-full z-20 top-0 start-0 pl-10" style="background-color: #0f7b99; ">
   <div class="max-w-full flex items-center justify-start mx-auto pl-1 text-2x"> 
 
     <div class="hidden md:flex md:w-auto md:justify-start md:ml-4"> 

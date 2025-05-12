@@ -30,17 +30,8 @@
         <x-nav-link href="/" :active="request()->is('/')" class="flex items-center">
                 <img src="{{ asset('/') }}" class="h-12" alt="Cart" />
         </x-nav-link>
-        <x-dropdown>
-            <x-slot name="trigger">
-                <button class="flex items-center text-gray-700 hover:text-blue-700 focus:outline-none">
-                    <span>Options</span>
-                </button>
-            </x-slot>
-
-            <x-dropdown-link href="/profile">Profile</x-dropdown-link>
-            <x-dropdown-link href="/settings">Settings</x-dropdown-link>
-            <x-dropdown-link href="/logout">Log Out</x-dropdown-link>
-        </x-dropdown>
+        
+        <!-- complicated ng dropdown mo jhondel tinanggal ko akin--> 
     </div>
     </div>
 

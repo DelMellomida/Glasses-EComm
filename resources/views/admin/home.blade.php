@@ -1,4 +1,4 @@
+<x-admin-layout>
 
-<div>
-    this is admin page
-</div>
+
+</x-admin-layout>

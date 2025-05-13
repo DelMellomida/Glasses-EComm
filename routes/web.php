@@ -17,6 +17,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 // Route::get('/admin/home', [AdminController::class, 'index'])->middleware('admin');
 
+Route::get('/products', function () {
+    return view('product.home');
+})->name('product.home');
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index']);
     

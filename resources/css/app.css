@@ -6,6 +6,14 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+@import "tailwindcss";
+@plugin "daisyui";
+
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+
 [x-cloak] {
     display: none;
 }

@@ -6,16 +6,15 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // Regular user dashboard
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+    });
+        Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
-
 // Route::get('/admin/home', [AdminController::class, 'index'])->middleware('admin');
 
 Route::middleware(['admin'])->group(function () {

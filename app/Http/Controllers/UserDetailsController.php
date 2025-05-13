@@ -94,6 +94,20 @@ class UserDetailsController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_details = UserDetails::where('user_id', $id)->first();
 
+        if (!$user_details) {
+            return response()->json(['error' => 'User details not found'], 404);
+        }
+
+        try {
+            $user_details->delete();
+        } catch (\Exception $e) {
+            Log::error('Error deleting user detail:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Failed to delete user detail'], 500);
+        }
+
+        Log::info('User Detail deleted successfully', ['user_id' => $id]);
+        return response()->json(['message' => 'User Detail deleted successfully'], 200);
     }
 }

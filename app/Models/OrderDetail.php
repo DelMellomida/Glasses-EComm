@@ -8,6 +8,10 @@ class OrderDetail extends Model
 {
     //
     protected $fillable = [
-
+        'order_id',
+        'user_id',
+        'product_id',
+        'quantity',
+        'payment_type',
     ];
 }

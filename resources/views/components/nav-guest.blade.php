@@ -1,7 +1,7 @@
-<nav class="fixed w-full z-20 top-0 start-0 pl-10" style="background-color: #0f7b99; ">
+<nav class="fixed w-full z-20 top-0 start-0 pl-10 pr-6" style="background-color: #0f7b99; ">
   <div class="max-w-full flex items-center justify-start mx-auto pl-1 text-2x"> 
 
-    <div class="hidden md:flex md:w-auto md:justify-start md:ml-4"> 
+    <div class="hidden md:flex "> 
       <ul class="flex flex-row font-medium space-x-8 rtl:space-x-reverse">
         <li>
           <x-nav-link href="/" :active="request()->is('/')" class="text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page">Home</x-nav-link>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="hidden md:flex md:w-auto md:justify-start md:ml-4">
-      <x-nav-link href="/" :active="request()->is('/')" class="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500">Log In</x-nav-link>
+      <a href="{{ route('login') }}" class="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500 ">Log In</a>
     </div>
   </div>    
 </nav>

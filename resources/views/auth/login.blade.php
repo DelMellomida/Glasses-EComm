@@ -2,7 +2,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('build/assets/Images/Sarabia-Logo-Blue-Row.jpg') }}" class="h-12" alt="Sarabia Logo" />
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -42,6 +42,7 @@
                 <x-button class="ms-4">
                     {{ __('Log in') }}
                 </x-button>
+                    <a href="{{ route('register') }}" class="text-black ms-2 text-xs">REGISTER</a>
             </div>
         </form>
     </x-authentication-card>

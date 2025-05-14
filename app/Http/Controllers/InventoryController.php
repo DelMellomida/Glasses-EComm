@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Inventory;
+use App\Models\Product;
+use App\Models\Branch;
 
 class InventoryController extends Controller
 {
     public function index()
     {
-        return view('inventory.index');
+        return view('admin.inventory.index');
     }
 
     public function create()
     {
-
+        $products = Product::all();
+        $branches = Branch::all();
+        return view('admin.inventory.create', [
+            'products' => $products,
+            'branches' => $branches,
+        ]);
     }
 
     public function store(Request $request)
@@ -35,11 +42,13 @@ class InventoryController extends Controller
 
         } catch(\Exception $e){
             Log::error('Error creating inventory:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to create inventory'], 500);
+            // return response()->json(['error' => 'Failed to create inventory'], 500);
+            return redirect()->route('admin.inventory.index')->with('error', 'Failed to create inventory.');
         };
 
         Log::info('Successful adding inventory', $request->all());
-        return response()->json(['message' => 'Inventory created successfully', 'inventory' => $inventory], 201);
+        // return response()->json(['message' => 'Inventory created successfully', 'inventory' => $inventory], 201);
+        return redirect()->route('admin.inventory.index')->with('success', 'Inventory created successfully.');
         
     }
 
@@ -55,6 +64,17 @@ class InventoryController extends Controller
     public function edit($id)
     {
         // Code to show form for editing an inventory
+        $inventory = Inventory::findOrFail($id);
+        $products = Product::all();
+        $branches = Branch::all();
+        if (!$inventory) {
+            return response()->json(['error' => 'Inventory not found'], 404);
+        }
+        return view('admin.inventory.edit', [
+            'inventory' => $inventory,
+            'products' => $products,
+            'branches' => $branches,
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -79,11 +99,13 @@ class InventoryController extends Controller
 
         } catch(\Exception $e){
             Log::error('Error updating inventory:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update inventory'], 500);
+            // return response()->json(['error' => 'Failed to update inventory'], 500);
+            return redirect()->route('admin.inventory.index')->with('error', 'Failed to update inventory.');
         };
 
         Log::info('Successful updating inventory', $request->all());
-        return response()->json(['message' => 'Inventory updated successfully', 'inventory' => $inventory], 200);
+        // return response()->json(['message' => 'Inventory updated successfully', 'inventory' => $inventory], 200);
+        return redirect()->route('admin.inventory.index')->with('success', 'Inventory updated successfully.');
     }
 
     public function destroy($id)
@@ -97,11 +119,13 @@ class InventoryController extends Controller
             $inventory->delete();
         } catch(\Exception $e){
             Log::error('Error deleting inventory:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete inventory'], 500);
+            // return response()->json(['error' => 'Failed to delete inventory'], 500);
+            return redirect()->route('admin.inventory.index')->with('error', 'Failed to delete inventory.');
         };
 
         Log::info('Successful deleting inventory', ['id' => $id]);
-        return response()->json(['message' => 'Inventory deleted successfully'], 200);
+        // return response()->json(['message' => 'Inventory deleted successfully'], 200);
+        return redirect()->route('admin.inventory.index')->with('success', 'Inventory deleted successfully.');
     }
     public function listInventory()
     {

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 use Illuminate\Support\Facades\Log;
+
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -13,8 +16,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // return view('admin.products');
-        // return response()->json(['message' => 'Product index']);
         $products = Product::query();
 
         if ($request->has('category')) {
@@ -24,16 +25,11 @@ class ProductController extends Controller
         return view('welcome', [
             'products' => $products->get(),
         ]);
-        // return response()->json($products);
     }
 
     public function listAllProducts()
     {
         $products = Product::all();
-
-        // return view('admin.products', [
-        //     'products' => $products,
-        // ]);
 
         return response()->json($products);
     }
@@ -43,7 +39,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $productImages = ProductImage::all();
+
+        return view('admin.products.create', [
+            'categories' => $categories,
+            'productImages' => $productImages,
+        ]);
     }
 
     /**
@@ -61,7 +63,7 @@ class ProductController extends Controller
 
         Log::info('Request data:', $request->all());
 
-        try{
+        try {
             $product = Product::create($request->only([
                 'name',
                 'description',
@@ -69,15 +71,13 @@ class ProductController extends Controller
                 'price',
                 'product_image_id',
             ]));
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error('Error creating product:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to create product'], 500);
+            return redirect()->route('products.create')->with('error', 'Failed to create product.');
         }
 
-        Log::info('Successful adding product', $request->all());
-        return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
-
+        Log::info('Successfully added product', $request->all());
+        return redirect()->route('products.create')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -87,10 +87,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         if (!$product) {
-            return response()->json(['error' => 'Product not found'], 404);
+            return redirect()->route('products.index')->with('error', 'Product not found.');
         }
 
-        return response()->json($product);
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -98,7 +98,15 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $productImages = ProductImage::all();
+
+        return view('admin.products.edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'productImages' => $productImages,
+        ]);
     }
 
     /**
@@ -116,7 +124,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        try{
+        try {
             $product->update($request->only([
                 'name',
                 'description',
@@ -124,14 +132,13 @@ class ProductController extends Controller
                 'price',
                 'product_image_id'
             ]));
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error('Error updating product:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update product'], 500);
+            return redirect()->route('products.edit', $id)->with('error', 'Failed to update product.');
         }
 
         Log::info('Product updated successfully', $request->all());
-        return response()->json(['message' => 'Product updated successfully'], 201);
+        return redirect()->route('products.edit', $id)->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -143,11 +150,10 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $product->delete();
 
-            return response()->json(['message' => 'Product deleted successfully'], 200);
+            return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error deleting product:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete product'], 500);
+            return redirect()->route('products.index')->with('error', 'Failed to delete product.');
         }
     }
-
 }

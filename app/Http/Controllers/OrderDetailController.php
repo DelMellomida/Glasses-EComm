@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Order;
 
 class OrderDetailController extends Controller
 {
@@ -13,7 +16,7 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        //
+        // You can implement this method as needed.
     }
 
     /**
@@ -21,7 +24,14 @@ class OrderDetailController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        $users = User::all();
+        $orders = Order::all();
+        return view('admin.order_details.create', [
+            'products' => $products,
+            'users' => $users,
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -38,7 +48,6 @@ class OrderDetailController extends Controller
         ]);
 
         try {
-            // Assuming you have an OrderDetail model
             $orderDetail = OrderDetail::create([
                 'order_id' => $request->order_id,
                 'product_id' => $request->product_id,
@@ -46,11 +55,12 @@ class OrderDetailController extends Controller
                 'price' => $request->price,
             ]);
         } catch (\Exception $e) {
-            Log::error('Error creating order details:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to create order detail'], 500);
+            Log::error('Error creating order detail:', ['error' => $e->getMessage()]);
+            return redirect()->route('order_details.create')->with('error', 'Failed to create order detail.');
         }
 
-        return response()->json(['message' => 'Order detail created successfully', 'order_detail' => $orderDetail], 201);
+        Log::info('Successfully created order detail', ['order_detail_id' => $orderDetail->id]);
+        return redirect()->route('order_details.create')->with('success', 'Order detail created successfully.');
     }
 
     /**
@@ -60,9 +70,9 @@ class OrderDetailController extends Controller
     {
         $orderDetail = OrderDetail::findOrFail($id);
         if (!$orderDetail) {
-            return response()->json(['error' => 'Order detail not found'], 404);
+            return redirect()->route('order_details.index')->with('error', 'Order detail not found.');
         }
-        return response()->json($orderDetail);
+        return view('admin.order_details.show', compact('orderDetail'));
     }
 
     /**
@@ -70,7 +80,16 @@ class OrderDetailController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $orderDetail = OrderDetail::findOrFail($id);
+        $products = Product::all();
+        $users = User::all();
+        $orders = Order::all();
+        return view('admin.order_details.edit', [
+            'products' => $products,
+            'users' => $users,
+            'orders' => $orders,
+            'orderDetail' => $orderDetail,
+        ]);
     }
 
     /**
@@ -89,16 +108,17 @@ class OrderDetailController extends Controller
         try {
             $orderDetail = OrderDetail::findOrFail($id);
             if (!$orderDetail) {
-                return response()->json(['error' => 'Order detail not found'], 404);
+                return redirect()->route('order_details.index')->with('error', 'Order detail not found.');
             }
 
             $orderDetail->update($request->all());
         } catch (\Exception $e) {
             Log::error('Error updating order detail:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update order detail'], 500);
+            return redirect()->route('order_details.edit', $id)->with('error', 'Failed to update order detail.');
         }
 
-        return response()->json(['message' => 'Order detail updated successfully', 'order_detail' => $orderDetail], 200);
+        Log::info('Successfully updated order detail', ['order_detail_id' => $orderDetail->id]);
+        return redirect()->route('order_details.edit', $id)->with('success', 'Order detail updated successfully.');
     }
 
     /**
@@ -109,15 +129,16 @@ class OrderDetailController extends Controller
         try {
             $orderDetail = OrderDetail::findOrFail($id);
             if (!$orderDetail) {
-                return response()->json(['error' => 'Order detail not found'], 404);
+                return redirect()->route('order_details.index')->with('error', 'Order detail not found.');
             }
 
             $orderDetail->delete();
         } catch (\Exception $e) {
             Log::error('Error deleting order detail:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete order detail'], 500);
+            return redirect()->route('order_details.index')->with('error', 'Failed to delete order detail.');
         }
 
-        return response()->json(['message' => 'Order detail deleted successfully'], 200);
+        Log::info('Successfully deleted order detail', ['order_detail_id' => $id]);
+        return redirect()->route('order_details.index')->with('success', 'Order detail deleted successfully.');
     }
 }

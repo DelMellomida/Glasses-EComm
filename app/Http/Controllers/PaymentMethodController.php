@@ -8,15 +8,27 @@ use App\Models\PaymentMethod;
 
 class PaymentMethodController extends Controller
 {
-    public function index(){
-
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        // You can implement this method as needed.
     }
 
-    public function create(){
-
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.payment_method.create');
     }
-    
-    public function store(Request $request){
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         $request->validate([
             'pay_method' => 'required|in:cash,credit_card,debit_card,gcash',
             'available' => 'required|in:yes,no',
@@ -28,23 +40,39 @@ class PaymentMethodController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error creating payment method:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to create payment method'], 500);
+            return redirect()->route('payment_methods.create')->with('error', 'Failed to create payment method.');
         }
+
+        Log::info('Successfully created payment method', ['payment_method_id' => $paymentMethod->id]);
+        return redirect()->route('payment_methods.create')->with('success', 'Payment method created successfully.');
     }
 
-    public function show($id){
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
         $paymentMethod = PaymentMethod::findOrFail($id);
         if (!$paymentMethod) {
-            return response()->json(['error' => 'Payment method not found'], 404);
+            return redirect()->route('payment_methods.index')->with('error', 'Payment method not found.');
         }
-        return response()->json($paymentMethod);
+        return view('admin.payment_method.show', compact('paymentMethod'));
     }
 
-    public function edit($id){
-        // Code to show form for editing a payment method
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $paymentMethod = PaymentMethod::findOrFail($id);
+        return view('admin.payment_method.edit', compact('paymentMethod'));
     }
 
-    public function update(Request $request, $id){
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'pay_method' => 'required|in:cash,credit_card,debit_card,gcash',
             'available' => 'required|in:yes,no',
@@ -55,18 +83,27 @@ class PaymentMethodController extends Controller
             $paymentMethod->update($request->all());
         } catch (\Exception $e) {
             Log::error('Error updating payment method:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update payment method'], 500);
+            return redirect()->route('payment_methods.edit', $id)->with('error', 'Failed to update payment method.');
         }
 
-        return response()->json(['message' => 'Payment Method updated successfully', 'payment_method' => $paymentMethod], 200);
+        Log::info('Successfully updated payment method', ['payment_method_id' => $paymentMethod->id]);
+        return redirect()->route('payment_methods.edit', $id)->with('success', 'Payment method updated successfully.');
     }
-    public function destroy($id){
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
         try {
             $paymentMethod = PaymentMethod::findOrFail($id);
             $paymentMethod->delete();
         } catch (\Exception $e) {
             Log::error('Error deleting payment method:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete payment method'], 500);
+            return redirect()->route('payment_methods.index')->with('error', 'Failed to delete payment method.');
         }
+
+        Log::info('Successfully deleted payment method', ['payment_method_id' => $id]);
+        return redirect()->route('payment_methods.index')->with('success', 'Payment method deleted successfully.');
     }
 }

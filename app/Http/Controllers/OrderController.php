@@ -13,7 +13,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.orders.index', [
+            'orders' => Order::all(),
+        ]);
     }
 
     /**
@@ -21,7 +23,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.orders.create');
     }
 
     /**
@@ -41,8 +43,11 @@ class OrderController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error creating order:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to create order'], 500);
+            return redirect()->route('orders.index')->with('error', 'Failed to create order.');
         }
+
+        Log::info('Successfully created order', ['order_id' => $order->id]);
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     /**
@@ -52,9 +57,9 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         if (!$order) {
-            return response()->json(['error' => 'Order not found'], 404);
+            return redirect()->route('orders.index')->with('error', 'Order not found.');
         }
-        return response()->json($order);
+        return view('admin.orders.show', compact('order'));
     }
 
     /**
@@ -62,7 +67,11 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $order = Order::findOrFail($id);
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'Order not found.');
+        }
+        return view('admin.orders.edit', compact('order'));
     }
 
     /**
@@ -83,8 +92,11 @@ class OrderController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error updating order:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update order'], 500);
+            return redirect()->route('orders.index')->with('error', 'Failed to update order.');
         }
+
+        Log::info('Successfully updated order', ['order_id' => $order->id]);
+        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 
     /**
@@ -97,9 +109,9 @@ class OrderController extends Controller
             $order->delete();
         } catch (\Exception $e) {
             Log::error('Error deleting order:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete order'], 500);
+            return redirect()->route('orders.index')->with('error', 'Failed to delete order.');
         }
-        Log::info('Successful deleting order', ['order_id' => $id]);
-        return response()->json(['message' => 'Order deleted successfully'], 200);
+        Log::info('Successfully deleted order', ['order_id' => $id]);
+        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
 }

@@ -46,3 +46,4 @@
         </form>
     </x-authentication-card>
 </x-guest-layout>
+<x-footer></x-footer>

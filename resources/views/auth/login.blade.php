@@ -1,4 +1,4 @@
-<x-nav-user></x-nav-user>
+<x-nav-guest></x-nav-guest>
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
@@ -47,4 +47,3 @@
         </form>
     </x-authentication-card>
 </x-guest-layout>
-<x-footer></x-footer>

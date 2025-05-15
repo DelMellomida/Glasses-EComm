@@ -1,14 +1,12 @@
 <nav class="fixed w-full z-20 top-0 start-0" style="background-color: #0f7b99;">
   <div class="max-w-full flex items-center justify-between mx-auto md:pl-1"> 
 
-    <!-- Logo section -->
     <div class="flex items-center ml-8">
-      <x-nav-link href="/" :active="request()->is('/')" class="flex items-center">
+      <a href="/" :active="request()->is('/')" class="flex items-center">
         <img src="{{ asset('build/assets/Images/Sarabia-logo-white.jpg') }}" class="h-12" alt="Sarabia Logo" />
-      </x-nav-link>
+      </a>
     </div>
 
-    <!-- Navigation and Icons section -->
     <div class="hidden md:flex items-center justify-end"> 
       <ul class="flex items-center mr-8">
         <li class="px-6">
@@ -25,7 +23,6 @@
         </li>
       </ul>
 
-      <!-- Icons section -->
       <div class="flex items-center space-x-4 mr-8"> 
         <x-nav-link href="/calendar" :active="request()->is('calendar')" class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -39,6 +36,8 @@
           </svg>
         </x-nav-link>
       </div>
+
+        <!-- need burgir dropdown, Jhondel ples -->
     </div>
   </div>
 </nav>

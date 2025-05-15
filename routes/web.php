@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('guest.guest-home');
+})->name('home');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Regular user dashboard
@@ -35,3 +37,4 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
+

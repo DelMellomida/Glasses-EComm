@@ -5,59 +5,84 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
-use App\Models\User;
 use App\Models\UserDetails;
 
 class UserDetailsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the user's details.
      */
     public function index()
     {
-        return view('user.details', [
-            'user' => Auth::user(),
-            'user_details' => UserDetails::where('user_id', Auth::user()->id)->first()
+        $user = Auth::user();
+
+        return view('user.user_details', [
+            'user' => $user,
+            'user_details' => UserDetails::where('user_id', $user->id)->first()
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form to create user details.
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+
+        return view('user.user_details_create', [
+            'user_id' => $user->id,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store the user details.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|in:male,female',
+        ]);
+
+        try {
+            UserDetails::create([
+                'address' => $request->address,
+                'phone_number' => $request->phone_number,
+                'date_of_birth' => $request->date_of_birth,
+                'gender' => $request->gender,
+                'user_id' => Auth::id(),
+            ]);
+
+            return redirect()->route('user-details.index')->with('success', 'User details created successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error creating user detail:', ['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors('Failed to create user details.');
+        }
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing user details.
      */
-    public function show(string $id)
+    public function edit()
     {
-        //
+        $user = Auth::user();
+        $user_details = UserDetails::where('user_id', $user->id)->first();
+
+        if (!$user_details) {
+            return redirect()->route('user-details.index')->withErrors('User details not found.');
+        }
+
+        return view('user.user_details_edit', [
+            'user_details' => $user_details,
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the user details.
      */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $request->validate([
             'address' => 'required|string|max:255',
@@ -66,10 +91,11 @@ class UserDetailsController extends Controller
             'gender' => 'required|in:male,female'
         ]);
 
-        $user_details = UserDetails::where('user_id', $id)->first();
+        $user = Auth::user();
+        $user_details = UserDetails::where('user_id', $user->id)->first();
 
         if (!$user_details) {
-            return response()->json(['error' => 'User details not found'], 404);
+            return redirect()->route('user-details.index')->withErrors('User details not found.');
         }
 
         try {
@@ -79,35 +105,32 @@ class UserDetailsController extends Controller
                 'date_of_birth',
                 'gender',
             ]));
+
+            return redirect()->route('user-details.index')->with('success', 'User details updated successfully.');
         } catch (\Exception $e) {
             Log::error('Error updating user detail:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to update user detail'], 500);
+            return redirect()->back()->withErrors('Failed to update user details.');
         }
-
-        Log::info('User Detail updated successfully', ['user_id' => $id]);
-        return response()->json(['message' => 'User Detail updated successfully'], 200);
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * Delete the user details.
      */
-    public function destroy(string $id)
+    public function destroy()
     {
-        $user_details = UserDetails::where('user_id', $id)->first();
+        $user = Auth::user();
+        $user_details = UserDetails::where('user_id', $user->id)->first();
 
         if (!$user_details) {
-            return response()->json(['error' => 'User details not found'], 404);
+            return redirect()->route('user-details.index')->withErrors('User details not found.');
         }
 
         try {
             $user_details->delete();
+            return redirect()->route('user-details.index')->with('success', 'User details deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error deleting user detail:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to delete user detail'], 500);
+            return redirect()->route('user-details.index')->withErrors('Failed to delete user details.');
         }
-
-        Log::info('User Detail deleted successfully', ['user_id' => $id]);
-        return response()->json(['message' => 'User Detail deleted successfully'], 200);
     }
 }

@@ -1,20 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('guest.guest-home');
+})->name('home');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Regular user dashboard
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
     });
-        Route::get('/dashboard', function () {
+    
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::view('/payment-method', 'payment.method')->name('payment.method');
 });
 // Route::get('/admin/home', [AdminController::class, 'index'])->middleware('admin');
 
@@ -36,3 +43,5 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
+
+Route::get('/products', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.products');

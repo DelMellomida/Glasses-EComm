@@ -1,4 +1,4 @@
-<footer class=" py-12 px-6" style="background-color: #0f7b99">
+<footer class=" py-12 px-6 bottom-0" style="background-color: #0f7b99">
 
   <div class="max-w-6xl mx-auto">
 

@@ -35,10 +35,11 @@ HTML;
 <x-guest-layout>
     <div class="pt-4 bg-gray-100">
         <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0">
-            <div>
-                <x-authentication-card-logo />
-            </div>
-
+                @if (auth()->user())
+                    <x-nav-user></x-nav-user>
+                @else
+                    <x-nav-guest></x-nav-guest>
+                @endif
             <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
                 {!! $terms !!}
             </div>

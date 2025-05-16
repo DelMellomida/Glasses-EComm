@@ -3,7 +3,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('build/assets/Images/Sarabia-Logo-Blue-Row.jpg') }}" class="h-12" alt="Sarabia Logo" />
         </x-slot>
 
         <x-validation-errors class="mb-4" />

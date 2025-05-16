@@ -176,7 +176,7 @@
 
 <!-- Donut Chart -->
 
-<table id="export-table" class="-mx-2 my-30">
+<table id="export-table" class="absolute left-100 top-55 max-w-5xl bg-white-500 dark:bg-gray-700">
     <thead>
         <tr>
             <th>
@@ -344,9 +344,6 @@
 </table>
 
 
-
-
-
 <!-- Script Section for Transactions-->
 <script>
 
@@ -400,12 +397,12 @@ if (document.getElementById("export-table") && typeof simpleDatatables.DataTable
         template: (options, dom) => "<div class='" + options.classes.top + "'>" +
             "<div class='flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-3 rtl:space-x-reverse w-full sm:w-auto'>" +
             (options.paging && options.perPageSelect ?
-                "<div class='mx-10" + options.classes.dropdown + "'>" +
+                "<div class='absolute left-280 top-20 my-20 " + options.classes.dropdown + "'>" +
                     "<label>" +
                         "<select class='" + options.classes.selector + "'></select> " + options.labels.perPage +
                     "</label>" +
                 "</div>" : ""
-            ) + "<button id='exportDropdownButton' type='button' class='relative top-30 flex w-30 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto'>" +
+            ) + "<button id='exportDropdownButton' type='button' class='absolute left-330 top-40 flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700'>" +
             "Export as" +
             "<svg class='-me-0.5 ms-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'>" +
                 "<path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m19 9-7 7-7-7' />" +
@@ -446,7 +443,20 @@ if (document.getElementById("export-table") && typeof simpleDatatables.DataTable
                     "</button>" +
                 "</li>" +
             "</ul>" +
-        "</div>" + "</div>"
+        "</div>" + "</div>" +
+            (options.searchable ?
+                "<div class='absolute top-40 left-100 " + options.classes.search + "'>" +
+                    "<input class='" + options.classes.input + "' placeholder='" + options.labels.placeholder + "' type='search' title='" + options.labels.searchTitle + "'" + (dom.id ? " aria-controls='" + dom.id + "'" : "") + ">" +
+                "</div>" : ""
+            ) +
+        "</div>" +
+        "<div class='" + options.classes.container + "'" + (options.scrollY.length ? " style='height: " + options.scrollY + "; overflow-Y: auto;'" : "") + "></div>" +
+        "<div class='absolute top-173 ml-44 " + options.classes.bottom + "'>" +
+            (options.paging ?
+                "<div class='" + options.classes.info + "'></div>" : ""
+            ) +
+            "<nav class='" + options.classes.pagination + "'></nav>" +
+        "</div>"
     })
     const $exportButton = document.getElementById("exportDropdownButton");
     const $exportDropdownEl = document.getElementById("exportDropdown");

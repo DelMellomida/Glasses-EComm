@@ -161,10 +161,8 @@ class ProductController extends Controller
     {
         $products = Product::select('product_name', 'product_description', 'price', 'product_image_id')->get();
         $productImages = ProductImage::all();
-<<<<<<< Updated upstream
+        
         return view('guest.guest-home', compact('products', 'productImages'));
-=======
-        return view('guest.products', compact('products', 'productImages'));
->>>>>>> Stashed changes
+
     }
 }

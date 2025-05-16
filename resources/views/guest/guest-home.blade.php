@@ -7,7 +7,7 @@
     <div class="flex-grow">
         <x-guest-layout>
             <div class="h-100 flex flex-row w-full bg-green-100">
-                <x-product-cards :products="$products" :productImages="$productImages" />
+                <x-product-card :products="$products" :productImages="$productImages" />
             </div>
         </x-guest-layout>
     </div>

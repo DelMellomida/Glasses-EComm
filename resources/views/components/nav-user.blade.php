@@ -1,4 +1,4 @@
-<nav class="fixed w-full z-20 top-0 start-0" style="background-color: #0f7b99;" x-data="{ open: false }">
+<nav class="fixed w-full h-20 z-20 top-0 start-0" style="background-color: #0f7b99;" x-data="{ open: false }">
   <div class="max-w-full flex items-center mx-auto p-4"> 
     <!-- Logo on the left -->
     <div class="flex-shrink-0">
@@ -27,19 +27,21 @@
         </li>
       </ul>
 
-      <div class="flex items-center space-x-4 mr-4"> 
-        <x-nav-link href="/calendar" :active="request()->is('calendar')" class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 4h10M5 11h14M5 19h14M5 15h14M5 11V9a2 2 0 012-2h10a2 2 0 012 2v2M5 19v2a2 2 0 002 2h10a2 2 0 002-2v-2" />
-          </svg>
-        </x-nav-link>
+      @if(auth()->user())
+        <div class="flex items-center space-x-4 mr-4"> 
+          <x-nav-link href="/calendar" :active="request()->is('calendar')" class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 4h10M5 11h14M5 19h14M5 15h14M5 11V9a2 2 0 012-2h10a2 2 0 012 2v2M5 19v2a2 2 0 002 2h10a2 2 0 002-2v-2" />
+            </svg>
+          </x-nav-link>
 
-        <x-nav-link href="/cart" :active="request()->is('cart')" class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
-          </svg>
-        </x-nav-link>
-      </div>
+          <x-nav-link href="/cart" :active="request()->is('cart')" class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
+            </svg>
+          </x-nav-link>
+        </div>
+      @endif
 
       <!-- Burger Menu Button -->
       <div class="relative">

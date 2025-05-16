@@ -156,4 +156,11 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('error', 'Failed to delete product.');
         }
     }
+
+    public function showAllProductsInGuestView()
+    {
+        $products = Product::select('product_name', 'product_description', 'price', 'product_image_id')->get();
+        $productImages = ProductImage::all();
+        return view('guest.products', compact('products', 'productImages'));
+    }
 }

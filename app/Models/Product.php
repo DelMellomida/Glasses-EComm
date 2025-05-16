@@ -7,6 +7,7 @@ use App\Models\ProductImage;
 
 class Product extends Model
 {
+    protected $primaryKey = 'product_id';
     protected $fillable = [
         'name',
         'description',

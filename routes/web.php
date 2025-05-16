@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\OrderDetailController;
 
 Route::get('/', function () {
     return view('guest.guest-home');
@@ -22,6 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::view('/payment-method', 'payment.method')->name('payment.method');
+    Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
 });
 // Route::get('/admin/home', [AdminController::class, 'index'])->middleware('admin');
 

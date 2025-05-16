@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\User;
@@ -141,4 +143,18 @@ class OrderDetailController extends Controller
         Log::info('Successfully deleted order detail', ['order_detail_id' => $id]);
         return redirect()->route('order_details.index')->with('success', 'Order detail deleted successfully.');
     }
+
+    public function getOrderDetailsByUserId()
+    {
+        $userId = Auth::id();
+
+        // Eager load 'product' and 'order' relationships to avoid nested loops in the Blade view
+        $orderDetails = OrderDetail::with(['product', 'order'])
+            ->where('user_id', $userId)
+            ->get();
+
+        return view('order.list', compact('orderDetails'));
+    }
+
+
 }

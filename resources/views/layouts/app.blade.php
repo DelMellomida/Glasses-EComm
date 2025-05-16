@@ -14,6 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://unpkg.com/alpinejs" defer></script>
 
         <!-- Styles -->
         @livewireStyles
@@ -22,7 +23,7 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+            <x-nav-user></x-nav-user>
                 
             <!-- Page Heading -->
             @if (isset($header))

@@ -34,4 +34,10 @@
                 @endforelse
             </tbody>
         </table>
+
+        @if(auth()->user())
+            <div class="mt-4">
+                cart
+            </div>
+        @endif
     </div>

@@ -14,7 +14,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
     });
-        Route::get('/dashboard', function () {
+    
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
@@ -40,3 +41,4 @@ Route::middleware(['admin'])->group(function () {
 });
 
 Route::get('/products', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.products');
+Route::view('/payment-method', 'payment.method')->name('payment.method');

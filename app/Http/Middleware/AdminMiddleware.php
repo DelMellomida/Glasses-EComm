@@ -13,7 +13,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('dashboard')->with('error', 'Unauthorized access.');
+        return redirect('welcome')->with('error', 'Unauthorized access.');
     }
 }
 

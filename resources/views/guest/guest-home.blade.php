@@ -1,5 +1,5 @@
 <div class="flex flex-col min-h-screen md:pt-16">
-    @if (auth()->user())
+    @if (Auth::check())    
         <x-nav-user></x-nav-user>
     @else
         <x-nav-guest></x-nav-guest>

@@ -15,9 +15,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Regular user dashboard
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
-    });
+    // Route::middleware(['admin'])->group(function () {
+    //     Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+    // });
     
     Route::get('/dashboard', function () {
         return view('dashboard');

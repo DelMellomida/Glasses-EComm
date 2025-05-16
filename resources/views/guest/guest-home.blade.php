@@ -2,11 +2,15 @@
     @if (auth()->user())
         <x-nav-user></x-nav-user>
     @else
-    <x-nav-guest></x-nav-guest>
+        <x-nav-guest></x-nav-guest>
     @endif
     <div class="flex-grow">
         <x-guest-layout>
-            <div class="h-100 flex flex-row w-full bg-green-100"></div>
+            <div class="h-100 flex flex-row w-full bg-green-100">
+                <div>
+                    <x-product-card :products="$products" :productImages="$productImages" />
+                </div>
+            </div>
         </x-guest-layout>
     </div>
 

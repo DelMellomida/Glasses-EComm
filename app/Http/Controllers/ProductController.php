@@ -161,6 +161,6 @@ class ProductController extends Controller
     {
         $products = Product::select('product_name', 'product_description', 'price', 'product_image_id')->get();
         $productImages = ProductImage::all();
-        return view('guest.products', compact('products', 'productImages'));
+        return view('guest.guest-home', compact('products', 'productImages'));
     }
 }

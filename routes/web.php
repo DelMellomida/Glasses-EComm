@@ -47,4 +47,4 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
 
-Route::get('/products', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.products');
+Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');

@@ -1,28 +1,31 @@
 <!-- Hero Section -->
-<section class="w-full pt-36 pb-20 bg-blue-100">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6 gap-10">
-       
-        <!-- Product Image -->
-        <div class="flex justify-center md:w-1/2">
-            <img src="{{ asset('images/sunglasses.png') }}" 
-                alt="Sunglasses" 
-                class="w-full max-w-[1200px] drop-shadow-2xl hover:scale-105 transition-transform duration-300">
-        </div>
+<div class="w-full relative flex justify-center items-center min-h-[10vh] md:min-h-[5vh]">
+    <!-- Product Image -->
+    <img src="{{ asset('build/assets/Images/sunglasses.png') }}"
+        alt="Sunglasses"  />
 
-
-
-            <!-- Text Content -->
-        <div class="text-center md:text-left md:w-1/2 space-y-6 px-4 md:px-0">
-            <h1 class="text-5xl md:text-6xl font-extrabold leading-snug text-gray-900 tracking-tight">
+    <!-- Text Content Overlay -->
+    <div class="absolute inset-0 flex flex-col justify-center items-end text-right space-y-8 px-8 md:px-16 lg:px-24">
+        <div class="max-w-lg ">
+            <span class="md:text-2xl font-extrabold leading-tight text-white tracking-tight drop-shadow-lg">
                 See the <span class="text-[#f04e37]">Difference!</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-md mx-auto md:mx-0 leading-relaxed">
+                </span>
+            <p class="text-2xl   text-gray-100 leading-relaxed drop-shadow mt-6">
                 Stylish eyewear for any occasion.
             </p>
-            <a href="/products" 
-            class="mt-6 inline-block bg-[#f04e37] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#0d6b8a] hover:scale-105 transition-transform duration-300">
+            @if (auth()->user())
+            <a href="#products-section"
+                class="mt-8 inline-block bg-[#f04e37] text-white px-8 py-3 rounded-lg shadow-lg font-semibold md:text-xl md:lg:text-2xl hover:bg-[#0d6b8a] hover:scale-105 transition-transform duration-300">
                 Buy now
             </a>
+            @else
+            <a href="{{ route('login') }}"
+                class="mt-8 inline-block bg-[#f04e37] text-white px-8 py-3 rounded-lg shadow-lg font-semibold md:text-xl md:lg:text-2xl hover:bg-[#0d6b8a] hover:scale-105 transition-transform duration-300">
+                Buy now
+            </a>
+            @endif
+            
         </div>
+    </div>
+</div>
 
-</section>

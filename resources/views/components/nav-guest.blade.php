@@ -4,28 +4,26 @@
     <div class="flex items-center">
       <ul class="flex items-center space-x-2">
         <li>
-          <x-nav-link href="/" :active="request()->is('/')" class="text-white hover:text-blue-200 px-4 py-1">Home</x-nav-link>
+          <x-nav-link href="/" :active="request()->is('/')" class="text-white hover:text-blue-200 px-4 md-min-px-1 py-1">Home</x-nav-link>
         </li>
         <li>
-          <x-nav-link href="/products" :active="request()->is('products')" class="text-white hover:text-blue-200 px-4 py-1">Products</x-nav-link>
+          <x-nav-link href="/products" :active="request()->is('products')" class="text-white hover:text-blue-200 px-4 md-min-px-1 py-1">Products</x-nav-link>
         </li>
         <li>
-          <x-nav-link href="/about" :active="request()->is('about')" class="text-white hover:text-blue-200 px-4 py-1">About Us</x-nav-link>
+          <x-nav-link href="/about" :active="request()->is('about')" class="text-white hover:text-blue-200 px-4 md-min-px-1 py-1">About Us</x-nav-link>
         </li>
         <li>
-          <x-nav-link href="/contact" :active="request()->is('contact')" class="text-white hover:text-blue-200 px-4 py-1">Contact</x-nav-link>
+          <x-nav-link href="/contact" :active="request()->is('contact')" class="text-white hover:text-blue-200 px-4 md-min-px-1 py-1">Contact</x-nav-link>
         </li>
       </ul>
     </div>
 
-    <!-- Center: Logo -->
-    <div class="flex flex-grow justify-center ml-30">
+    <div class="flex flex-grow justify-center md:ml-30 md:min-ml-0">
       <a href="/" :active="request()->is('/')" class="flex items-center">
         <img src="{{ asset('build/assets/Images/Sarabia-logo-white.jpg') }}" class="h-12" alt="Sarabia Logo" />
       </a>
     </div>
 
-    <!-- Right side: Login -->
     <div class="flex flex-grow justify-end">
       <x-nav-link href="{{ route('login') }}" class="text-white hover:text-blue-200 px-4 py-1">Log In</x-nav-link>
     </div>
@@ -33,4 +31,3 @@
 </nav>
 
 
-</style>

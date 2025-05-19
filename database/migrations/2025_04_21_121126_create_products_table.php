@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('product_name')->nullable();
             $table->string('product_description')->nullable();
             $table->integer('price')->default(0);
+            $table->integer('stock')->default(0);
 
             $table->unsignedBigInteger('product_image_id')->nullable();
             $table->unsignedBigInteger('category_id')->required();

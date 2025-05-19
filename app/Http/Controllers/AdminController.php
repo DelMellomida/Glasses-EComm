@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\User;
 
@@ -18,28 +19,159 @@ class AdminController extends Controller
         ]);
     }
 
+    public function userIndex()
+    {
+        return view('admin.users.list');
+    }
+
+    public function adminIndex()
+    {
+        return view('admin.users.list-admin');
+    }
+
+    public function create()
+    {
+        return view('admin.users.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'type' => 'user',
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'User created successfully.');
+    }
+
     public function listUsers()
     {
-        $userModel = new User();
-        $users = $userModel->getUsers();
-
-        dd($users->toArray()); 
-
-        // return view('admin.users', [
-        //     'users' => $users->toArray(),
-        // ]);
+        return DataTables::of(
+        User::where('type', 'user')
+        )
+        ->addColumn('action', function ($user) {
+            return '
+                <div class="flex space-x-2 justify-center">
+                    <form action="' . route('admin.user.destroy', $user->id) . '" method="POST" style="display:inline;">
+                        ' . csrf_field() . method_field('DELETE') . '
+                        <button type="submit" title="Delete"
+                            class="p-2 bg-transparent hover:bg-red-100 rounded transition group"
+                            onclick="event.stopPropagation(); return confirm(\'Are you sure you want to delete this user?\')">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 group-hover:text-red-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <form action="' . route('admin.change-user-role', $user->id) . '" method="POST" style="display:inline;">
+                        ' . csrf_field() . '
+                        <input type="hidden" name="type" value="admin">
+                        <button type="submit" title="Promote to Admin"
+                            class="p-2 bg-transparent hover:bg-green-100 rounded transition group"
+                            onclick="event.stopPropagation();">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 group-hover:text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.485 0 4.797.657 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            ';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
     }
 
     public function listAdmins()
     {
-        $userModel = new User();
-        $users = $userModel->getAdmins();
+        return DataTables::of(
+        User::where('type', 'admin')
+        )
+        ->addColumn('action', function ($user) {
+            return '
+                <div class="flex space-x-2 justify-center">
+                    <form action="' . route('admin.user.destroy', $user->id) . '" method="POST" style="display:inline;">
+                        ' . csrf_field() . method_field('DELETE') . '
+                        <button type="submit" title="Delete"
+                            class="p-2 bg-transparent hover:bg-red-100 rounded transition group"
+                            onclick="event.stopPropagation(); return confirm(\'Are you sure you want to delete this user?\')">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 group-hover:text-red-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            ';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
 
-        dd($users->toArray());
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $user_details = $user->userDetail;
 
-        // return view('admin.admins', [
-        //     'users' => $users->toArray(),
-        // ]);
+        if ($user) {
+            return view('admin.users.edit', [
+                'user' => $user,
+                'user_details' => $user_details,
+            ]);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+                'address' => 'nullable|string|max:255',
+                'phone_number' => 'nullable|string|max:20',
+                'date_of_birth' => 'nullable|date',
+                'gender' => 'nullable|in:male,female',
+            ]);
+
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+            ]);
+
+            $user->userDetail()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'address' => $validated['address'] ?? null,
+                        'phone_number' => $validated['phone_number'] ?? null,
+                        'date_of_birth' => $validated['date_of_birth'] ?? null,
+                        'gender' => $validated['gender'] ?? 'male', // Default to 'male' if not set
+                    ]
+            );
+
+            return redirect(
+                request('back') ??
+                ($user->type === 'admin'
+                    ? route('admin.adminIndex')
+                    : route('user.index'))
+            )->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+            Log::info('Error updating user', [
+                'id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'An error occurred while updating the user.');
+        }
     }
 
     public function changeUserRole(Request $request, $id)
@@ -56,19 +188,19 @@ class AdminController extends Controller
                 'id' => $user->id,
                 'type' => $request->input('type'),
             ]);
-
-            return response()->json(['message' => 'User role updated successfully'], 200);
+            return $this->userIndex();
+            // return response()->json(['message' => 'User role updated successfully'], 200);
         }
         return response()->json(['message' => 'User not found'], 404);
     }
 
-    public function deleteUser($id)
+    public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
         if ($user) {
             $user->delete();
-            return response()->json(['message' => 'User deleted successfully'], 200);
+            return redirect()->route('user.index')->with('success', 'User deleted successfully.');
         }
-        return response()->json(['message' => 'User not found'], 404);
+        return redirect()->route('user.index')->with('error', 'User not found.');
     }
 }

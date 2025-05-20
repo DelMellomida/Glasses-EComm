@@ -7,9 +7,10 @@
                 <table id="inventory_list" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Product Image</th>
                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Email</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Action</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Price</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">

@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Events\Authenticated;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Only needed if you want to add a custom route for redirect
+        Route::get('/redirect-after-login', function () {
+            if (Auth::check() && Auth::user()->type === 'admin') {
+                return redirect('/admin/home');
+            }
+            return redirect('/dashboard');
+        });
     }
 }

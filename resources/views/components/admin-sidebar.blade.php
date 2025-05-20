@@ -137,7 +137,7 @@
             </button>
             <ul id="dropdown-transaction" class="hidden py-2 space-y-2 mt-2">
                <li>
-                  <a href="#" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <a href={{ route('all-transaction.index') }} class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                      <!-- List Icon -->
                      <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -146,7 +146,7 @@
                   </a>
                </li>
                <li>
-                  <a href="#" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <a href={{ route('failed-transaction.index') }} class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                      <!-- X Circle Icon -->
                      <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"/>
@@ -156,7 +156,7 @@
                   </a>
                </li>
                <li>
-                  <a href="#" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <a href={{ route('successful-transaction.index') }} class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                      <!-- Check Circle Icon -->
                      <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"/>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('order_id')->primary();
             $table->integer('order_total')->default(0);
             $table->dateTime('purchase_date')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

@@ -36,34 +36,32 @@ class BranchController extends Controller
         }
         catch(\Exception $e){
             Log::error('Error creating branch:', ['error' => $e->getMessage()]);
-            // return response()->json(['error' => 'Failed to create branch'], 500);
             return redirect()->route('admin.branches.index')->with('error', 'Failed to create branch.');
         }
 
         Log::info('Successful adding branch', $request->all());
-        // return response()->json(['message' => 'Branch created successfully', 'branch' => $branch], 201);
         return redirect()->route('admin.branches.index')->with('success', 'Branch created successfully');       
 
     }
+
     public function show($id)
     {
-        // Code to show a specific branch
-
         $branch = Branch::findOrFail($id);
         if (!$branch) {
             return response()->json(['error' => 'Branch not found'], 404);
         }
         return response()->json($branch);
     }
+
     public function edit($id)
     {
-        // Code to show form for editing a branch
         $branch = Branch::findOrFail($id);
         if (!$branch) {
             return response()->json(['error' => 'Branch not found'], 404);
         }
         return view('admin.branches.edit', compact('branch'));
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -75,7 +73,6 @@ class BranchController extends Controller
 
         $branch = Branch::findOrFail($id);
         if (!$branch) {
-            // return response()->json(['error' => 'Branch not found'], 404);
             return redirect()->route('admin.branches.index')->with('error', 'Branch not found');
         }
 
@@ -88,18 +85,14 @@ class BranchController extends Controller
             ]));
         } catch (\Exception $e) {
             Log::error('Error updating branch:', ['error' => $e->getMessage()]);
-            // return response()->json(['error' => 'Failed to update branch'], 500);
             return redirect()->route('admin.branches.index')->with('error', 'Failed to update branch.');
         }
 
         Log::info('Successful updating branch', $request->all());
-        // return response()->json(['message' => 'Branch updated successfully', 'branch' => $branch], 200);
         return redirect()->route('admin.branches.index')->with('success', 'Branch updated successfully.');
     }
     public function destroy($id)
     {
-        // Code to delete a specific branch
-
         $branch = Branch::findOrFail($id);
         if (!$branch) {
             return response()->json(['error' => 'Branch not found'], 404);
@@ -115,7 +108,6 @@ class BranchController extends Controller
 
     public function getAllBranches()
     {
-        // Code to get all branches
         $branches = Branch::all();
         if ($branches->isEmpty()) {
             return response()->json(['message' => 'No branches found'], 404);

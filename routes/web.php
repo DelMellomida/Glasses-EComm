@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 // Route::get('/', function () {
 //     return view('guest.guest-home');
@@ -50,6 +51,18 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/list-categories/data', [CategoryController::class, 'listCategories'])->name('admin.list-categories');
     Route::put('/admin/category/{id}/edit', [CategoryController::class, 'update'])->name('admin.category.update');
     Route::delete('/admin/category/{id}/delete', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+    Route::get('/admin/all-transactions', [OrderController::class, 'index'])->name('all-transaction.index');
+    Route::get('/admin/successful-transactions', [OrderController::class, 'successfulIndex'])->name('successful-transaction.index');
+    Route::get('/admin/failed-transactions', [OrderController::class, 'failedindex'])->name('failed-transaction.index');
+    Route::get('/admin/add-transaction', [OrderController::class, 'create'])->name('admin.transaction.create');
+    Route::post('/admin/add-new-transaction', [OrderController::class, 'store'])->name('admin.transaction.store');
+    Route::get('/admin/transaction/{id}/edit', [OrderController::class, 'edit'])->name('admin.transaction.edit');
+    Route::get('/admin/all-transactions/data', [OrderController::class, 'listAllTransactions'])->name('admin.all-transactions');
+    Route::get('/admin/successful-transactions/data', [OrderController::class, 'listSuccessfulTransactions'])->name('admin.successful-transactions');
+    Route::get('/admin/failed-transactions/data', [OrderController::class, 'listFailedTransactions'])->name('admin.failed-transactions');
+    Route::put('/admin/transaction/{id}/edit', [OrderController::class, 'update'])->name('admin.transaction.update');
+    Route::delete('/admin/transaction/{id}/delete', [OrderController::class, 'destroy'])->name('admin.transaction.destroy');
 
 
     Route::delete('/user-detail/{id}', [AdminController::class, 'destroy'])->name('admin.user.destroy');

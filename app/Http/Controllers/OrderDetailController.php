@@ -52,12 +52,13 @@ class OrderDetailController extends Controller
         try {
             $orderDetail = OrderDetail::create([
                 'order_id' => $request->order_id,
+                'user_id' => $request->user_id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
                 'price' => $request->price,
             ]);
         } catch (\Exception $e) {
-            Log::error('Error creating order detail:', ['error' => $e->getMessage()]);
+            Log::info('Error creating order detail:', ['error' => $e->getMessage()]);
             return redirect()->route('order_details.create')->with('error', 'Failed to create order detail.');
         }
 

@@ -9,9 +9,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
-// Route::get('/', function () {
-//     return view('guest.guest-home');
-// })->name('home');
+Route::get('/redirect-after-login', function () {
+    if (Auth::check() && Auth::user()->type === 'admin') {
+        return redirect('/admin/home');
+    }
+        return redirect('/dashboard');
+});
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {

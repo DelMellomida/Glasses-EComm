@@ -20,10 +20,10 @@
           <x-nav-link href="/products" :active="request()->is('products')" class="text-white hover:text-blue-200 py-1">Products</x-nav-link>
         </li>
         <li class="px-3">
-          <x-nav-link href="/about" :active="request()->is('about')" class="text-white hover:text-blue-200 py-1">About Us</x-nav-link>
+          <x-nav-link href="{{ route('about-us') }}" :active="request()->is('about')" class="text-white hover:text-blue-200 py-1">About Us</x-nav-link>
         </li>
         <li class="px-3">
-          <x-nav-link href="/contact" :active="request()->is('contact')" class="text-white hover:text-blue-200 py-1">Contact</x-nav-link>
+          <x-nav-link href="{{ route('contacts') }}" :active="request()->is('contact')" class="text-white hover:text-blue-200 py-1">Contact</x-nav-link>
         </li>
       </ul>
 

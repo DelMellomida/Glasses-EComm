@@ -1,7 +1,7 @@
 <x-admin-layout>
     <div class="max-w-6xl mx-auto py-10 space-y-8">
 
-        <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Order & Sales Dashboard</h2>
+        <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-gray-800">Order & Sales Dashboard</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-green-400">

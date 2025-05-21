@@ -17,6 +17,19 @@ Route::get('/redirect-after-login', function () {
         return redirect('/dashboard');
 });
 
+Route::get('/products', function () {
+    return view('product.home');
+})->name('product.home');
+
+Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
+
+Route::get('/about-us', function () {
+    return view('aboutus.about-home');
+})->name('about-us');
+
+Route::get('/contacts', function () {
+    return view('contacts.contacts-home');
+})->name('contacts');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -26,10 +39,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::view('/payment-method', 'payment.method')->name('payment.method');
 });
     Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
-
-Route::get('/products', function () {
-    return view('product.home');
-})->name('product.home');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index'])->name("admin.dashboard");
@@ -77,6 +86,4 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
-
-Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
 // Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');

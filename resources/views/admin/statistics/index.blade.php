@@ -3,7 +3,6 @@
 
         <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Order & Sales Dashboard</h2>
 
-        <!-- Order Status Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-green-400">
                 <div class="text-4xl font-extrabold text-green-600">{{ $orderCounts['successful'] }}</div>
@@ -19,7 +18,6 @@
             </div>
         </div>
 
-        <!-- Orders Overview Chart with Interval Selector -->
         <div class="bg-white rounded-xl shadow p-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
                 <h3 class="text-xl font-bold text-gray-700">Order Overview</h3>
@@ -36,7 +34,6 @@
             <canvas id="ordersChart" height="100"></canvas>
         </div>
 
-        <!-- Sales Chart with Interval Selector -->
         <div class="bg-white rounded-xl shadow p-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
                 <h3 class="text-xl font-bold text-gray-700">Sales (₱)</h3>
@@ -52,7 +49,6 @@
             <canvas id="salesChart" height="100"></canvas>
         </div>
 
-        <!-- Income and Other Stats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-teal-400">
                 <div class="text-3xl font-bold text-teal-700">₱{{ number_format($totalIncome, 2) }}</div>
@@ -69,7 +65,6 @@
         </div>
     </div>
 
-    <!-- Hidden div for passing JSON data -->
     <div id="sales-data"
         data-sales='@json($salesData)'
         data-order-status-counts='@json($orderStatusCounts)'
@@ -87,13 +82,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Parse data from hidden div
         const salesData = JSON.parse(document.getElementById('sales-data').dataset.sales);
         const orderStatusCounts = JSON.parse(document.getElementById('sales-data').dataset.orderStatusCounts);
         const orderCounts = JSON.parse(document.getElementById('sales-data').dataset.orderCounts);
         const incomeByStatus = JSON.parse(document.getElementById('sales-data').dataset.incomeStatus);
 
-        // Orders chart (bar, grouped by status)
         function getOrderChartData(interval) {
             if (interval === 'total') {
                 return {
@@ -154,7 +147,6 @@
             ordersChart.update();
         });
 
-        // Sales chart (switches type based on interval)
         let currentInterval = 'month';
         const salesChartCtx = document.getElementById('salesChart').getContext('2d');
         let salesChart = new Chart(salesChartCtx, {
@@ -191,7 +183,6 @@
             currentInterval = this.value;
             salesChart.data.labels = salesData[currentInterval].labels;
             salesChart.data.datasets[0].data = salesData[currentInterval].totals;
-            // Switch to bar for week, line for others
             salesChart.config.type = (currentInterval === 'week') ? 'bar' : 'line';
             salesChart.update();
         });

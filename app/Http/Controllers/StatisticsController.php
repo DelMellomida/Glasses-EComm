@@ -12,18 +12,15 @@ class StatisticsController extends Controller
 {
     public function index()
     {
-        // Order counts by status (total)
         $orderCounts = [
             'successful' => Order::where('status', 'successful')->count(),
             'failed' => Order::where('status', 'failed')->count(),
             'pending' => Order::where('status', 'pending')->count(),
         ];
 
-        // User and product counts
         $userCount = User::count();
         $productCount = Product::count();
 
-        // Total income and income by status
         $totalIncome = Order::where('status', 'successful')->sum('order_total');
         $incomeByStatus = [
             'successful' => Order::where('status', 'successful')->sum('order_total'),
@@ -31,9 +28,6 @@ class StatisticsController extends Controller
             'pending' => Order::where('status', 'pending')->sum('order_total'),
         ];
 
-        // --- Order counts by interval and status ---
-
-        // Monthly counts
         $monthlyCounts = Order::select(
                 DB::raw("DATE_FORMAT(purchase_date, '%Y-%m') as ym"),
                 'status',
@@ -43,7 +37,6 @@ class StatisticsController extends Controller
             ->orderBy('ym')
             ->get();
 
-        // Prepare month labels and status counts
         $monthLabels = [];
         $monthData = [];
         foreach ($monthlyCounts->groupBy('ym') as $ym => $group) {
@@ -59,7 +52,6 @@ class StatisticsController extends Controller
             $monthData[] = $row;
         }
 
-        // Yearly counts
         $yearlyCounts = Order::select(
                 DB::raw("DATE_FORMAT(purchase_date, '%Y') as y"),
                 'status',
@@ -84,7 +76,6 @@ class StatisticsController extends Controller
             $yearData[] = $row;
         }
 
-        // Weekly counts (by day of week)
         $weeklyCounts = Order::select(
                 DB::raw("DAYOFWEEK(purchase_date) as weekday"),
                 'status',
@@ -110,7 +101,6 @@ class StatisticsController extends Controller
             $weekData[] = $row;
         }
 
-        // Prepare orderStatusCounts for JS
         $orderStatusCounts = [
             'month' => [
                 'labels' => $monthLabels,
@@ -133,18 +123,14 @@ class StatisticsController extends Controller
             'total' => $orderCounts,
         ];
 
-        // --- Sales data (for income) as before ---
-        // Monthly sales (YYYY-MM)
         $monthlySales = Order::where('status', 'successful')
             ->select(DB::raw("DATE_FORMAT(purchase_date, '%Y-%m') as label"), DB::raw('SUM(order_total) as total'))
             ->groupBy('label')->orderBy('label')->get();
 
-        // Yearly sales (YYYY)
         $yearlySales = Order::where('status', 'successful')
             ->select(DB::raw("DATE_FORMAT(purchase_date, '%Y') as label"), DB::raw('SUM(order_total) as total'))
             ->groupBy('label')->orderBy('label')->get();
 
-        // Weekly sales (by day of week: Sunday-Saturday)
         $weeklySales = Order::where('status', 'successful')
             ->selectRaw("DAYOFWEEK(purchase_date) as weekday, SUM(order_total) as total")
             ->groupBy('weekday')->orderBy('weekday')->get();

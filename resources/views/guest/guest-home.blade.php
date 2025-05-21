@@ -11,6 +11,7 @@
 
             <!-- balak ko sana yung left and right shit parang mirrored
             tas scroll yung mga products pa design nalang hahaah -ocariza -->
+            <x-featured-products></x-featured-products>
         <x-product-container-right>
             <x-product-card :products="$products" :productImages="$productImages" /> <!-- aayusin pa db for new arrival -->
         </x-product-container-right>

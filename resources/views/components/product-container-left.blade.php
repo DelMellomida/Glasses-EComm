@@ -1,17 +1,37 @@
-<!-- Section Header -->
-<div class="flex justify-between items-center mb-6 md:mb-8 mt-3 ml-2 md:ml-4 mr-2 md:mr-4">
-    <a href="/products" class="text-[#0f7b99] hover:text-[#0d6b8a] font-semibold text-sm md:text-base transition-colors duration-300">
-        SEE ALL
-    </a>
-    <h2 class="text-xl md:text-4xl lg:text-5xl font-bold text-[#0f7b99] tracking-wide">
-        BEST SELLERS
-    </h2>
+<!-- Outer Wrapper -->
+<div class="my-20 px-6 md:px-12">
+
+    <!-- Orange Background Section -->
+    <section class="bg-[#eb5638] rounded-3xl py-16 md:py-20 px-6 md:px-12 shadow-xl overflow-hidden relative">
+        <div class="max-w-7xl mx-auto">
+
+        <div class="flex justify-between items-center mb-10 -mt-5">
+        <h2 class="font-extrabold text-white tracking-tight" style="font-size: 70px; line-height: 1;">
+            Best Seller
+        </h2>
+
+  <a href="/products"
+     class="font-semibold text-sm md:text-base px-5 py-2 rounded-full border border-white backdrop-blur-md transition-all duration-300 ease-in-out"
+     style="color: white; background-color: transparent; border-color: white;"
+     onmouseover="this.style.color='#eb5638'; this.style.backgroundColor='white';"
+     onmouseout="this.style.color='white'; this.style.backgroundColor='transparent';"
+     onfocus="this.style.color='#eb5638'; this.style.backgroundColor='white';"
+     onblur="this.style.color='white'; this.style.backgroundColor='transparent';"
+     onmousedown="this.style.color='#eb5638'; this.style.backgroundColor='white';"
+     onmouseup="this.style.color='#eb5638'; this.style.backgroundColor='white';"
+  >
+    SEE ALL
+  </a>
 </div>
-<div class="w-1/2 py-8 md:py-12 md:m-10 rounded-3xl overflow-hidden" style="background-color: #eb5638;">
-    <div class="container mx-auto px-4">
-        <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {{ $slot }}
+
+
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {{ $slot }}
+            </div>
+
         </div>
-    </div>
+    </section>
+
 </div>

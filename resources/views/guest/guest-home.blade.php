@@ -18,8 +18,6 @@
         <x-product-container-left>
             <x-product-card :products="$products" :productImages="$productImages" />
         </x-product-container-left>
-
-        <x-branches-info></x-branches-info>
         </x-guest-layout>
     <x-personalized-eyecare></x-personalized-eyecare>
 

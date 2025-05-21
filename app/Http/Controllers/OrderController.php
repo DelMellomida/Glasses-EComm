@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
+    
     public function index()
     {
         return view('admin.orders.list', [

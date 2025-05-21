@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\StatisticsController as AdminStatisticsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StatisticsController;
 
 Route::get('/redirect-after-login', function () {
     if (Auth::check() && Auth::user()->type === 'admin') {
@@ -32,6 +33,8 @@ Route::get('/products', function () {
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index']);
+
+    Route::get('admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
     
     Route::get('/admin/list-products', [ProductController::class, 'listAllProducts'])->name('admin.list-products');
     Route::post('/admin/add-product', [ProductController::class, 'store'])->name('admin.add-product');

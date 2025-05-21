@@ -170,7 +170,7 @@
 
          <!-- Statistics & Graphs -->
          <li>
-            <a href="#" class="flex items-center p-2 pl-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group">
+            <a href={{ route('admin.statistics') }} class="flex items-center p-2 pl-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group">
                <!-- Chart Pie Icon -->
                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1021 12h-9V3.055z"/>

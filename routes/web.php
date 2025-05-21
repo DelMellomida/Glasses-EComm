@@ -32,7 +32,7 @@ Route::get('/products', function () {
 })->name('product.home');
 
 Route::middleware(['admin'])->group(function () {
-    Route::get('/admin/home', [AdminController::class, 'index']);
+    Route::get('/admin/home', [AdminController::class, 'index'])->name("admin.dashboard");
 
     Route::get('admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
     
@@ -79,4 +79,4 @@ Route::middleware(['admin'])->group(function () {
 });
 
 Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
-Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+// Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');

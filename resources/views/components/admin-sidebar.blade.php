@@ -8,7 +8,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
-<aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 mt-3 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+<aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 mt-1 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full py-4 overflow-y-auto bg-[#1f2937] px-1">
       <ul class="space-y-2 font-medium">
          <!-- Dashboard -->

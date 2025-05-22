@@ -165,4 +165,12 @@ class ProductController extends Controller
         return view('guest.guest-home', compact('products', 'productImages'));
 
     }
+      public function showAllProductsInProductsView()
+    {
+        $products = Product::select('product_name', 'product_description', 'price', 'product_image_id')->get();
+        $productImages = ProductImage::all();
+        
+        return view('product.home', compact('products', 'productImages'));
+
+    }
 }

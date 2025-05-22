@@ -24,6 +24,8 @@ Route::get('/products', function () {
 
 Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
 
+Route::get('/', [ProductController::class, 'showAllProductsInProductsView'])->name('product.home');
+
 Route::get('/about-us', function () {
     return view('aboutus.about-home');
 })->name('about-us');

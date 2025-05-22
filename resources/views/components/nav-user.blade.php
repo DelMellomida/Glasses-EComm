@@ -29,7 +29,7 @@
 
       @if(auth()->user())
         <div class="flex items-center space-x-4 mr-4"> 
-          <x-nav-link href="/calendar" :active="request()->is('calendar')" class="flex items-center">
+          <x-nav-link href="{{ route('appointments.index') }}" :active="request()->is('calendar')" class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 4h10M5 11h14M5 19h14M5 15h14M5 11V9a2 2 0 012-2h10a2 2 0 012 2v2M5 19v2a2 2 0 002 2h10a2 2 0 002-2v-2" />
             </svg>

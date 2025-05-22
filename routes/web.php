@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\AppointmentController;
 
 Route::get('/redirect-after-login', function () {
     if (Auth::check() && Auth::user()->type === 'admin') {
@@ -31,14 +32,28 @@ Route::get('/contacts', function () {
     return view('contacts.contacts-home');
 })->name('contacts');
 
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+    Route::post('/appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::get('/appointments/{id}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
+    Route::put('/appointments/{id}/edit', [AppointmentController::class, 'update'])->name('appointments.update');
+    Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+
+    // Route::resource('appointments', AppointmentController::class);
+    Route::get('/appointments/json', [AppointmentController::class, 'appointments'])->name('appointments.json');
+
     Route::view('/payment-method', 'payment.method')->name('payment.method');
 });
-    Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
+
+Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
+
+
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index'])->name("admin.dashboard");

@@ -26,9 +26,12 @@
           Explore
         </p>
         <nav class="flex flex-col gap-3 text-gray-700 font-medium">
-          @foreach (['Our Heritage', 'Prescription Guide', 'Stores', 'FAQ', 'Book Eye Exam', 'Contact Us'] as $item)
-            <a href="#" class="hover:text-[#f04e37] transition-colors duration-300">{{ $item }}</a>
-          @endforeach
+            <a href="{{ route('about-us') }}">Our Heritage</a>
+            <a href="{{ route('product.home') }}" >Prescription Guide</a>
+            <a href="#stores" >Stores</a>
+            <a href="#faq" >FAQ</a>
+            <a href="#eye-exam" >Book Eye Exam</a>
+            <a href="{{ route('contacts') }}">Contact Us</a>
         </nav>
       </div>
 

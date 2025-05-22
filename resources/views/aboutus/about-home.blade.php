@@ -1,4 +1,10 @@
-<div class= 'flex flex-col max-w-full md:w-full bg-black-100 text-white mb-1' >
+@if (auth()->user())
+        <x-nav-user></x-nav-user>
+    @else
+    <x-nav-guest></x-nav-guest>
+    @endif
+<x-guest-layout>
+<div class= 'flex flex-col max-w-full md:w-full bg-black-100 text-white mb-1 md:pt-16' >
     <div class="flex flex-col items-center justify-center w-full md:h-20 font-extrabold " style="background-color: #701218">
         <h1 class="text-2xl ">About Us</h1>
     </div>
@@ -11,5 +17,7 @@
         </div>
     </div>
     <div class="flex flex-col items-center justify-center w-full md:h-20" style="background-color: #701218"></div>
+    <x-branches-info></x-branches-info>
 </div>
-
+</x-guest-layout>
+<x-footer></x-footer>

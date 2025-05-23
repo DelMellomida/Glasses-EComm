@@ -22,9 +22,9 @@
 
 <section class="bg-white w-full py-20 px-6">
   <div class="mx-auto max-w-7xl">
-    <h2 class="text-4xl font-extrabold text-gray-800 mb-8">
-      Featured <span class="text-[#f04e37]">Products</span>
-    </h2>
+  <p class="text-7xl font-black text-gray-800">
+      Featured <span class="text-[#f04e37]">Product</span>
+</p>
 
     <!-- Horizontal scrollable product list -->
     <div class="flex flex-row gap-6 overflow-x-auto overflow-y-hidden custom-scrollbar pb-4">

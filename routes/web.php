@@ -22,9 +22,11 @@ Route::get('/products', function () {
     return view('product.home');
 })->name('product.home');
 
-Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
+// ✅ FIX: Assign product.home to /products only
+Route::get('/products', [ProductController::class, 'showAllProductsInProductsView'])->name('product.home');
 
-Route::get('/', [ProductController::class, 'showAllProductsInProductsView'])->name('product.home');
+// ✅ FIX: Keep guest homepage on /
+Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
 
 Route::get('/about-us', function () {
     return view('aboutus.about-home');

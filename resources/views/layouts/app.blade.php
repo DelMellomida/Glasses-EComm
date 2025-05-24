@@ -11,10 +11,22 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- Add Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- FullCalendar with Bootstrap theme -->
+        <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
+
+        <style>
+            a {
+                text-decoration: none !important;
+            }
+        </style>
 
         <!-- Styles -->
         @livewireStyles
@@ -41,6 +53,8 @@
         </div>
 
         @stack('modals')
+
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
         @livewireScripts
     </body>

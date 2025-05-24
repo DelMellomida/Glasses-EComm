@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('type'); // e.g., eye exam, fitting
             $table->date('appointment_date');
             $table->time('appointment_time');
+            $table->unsignedBigInteger('branch_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branch')->onDelete('cascade');
         });
     }
 

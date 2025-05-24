@@ -34,7 +34,7 @@
                   <path d="M0 0l5 6 5-6H0z"/>
                </svg>
             </button>
-            <ul id="dropdown-users" class="hidden py-2 space-y-2 mt-2">
+            <ul id="dropdown-users" class="hidden py-2 space-y-2">
                <li>
                   <a href="{{ route('user.index') }}" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                      <!-- User Icon -->

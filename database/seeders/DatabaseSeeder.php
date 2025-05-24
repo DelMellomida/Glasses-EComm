@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+            BranchSeeder::class,
+        ]);
 
         User::firstOrCreate([
             'email' => 'admin@example.com',
@@ -27,6 +30,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'password' => Hash::make('admin123'),
             'type' => 'admin',
+            ]);
+
+        User::firstOrCreate([
+            'email' => 'user@example.com',
+        ], [
+            'name' => 'User',
+            'password' => Hash::make('user1234'),
+            'type' => 'user',
             ]);
     }
 }

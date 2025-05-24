@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/appointments/{id}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
     Route::put('/appointments/{id}/edit', [AppointmentController::class, 'update'])->name('appointments.update');
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+    Route::get('/appointments/available-times', [AppointmentController::class, 'availableTimes']);
 
     // Route::resource('appointments', AppointmentController::class);
     Route::get('/appointments/json', [AppointmentController::class, 'appointments'])->name('appointments.json');

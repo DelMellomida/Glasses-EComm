@@ -10,12 +10,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CartController;
 
 Route::get('/redirect-after-login', function () {
     if (Auth::check() && Auth::user()->type === 'admin') {
         return redirect('/admin/home');
     }
-        return redirect('/dashboard');
+        return redirect('/');
 });
 
 Route::get('/products', function () {
@@ -35,6 +36,10 @@ Route::get('/about-us', function () {
 Route::get('/contacts', function () {
     return view('contacts.contacts-home');
 })->name('contacts');
+
+Route::get('/cart', function () {
+    return view('cart.cart-home');
+})->name('cart-home');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -107,3 +112,4 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
 // Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+

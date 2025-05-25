@@ -11,11 +11,11 @@
         <x-product-header></x-product-header>
 
         <x-product-outwrapper-left>
-            <x-product-card :products="$products" :productImages="$productImages" />
+            <x-product-card-male :products="$products" :productImages="$productImages" />
         </x-product-outwrapper-left>
 
         <x-product-outwrapper-right>
-            <x-product-card :products="$products" :productImages="$productImages" />
+            <x-product-card-female :products="$products" :productImages="$productImages" />
         </x-product-outwrapper-right>
 
         <x-product-card :products="$products" :productImages="$productImages" />

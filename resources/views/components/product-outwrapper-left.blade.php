@@ -9,12 +9,12 @@
                     Mens Section
                 </h2>
                 <p class="mt-4 text-lg sm:text-xl text-gray-500 font-light max-w-2xl mx-auto">
-                A powerful blend of bold design and cool sophistication  discover premium eyewear for men.
+                A powerful blend of bold design and cool sophistication discover premium eyewear for men.
                 </p>
             </div>
 
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-auto">
                 {{ $slot }}
             </div>
 

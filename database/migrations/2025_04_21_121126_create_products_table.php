@@ -18,10 +18,8 @@ return new class extends Migration
             $table->integer('price')->default(0);
             $table->integer('stock')->default(0);
 
-            $table->unsignedBigInteger('product_image_id')->nullable();
             $table->unsignedBigInteger('category_id')->required();
 
-            $table->foreign('product_image_id')->references('id')->on('product_images')->onDelete('cascade');
             $table->foreign('category_id')->references('category_id')->on('category')->onDelete('cascade');
             $table->timestamps();
         });        

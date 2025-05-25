@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\StatisticsController as AdminStatisticsController;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
@@ -11,6 +14,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CartController;
+
+use function PHPUnit\Framework\isNull;
 
 Route::get('/redirect-after-login', function () {
     if (Auth::check() && Auth::user()->type === 'admin') {
@@ -70,10 +75,13 @@ Route::middleware(['admin'])->group(function () {
 
     Route::get('admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
     
-    Route::get('/admin/list-products', [ProductController::class, 'listAllProducts'])->name('admin.list-products');
-    Route::post('/admin/add-product', [ProductController::class, 'store'])->name('admin.add-product');
-    Route::put('/admin/update-product/{id}', [ProductController::class,'update'])->name('admin.update-product');
-    Route::delete('/admin/delete-product/{id}', [ProductController::class,'destroy'])->name('admin.delete-product');
+    Route::get('/admin/list-products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/admin/list-products/data', [ProductController::class, 'listProducts'])->name('admin.list-products');
+    Route::get('/admin/add-product', [ProductController::class, 'create'])->name('admin.product.create');
+    Route::post('/admin/add-product', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::get('/admin/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+    Route::put('/admin/products/{id}/edit', [ProductController::class,'update'])->name('admin.product.update');
+    Route::delete('/admin/products/{id}/delete', [ProductController::class,'destroy'])->name('admin.product.destroy');
     
     Route::get('/admin/list-users', [AdminController::class, 'userIndex'])->name('user.index');
     Route::get('/admin/list-admins', [AdminController::class, 'adminIndex'])->name('admin.index');
@@ -111,5 +119,8 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
+<<<<<<< Updated upstream
 // Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+=======
+>>>>>>> Stashed changes
 

@@ -9,14 +9,14 @@ class Product extends Model
 {
     protected $primaryKey = 'product_id';
     protected $fillable = [
-        'name',
-        'description',
+        'product_name',
+        'product_description',
         'price',
-        'product_image_id',
+        'category_id',
+        'stock'
     ];
-
-    public function image()
+    public function images()
     {
-        return $this->belongsTo(ProductImage::class, 'product_image_id');
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 }

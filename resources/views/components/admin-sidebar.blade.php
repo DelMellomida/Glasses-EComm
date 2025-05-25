@@ -73,7 +73,7 @@
             </button>
             <ul id="dropdown-inventory" class="hidden py-2 space-y-2 mt-2">
                <li>
-                  <a href="#" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <a href="{{ route('products.index') }}" class="flex items-center w-full p-2 pl-8 text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                      <!-- Clipboard List Icon -->
                      <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5h6M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>

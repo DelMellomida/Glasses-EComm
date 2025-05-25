@@ -6,4 +6,5 @@ return [
     App\Providers\JetstreamServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
     Yajra\DataTables\DataTablesServiceProvider::class,
+    CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
 ];

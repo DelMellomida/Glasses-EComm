@@ -62,7 +62,7 @@
                                 </button>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Login</a>
+                            <a href="{{ route('login') }}" class="block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Buy</a>
                         @endif
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                                 </button>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="bottom-6 block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Login</a>
+                            <a href="{{ route('login') }}" class="bottom-6 block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Buy</a>
                         @endif
                 </div>
             </div>

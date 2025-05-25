@@ -119,8 +119,4 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
 });
-<<<<<<< Updated upstream
-// Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
-=======
->>>>>>> Stashed changes
 

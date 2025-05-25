@@ -91,7 +91,6 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
-            // Check Cloudinary configuration
             if (empty(env('CLOUDINARY_CLOUD_NAME')) || empty(env('CLOUDINARY_API_KEY')) || empty(env('CLOUDINARY_API_SECRET'))) {
                 Log::error('Cloudinary configuration missing');
                 return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
@@ -105,14 +104,12 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
             ]);
 
-            // Debug: Log the created product
             Log::info('Product created', [
                 'product_id' => $product->product_id,
                 'primary_key' => $product->getKey(),
                 'product_data' => $product->toArray()
             ]);
 
-            // Handle multiple image uploads using direct Cloudinary API
             if ($request->hasFile('images')) {
                 $cloudinary = new \Cloudinary\Cloudinary([
                     'cloud' => [
@@ -142,7 +139,6 @@ class ProductController extends Controller
 
                         $tempPath = $image->getRealPath();
                         
-                        // Use the product's primary key for the folder
                         $uploadResult = $cloudinary->uploadApi()->upload($tempPath, [
                             'folder' => 'products/' . $product->getKey(),
                             'resource_type' => 'image',
@@ -157,20 +153,17 @@ class ProductController extends Controller
                             continue;
                         }
 
-                        // Debug: Log before creating ProductImage
                         Log::info('About to create ProductImage', [
                             'product_id' => $product->getKey(),
                             'image_path' => $uploadResult['secure_url']
                         ]);
 
-                        // Create database record for the image using the primary key
                         $productImage = ProductImage::create([
-                            'product_id' => $product->getKey(), // Use getKey() to get the primary key value
+                            'product_id' => $product->getKey(),
                             'image_path' => $uploadResult['secure_url'],
                             'cloudinary_public_id' => $uploadResult['public_id'] ?? null,
                         ]);
 
-                        // Debug: Log after creating ProductImage
                         Log::info('ProductImage created', [
                             'image_id' => $productImage->id,
                             'product_id' => $productImage->product_id,
@@ -230,9 +223,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $product = Product::findOrFail($id);
@@ -243,9 +233,6 @@ class ProductController extends Controller
         return view('admin.products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $product = Product::with('images')->findOrFail($id);
@@ -257,9 +244,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -284,9 +268,7 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
             ]);
 
-            // Handle new image uploads using the same direct API approach
             if ($request->hasFile('images')) {
-                // Check Cloudinary configuration
                 if (empty(env('CLOUDINARY_CLOUD_NAME')) || empty(env('CLOUDINARY_API_KEY')) || empty(env('CLOUDINARY_API_SECRET'))) {
                     Log::error('Cloudinary configuration missing');
                     return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
@@ -338,7 +320,6 @@ class ProductController extends Controller
                             'product_id' => $product->getKey(),
                             'error' => $e->getMessage()
                         ]);
-                        // Continue with other images
                         continue;
                     }
                 }
@@ -505,23 +486,19 @@ class ProductController extends Controller
 
     public function showAllProductsInGuestView()
     {
-<<<<<<< Updated upstream
-        $products = Product::select('product_name', 'product_description', 'price', 'product_image_id', 'category_id')->get();
-=======
+
+        // $products = Product::select('product_name', 'product_description', 'price', 'category_id')->get();
+
         $products = Product::select('product_name', 'product_description', 'price')->get();
->>>>>>> Stashed changes
+
         $productImages = ProductImage::all();
         
         return view('guest.guest-home', compact('products', 'productImages'));
 
     }
-      public function showAllProductsInProductsView()
-    {
-<<<<<<< Updated upstream
-        $products = Product::select('product_name', 'product_description', 'price', 'product_image_id', 'category_id')->get();
-=======
+      public function showAllProductsInProductsView()    {
         $products = Product::select('product_name', 'product_description', 'price')->get();
->>>>>>> Stashed changes
+
         $productImages = ProductImage::all();
         
         return view('product.home', compact('products', 'productImages'));

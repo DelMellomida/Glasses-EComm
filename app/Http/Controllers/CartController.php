@@ -20,17 +20,24 @@ class CartController extends Controller
             ['session_id' => session()->getId()]
         );
 
-        $cartItem = CartItem::updateOrCreate(
-            [
+        $cartItem = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        if ($cartItem) {
+            // Increment the quantity if the product already exists in the cart
+            $cartItem->quantity += $request->quantity;
+            $cartItem->save();
+        } else {
+            // Create a new cart item if it doesn't exist
+            CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $request->product_id,
-            ],
-            [
-                'quantity' => $request->quantity, // Set the quantity directly
-            ]
-        );
+                'quantity' => $request->quantity,
+            ]);
+        }
 
-        return response()->json(['message' => 'Item added to cart successfully!', 'cartItem' => $cartItem]);
+        return response()->json(['message' => 'Item added to cart successfully!']);
     }
 
     public function showCart()

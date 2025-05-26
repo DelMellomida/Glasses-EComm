@@ -151,27 +151,30 @@
 <script src="//unpkg.com/alpinejs" defer></script>
 <script>
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const productId = this.dataset.productId;
-                console.log('Product ID:', productId); // Debugging
-                const quantity = 1;
+    const newButton = button.cloneNode(true);
+    button.replaceWith(newButton);
 
-                fetch('/cart/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    },
-                    body: JSON.stringify({ product_id: productId, quantity: quantity }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Product added to cart!');
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert('An error occurred. Please check the console for details.');
-                });
-            });
+    newButton.addEventListener('click', function () {
+        console.log('Add to Cart button clicked'); // Debugging
+        const productId = this.dataset.productId;
+        const quantity = 1;
+
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({ product_id: productId, quantity: quantity }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Product added to cart!');
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('An error occurred. Please check the console for details.');
         });
+    });
+});
 </script>

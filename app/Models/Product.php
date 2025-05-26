@@ -17,6 +17,7 @@ class Product extends Model
     ];
     public function images()
     {
-        return $this->hasMany(ProductImage::class, 'product_id');
+        // Ensure the second parameter matches the foreign key column in product_images table
+        return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
     }
 }

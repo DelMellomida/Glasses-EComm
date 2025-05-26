@@ -20,7 +20,7 @@
                     }
                 }
             @endphp
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col w-60 md:w-72 h-[340px] md:h-[380px]">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col w-60 md:w-72 h-[340px] md:h-[380px] mb-12">
                 <div
                     class="h-44 md:h-56 overflow-hidden flex items-center justify-center cursor-pointer"
                     @click="open = true; modalProduct = {{ json_encode($product) }}; modalImage = '{{ $imagePath }}';"
@@ -52,9 +52,10 @@
                                     BUY
                                 </button>
                                 <button
-                                    class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center"
+                                    class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center add-to-cart-btn"
                                     style="background-color: #14b8a6 !important;"
                                     title="Add to Cart"
+                                    data-product-id="{{ $product->product_id }}"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
@@ -124,9 +125,10 @@
                                     BUY
                                 </button>
                                 <button
-                                    class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center"
+                                    class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center add-to-cart-btn"
                                     style="background-color: #14b8a6 !important;"
                                     title="Add to Cart"
+                                    data-product-id="{{ $product->product_id }}"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
@@ -139,7 +141,36 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <script src="//unpkg.com/alpinejs" defer></script>
+<script>
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.dataset.productId;
+                console.log('Product ID:', productId); // Debugging
+                const quantity = 1;
+
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    body: JSON.stringify({ product_id: productId, quantity: quantity }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Product added to cart!');
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert('An error occurred. Please check the console for details.');
+                });
+            });
+        });
+</script>

@@ -42,10 +42,9 @@ Route::get('/contacts', function () {
     return view('contacts.contacts-home');
 })->name('contacts');
 
-Route::get('/cart', function () {
-    return view('cart.cart-home');
-})->name('cart-home');
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart-home');
 
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

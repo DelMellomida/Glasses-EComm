@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use App\Models\Cart;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +31,15 @@ class AppServiceProvider extends ServiceProvider
                 return redirect('/admin/home');
             }
             return redirect('/dashboard');
+        });
+
+        View::composer('*', function ($view) {
+            $cart = Cart::with('items.product')
+                ->where('user_id', auth()->id())
+                ->orWhere('session_id', session()->getId())
+                ->first();
+
+            $view->with('cart', $cart);
         });
     }
 }

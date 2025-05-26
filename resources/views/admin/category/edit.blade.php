@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between items-center mt-8">
-                    <a href="{{ route('admin.list-categories') }}"
+                    <a href="{{ route('category.index') }}"
                        class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold shadow hover:bg-gray-300 transition">
                         &larr; Go Back
                     </a>

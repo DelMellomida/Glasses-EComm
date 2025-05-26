@@ -127,6 +127,12 @@ class OrderController extends Controller
                         'quantity' => $productData['quantity'] ?? 1,
                         'user_id' => $validated['user_id'],
                     ]);
+                    EventLogger::log('Order Detail Creation', 'Order detail created successfully', [
+                        'order_id' => $order->order_id,
+                        'product_id' => $product_id,
+                        'quantity' => $productData['quantity'] ?? 1,
+                        'user_id' => $validated['user_id'],
+                    ]);
                 }
             }
 

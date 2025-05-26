@@ -29,10 +29,18 @@ class CategoryController extends Controller
                     $editUrl = route('admin.category.edit', ['id' => $row->category_id]);
                     $deleteUrl = route('admin.category.destroy', ['id' => $row->category_id]);
                     return '
-                        <a href="'.$editUrl.'" class="text-green-400 mr-2">Edit</a>
+                        <a href="'.$editUrl.'" class="inline-flex items-center px-2 py-1 text-[#118ab2] hover:text-[#ef476f]" title="Edit">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m-2 2h2v2h-2z"/>
+                            </svg>
+                        </a>
                         <form action="'.$deleteUrl.'" method="POST" style="display:inline;">
                             '.csrf_field().method_field('DELETE').'
-                            <button type="submit" class="text-red-400" onclick="return confirm(\'Delete this category?\')">Delete</button>
+                            <button type="submit" class="inline-flex items-center px-2 py-1 text-[#ef476f] hover:text-[#ffd166]" title="Delete" onclick="return confirm(\'Delete this category?\')">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                         </form>
                     ';
                 })

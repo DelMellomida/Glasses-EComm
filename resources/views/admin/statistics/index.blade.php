@@ -1,29 +1,29 @@
 <x-admin-layout>
     <div class="max-w-6xl mx-auto py-10 space-y-8">
 
-        <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-gray-800">Order & Sales Dashboard</h2>
+        <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-[#3d405b]">Order & Sales Dashboard</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-green-400">
-                <div class="text-4xl font-extrabold text-green-600">{{ $orderCounts['successful'] }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Successful Orders</div>
+            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#06d6a0]">
+                <div class="text-4xl font-extrabold text-[#06d6a0]">{{ $orderCounts['successful'] }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Successful Orders</div>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-red-400">
-                <div class="text-4xl font-extrabold text-red-600">{{ $orderCounts['failed'] }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Failed Orders</div>
+            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ef476f]">
+                <div class="text-4xl font-extrabold text-[#ef476f]">{{ $orderCounts['failed'] }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Failed Orders</div>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-yellow-400">
-                <div class="text-4xl font-extrabold text-yellow-600">{{ $orderCounts['pending'] }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Pending Orders</div>
+            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ffd166]">
+                <div class="text-4xl font-extrabold text-[#ffd166]">{{ $orderCounts['pending'] }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Pending Orders</div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow p-8">
+        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-                <h3 class="text-xl font-bold text-gray-700">Order Overview</h3>
+                <h3 class="text-xl font-bold text-[#3d405b]">Order Overview</h3>
                 <div>
-                    <label for="orders-interval" class="font-semibold mr-2">Show orders by:</label>
-                    <select id="orders-interval" class="border border-gray-300 rounded px-2 py-1 focus:ring focus:ring-teal-200">
+                    <label for="orders-interval" class="font-semibold mr-2 text-[#3d405b]">Show orders by:</label>
+                    <select id="orders-interval" class="border border-[#ef476f] rounded px-2 py-1 focus:ring focus:ring-[#ffd166] bg-[#ffd6e0] text-[#3d405b]">
                         <option value="total" selected>Total</option>
                         <option value="week">Day of Week</option>
                         <option value="month">Month</option>
@@ -34,12 +34,12 @@
             <canvas id="ordersChart" height="100"></canvas>
         </div>
 
-        <div class="bg-white rounded-xl shadow p-8">
+        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-                <h3 class="text-xl font-bold text-gray-700">Sales (₱)</h3>
+                <h3 class="text-xl font-bold text-[#3d405b]">Sales (₱)</h3>
                 <div>
-                    <label for="sales-interval" class="font-semibold mr-2">Show sales by:</label>
-                    <select id="sales-interval" class="border border-gray-300 rounded px-2 py-1 focus:ring focus:ring-teal-200">
+                    <label for="sales-interval" class="font-semibold mr-2 text-[#3d405b]">Show sales by:</label>
+                    <select id="sales-interval" class="border border-[#ef476f] rounded px-2 py-1 focus:ring focus:ring-[#ffd166] bg-[#ffd6e0] text-[#3d405b]">
                         <option value="month" selected>Month</option>
                         <option value="week">Day of Week</option>
                         <option value="year">Year</option>
@@ -50,17 +50,17 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-teal-400">
-                <div class="text-3xl font-bold text-teal-700">₱{{ number_format($totalIncome, 2) }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Total Income</div>
+            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#118ab2]">
+                <div class="text-3xl font-bold text-[#118ab2]">₱{{ number_format($totalIncome, 2) }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Total Income</div>
             </div>
-            <a href="{{ route('user.index') }}" class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-blue-400 transition hover:shadow-lg hover:bg-blue-50 cursor-pointer block">
-                <div class="text-3xl font-bold">{{ $userCount }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Total Users</div>
+            <a href="{{ route('user.index') }}" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#3d405b] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
+                <div class="text-3xl font-bold text-[#3d405b]">{{ $userCount }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Total Users</div>
             </a>
-            <a href="#" class="bg-white p-8 rounded-xl shadow text-center border-t-4 border-purple-400 transition hover:shadow-lg hover:bg-purple-50 cursor-pointer block">
-                <div class="text-3xl font-bold">{{ $productCount }}</div>
-                <div class="text-gray-600 mt-2 font-semibold">Total Products</div>
+            <a href="#" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#b8c6db] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
+                <div class="text-3xl font-bold text-[#b8c6db]">{{ $productCount }}</div>
+                <div class="text-[#3d405b] mt-2 font-semibold">Total Products</div>
             </a>
         </div>
     </div>
@@ -99,9 +99,9 @@
                             orderStatusCounts.total.pending
                         ],
                         backgroundColor: [
-                            'rgba(34,197,94,0.7)',
-                            'rgba(239,68,68,0.7)',
-                            'rgba(251,191,36,0.7)'
+                            '#06d6a0',
+                            '#ef476f',
+                            '#ffd166'
                         ]
                     }]
                 };
@@ -112,17 +112,17 @@
                         {
                             label: 'Successful',
                             data: orderStatusCounts[interval].successful,
-                            backgroundColor: 'rgba(34,197,94,0.7)'
+                            backgroundColor: '#06d6a0'
                         },
                         {
                             label: 'Failed',
                             data: orderStatusCounts[interval].failed,
-                            backgroundColor: 'rgba(239,68,68,0.7)'
+                            backgroundColor: '#ef476f'
                         },
                         {
                             label: 'Pending',
                             data: orderStatusCounts[interval].pending,
-                            backgroundColor: 'rgba(251,191,36,0.7)'
+                            backgroundColor: '#ffd166'
                         }
                     ]
                 };
@@ -156,8 +156,8 @@
                 datasets: [{
                     label: 'Sales (₱)',
                     data: salesData[currentInterval].totals,
-                    borderColor: 'rgba(16,185,129,1)',
-                    backgroundColor: 'rgba(16,185,129,0.2)',
+                    borderColor: '#118ab2',
+                    backgroundColor: 'rgba(17,138,178,0.15)',
                     fill: true,
                     tension: 0.3
                 }]

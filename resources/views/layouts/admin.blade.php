@@ -28,64 +28,17 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
 
         <script>
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark')
-                }
-
-                var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-                var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-        // Change the icons inside the button based on previous settings
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    themeToggleLightIcon.classList.remove('hidden');
-                } else {
-                    themeToggleDarkIcon.classList.remove('hidden');
-                }
-
-            var themeToggleBtn = document.getElementById('theme-toggle');
-
-            themeToggleBtn.addEventListener('click', function() {
-
-        // toggle icons inside button
-            themeToggleDarkIcon.classList.toggle('hidden');
-            themeToggleLightIcon.classList.toggle('hidden');
-
-        // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-
-        // if NOT set via local storage previously
-            } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            }
-    
-        });
-
-
+        // Remove dark mode logic for light theme
+        document.documentElement.classList.remove('dark');
         </script>
 
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-gray-50">
         <x-banner />
 
-        <div class="min-h-screen bg-[#115E59]">
+        <div class="min-h-screen bg-gray-100">
             <x-admin-sidebar />
             <x-admin-navbar />
 

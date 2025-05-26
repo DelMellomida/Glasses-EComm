@@ -11,11 +11,11 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check() && Auth::user()->type === 'admin') {
-            EventLogger::log('Admin Access', 'User accessed admin area', [
-                'user_id' => Auth::id(),
-                'ip_address' => $request->ip(),
-                'url' => $request->fullUrl(),
-            ]);
+            // EventLogger::log('Admin Access', 'User accessed admin area', [
+            //     'user_id' => Auth::id(),
+            //     'ip_address' => $request->ip(),
+            //     'url' => $request->fullUrl(),
+            // ]);
 
             return $next($request);
         }

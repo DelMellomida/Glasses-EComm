@@ -1,19 +1,19 @@
 <x-admin-layout>
-    <div class="flex h-screen">
+    <div class="flex h-screen bg-gradient-to-br from-[#ffe5ec] to-[#b8c6db]">
         <div class="flex-1 flex items-start justify-center py-12">
-            <div class="w-full max-w-5xl mx-auto bg-[#1E293B] rounded-xl shadow-lg p-6 mt-12">
+            <div class="w-full max-w-5xl mx-auto bg-[#fff1f1] rounded-xl shadow-lg p-6 mt-12 border border-[#ffd6e0]">
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('admin.user.create') }}"
-                       class="bg-[#38BDF8] hover:bg-[#0E7490] text-white font-bold py-2 px-4 rounded transition">
+                       class="bg-[#ef476f] hover:bg-[#ffd166] text-white hover:text-[#3d405b] font-bold py-2 px-4 rounded transition border border-[#ef476f] hover:border-[#ffd166] shadow">
                         + Add User
                     </a>
                 </div>
                 <table id="user_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#164E63] text-[#F1F5F9] uppercase tracking-wider border-b-2 border-[#38BDF8]">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#164E63] text-[#F1F5F9] uppercase tracking-wider border-b-2 border-[#38BDF8]">Email</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#164E63] text-[#F1F5F9] uppercase tracking-wider border-b-2 border-[#38BDF8]">Action</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,37 +25,63 @@
     </div>
 
     <style>
-        /* Improved DataTable styling */
+        /* Retro DataTable styling */
         #user_list tbody tr:nth-child(even) {
-            background-color: #155E75 !important;
+            background-color: #ffe5ec !important;
         }
         #user_list tbody tr:nth-child(odd) {
-            background-color: #1E293B !important;
+            background-color: #fff1f1 !important;
         }
         #user_list tbody tr {
-            color: #E0F2FE !important;
-            border-bottom: 1px solid #38BDF8 !important;
+            color: #3d405b !important;
+            border-bottom: 1px solid #ffd6e0 !important;
         }
         #user_list tbody tr:hover {
-            background-color: #0E7490 !important;
+            background-color: #ffd6e0 !important;
             transition: background 0.2s;
         }
         #user_list th, #user_list td {
             border-radius: 6px;
-            border: 1px solid rgba(56,189,248,0.15);
+            border: 1px solid #ffd6e0;
         }
         #user_list {
             border-radius: 12px;
             overflow: hidden;
+            background: transparent;
         }
-        #user_list tbody tr:nth-child(even) {
-            background-color: #155E75 !important;
-        }
-        /* ...existing code... */
         .dataTables_length select {
             min-width: 5rem !important;
             width: 5rem !important;
-            padding-right: 2rem; /* space for the arrow */
+            padding-right: 2rem;
+            background: #ffd6e0;
+            color: #3d405b;
+            border: 1px solid #ef476f;
+            border-radius: 6px;
+        }
+        .dataTables_filter label {
+            color: #3d405b !important;
+        }
+        .dataTables_filter input {
+            background: #ffd6e0 !important;
+            color: #3d405b !important;
+            border: 1px solid #ef476f !important;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+        }
+        .dataTables_info {
+            color: #3d405b !important;
+        }
+        .dt-button, .dt-buttons .btn {
+            background: #ef476f !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+            border: 1px solid #ef476f !important;
+            margin-right: 0.5rem;
+        }
+        .dt-button:hover, .dt-buttons .btn:hover {
+            background: #ffd166 !important;
+            color: #3d405b !important;
+            border: 1px solid #ffd166 !important;
         }
     </style>
 
@@ -73,22 +99,22 @@
                     { data: "email", name: "email" },
                     { data: "action", name: "action", orderable: false, searchable: false }
                 ],
-                dom: 'lfrtipB', // <-- This puts filter and buttons in the same row
+                dom: 'lfrtipB',
                 buttons: [
                     {
                         extend: 'collection',
                         text: 'Export',
-                        className: 'bg-[#164E63] text-white px-4 py-2 rounded mr-2',
+                        className: 'bg-[#ef476f] text-white px-4 py-2 rounded mr-2',
                         buttons: [
                             {
                                 extend: 'csvHtml5',
                                 text: 'CSV',
-                                className: 'bg-[#164E63] text-white px-4 py-2 rounded mb-2'
+                                className: 'bg-[#ef476f] text-white px-4 py-2 rounded mb-2'
                             },
                             {
                                 extend: 'excelHtml5',
                                 text: 'Excel',
-                                className: 'bg-[#164E63] text-white px-4 py-2 rounded'
+                                className: 'bg-[#ef476f] text-white px-4 py-2 rounded'
                             }
                         ]
                     }
@@ -104,18 +130,17 @@
                     var $buttons = $('.dt-buttons');
                     $filter.css('display', 'flex').css('align-items', 'center').css('gap', '12px').addClass('mb-2');
                     $buttons.css('margin-bottom', '0');
-                    $buttons.find('button').addClass('bg-[#164E63] text-white px-4 py-2 rounded');
-                    // Only move if not already moved
+                    $buttons.find('button').addClass('bg-[#ef476f] text-white px-4 py-2 rounded');
                     if ($buttons.parent()[0] !== $filter[0]) {
                         $filter.append($buttons);
                     }
-                    $('.dataTables_filter label').addClass('text-white mr-2');
+                    $('.dataTables_filter label').addClass('text-[#3d405b] mr-2');
                     $('.dataTables_filter input')
-                        .addClass('bg-[#164E63] text-white border border-[#38BDF8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400')
+                        .addClass('bg-[#ffd6e0] text-[#3d405b] border border-[#ef476f] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ffd166]')
                         .css('margin-left', '12px');
-                    $('.dataTables_length label').addClass('text-white');
-                    $('.dataTables_length select').addClass('bg-[#164E63] text-white border border-[#38BDF8] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sky-400');
-                    $('.dataTables_info').addClass('text-white');
+                    $('.dataTables_length label').addClass('text-[#3d405b]');
+                    $('.dataTables_length select').addClass('bg-[#ffd6e0] text-[#3d405b] border border-[#ef476f] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#ffd166]');
+                    $('.dataTables_info').addClass('text-[#3d405b]');
                 }
             });
 

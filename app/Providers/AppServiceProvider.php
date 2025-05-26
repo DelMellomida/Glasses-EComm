@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $cart = Cart::with('items.product')
-                ->where('user_id', auth()->id())
+                ->where('user_id', Auth::id())
                 ->orWhere('session_id', session()->getId())
                 ->first();
 

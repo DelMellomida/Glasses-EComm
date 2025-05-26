@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\EventLogger;
 
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -14,9 +15,6 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         return view('admin.products.list');
@@ -208,6 +206,17 @@ class ProductController extends Controller
                 $message .= ' Some images failed to upload: ' . implode(', ', $failedUploads);
             }
 
+            EventLogger::log(
+                'Product creation',
+                'Product created successfully',
+                [
+                    'product_id' => $product->getKey(),
+                    'product_name' => $product->product_name,
+                    'images_uploaded' => count($uploadedImages),
+                    'failed_uploads' => $failedUploads
+                ]
+            );
+
             return redirect()->route('products.index')->with('success', $message);
             
         } catch (\Exception $e) {
@@ -218,6 +227,15 @@ class ProductController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->except(['images'])
             ]);
+
+            EventLogger::log(
+                'Product creation error',
+                'Failed to create product',
+                [
+                    'error' => $e->getMessage(),
+                    'request_data' => $request->except(['images'])
+                ]
+            );
             
             return redirect()->route('products.index')->with('error', 'Failed to create product: ' . $e->getMessage());
         }
@@ -328,6 +346,17 @@ class ProductController extends Controller
             DB::commit();
 
             Log::info('Product updated successfully', ['product_id' => $product->getKey()]);
+
+            EventLogger::log(
+                'Product update',
+                'Product updated successfully',
+                [
+                    'product_id' => $product->getKey(),
+                    'product_name' => $product->product_name,
+                    'updated_data' => $request->except(['images'])
+                ]
+            );
+
             return redirect()->route('products.index')->with('success', 'Product updated successfully.');
             
         } catch (\Exception $e) {
@@ -337,6 +366,17 @@ class ProductController extends Controller
                 'product_id' => $id,
                 'error' => $e->getMessage()
             ]);
+
+            EventLogger::log(
+                'Product update error',
+                'Failed to update product',
+                [
+                    'product_id' => $id,
+                    'error' => $e->getMessage(),
+                    'request_data' => $request->except(['images'])
+                ]
+            );
+
             return redirect()->route('products.index')->with('error', 'Failed to update product.');
         }
     }
@@ -469,6 +509,17 @@ class ProductController extends Controller
                 'failed_cloudinary_deletes' => $failedCloudinaryDeletes
             ]);
 
+            EventLogger::log(
+                'Product deletion',
+                'Product deleted successfully',
+                [
+                    'product_id' => $id,
+                    'images_deleted_from_db' => $product->images->count(),
+                    'images_deleted_from_cloudinary' => $deletedFromCloudinary,
+                    'failed_cloudinary_deletes' => $failedCloudinaryDeletes
+                ]
+            );
+
             return redirect()->route('products.index')->with('success', $message);
 
         } catch (\Exception $e) {
@@ -479,6 +530,15 @@ class ProductController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
+
+            EventLogger::log(
+                'Product deletion error',
+                'Failed to delete product',
+                [
+                    'product_id' => $id,
+                    'error' => $e->getMessage()
+                ]
+            );
             
             return redirect()->route('products.index')->with('error', 'Failed to delete product: ' . $e->getMessage());
         }

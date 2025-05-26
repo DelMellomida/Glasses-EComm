@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\User;
+use App\Helpers\EventLogger;
 
 
 class AdminController extends Controller
@@ -36,20 +37,35 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-            'type' => 'user',
-        ]);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+                'type' => 'user',
+            ]);
 
-        return redirect()->route('user.index')->with('success', 'User created successfully.');
+            EventLogger::log('User Creation', 'User created successfully', [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ]);
+
+            return redirect()->route('user.index')->with('success', 'User created successfully.');
+        } catch (\Exception $e) {
+            EventLogger::log('User Creation Failed', 'Failed to create user', [
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('password', 'password_confirmation'), // avoid logging sensitive data
+            ]);
+
+            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create user. Please try again.']);
+        }
     }
 
     public function listUsers()
@@ -156,6 +172,12 @@ class AdminController extends Controller
                     ]
             );
 
+            EventLogger::log('User Update', 'User updated successfully', [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ]);
+
             return redirect(
                 request('back') ??
                 ($user->type === 'admin'
@@ -167,6 +189,13 @@ class AdminController extends Controller
                 'id' => $id,
                 'error' => $e->getMessage(),
             ]);
+
+            EventLogger::log('User Update Failed', 'Failed to update user', [
+                'user_id' => $id,
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('password', 'password_confirmation'), // avoid logging sensitive data
+            ]);
+
             return redirect()
                 ->back()
                 ->withInput()
@@ -188,9 +217,16 @@ class AdminController extends Controller
                 'id' => $user->id,
                 'type' => $request->input('type'),
             ]);
+
+            EventLogger::log('User Role Change', 'User role updated successfully', [
+                'user_id' => $user->id,
+                'new_role' => $user->type,
+            ]);
+
             return $this->userIndex();
             // return response()->json(['message' => 'User role updated successfully'], 200);
         }
+
         return response()->json(['message' => 'User not found'], 404);
     }
 
@@ -198,7 +234,14 @@ class AdminController extends Controller
     {
         $user = User::find($id);
         if ($user) {
+            EventLogger::log('User Deletion', 'User deleted successfully', [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ]);
+
             $user->delete();
+
             return redirect()->route('user.index')->with('success', 'User deleted successfully.');
         }
         return redirect()->route('user.index')->with('error', 'User not found.');

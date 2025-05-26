@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
+use App\Helpers\EventLogger;
 
 class CategoryController extends Controller
 {
@@ -52,10 +53,20 @@ class CategoryController extends Controller
                 'category_name',
                 'category_desc'
             ]));
+
+            EventLogger::log('Category Creation', 'Category created successfully', [
+                'category_id' => $branch->category_id,
+                'category_name' => $branch->category_name,
+                'category_desc' => $branch->category_desc,
+            ]);
         }
         catch(\Exception $e){
             Log::error('Error creating category:', ['error' => $e->getMessage()]);
             // return response()->json(['error' => 'Failed to create category'], 500);
+            EventLogger::log('Category Creation Failed', 'Failed to create category', [
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('_token'),
+            ]);
             return redirect()->route('category.index')->with('error', 'Failed to create category.');
         }
 
@@ -86,10 +97,19 @@ class CategoryController extends Controller
                 'category_name',
                 'category_desc'
             ]));
+            EventLogger::log('Category Update', 'Category updated successfully', [
+                'category_id' => $category->category_id,
+                'category_name' => $category->category_name,
+                'category_desc' => $category->category_desc,
+            ]);
         }
         catch(\Exception $e){
             Log::error('Error updating category:', ['error' => $e->getMessage()]);
             // return response()->json(['error' => 'Failed to update category'], 500);
+            EventLogger::log('Category Update Failed', 'Failed to update category', [
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('_token'),
+            ]);
             return redirect()->route('category.index')->with('error', 'Error updating category');
         }
         Log::info('Successful updating category', $request->all());
@@ -102,11 +122,19 @@ class CategoryController extends Controller
         // Logic to delete the category
         try{
             $category = Category::findOrFail($id);
+            EventLogger::log('Category Deletion', 'Category deleted successfully', [
+                'category_id' => $category->category_id,
+                'category_name' => $category->category_name,
+                'category_desc' => $category->category_desc,
+            ]);
             $category->delete();
         }
         catch(\Exception $e){
             Log::error('Error deleting category:', ['error' => $e->getMessage()]);
             // return response()->json(['error' => 'Failed to delete category'], 500);
+            EventLogger::log('Category Deletion Failed', 'Failed to delete category', [
+                'error_message' => $e->getMessage(),
+            ]);
             return redirect()->route('category.index')->with('error', 'Error deleting category');
         }
         // return redirect()->route('categories.index');

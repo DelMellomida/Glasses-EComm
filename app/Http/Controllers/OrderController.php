@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Order;
 use Yajra\DataTables\Facades\DataTables;
+use App\Helpers\EventLogger;
 
 class OrderController extends Controller
 {
@@ -128,9 +129,22 @@ class OrderController extends Controller
                     ]);
                 }
             }
+
+            EventLogger::log('Order Creation', 'Order created successfully', [
+                'order_id' => $order->order_id,
+                'user_id' => $validated['user_id'],
+                'order_total' => $validated['order_total'],
+                'purchase_date' => $validated['purchase_date'],
+                'status' => $validated['status'],
+            ]);
+
         } catch (\Exception $e) {
             Log::error('Error creating order:', ['error' => $e->getMessage()]);
             session()->flash('js_error', $e->getMessage());
+            EventLogger::log('Order Creation Failed', 'Failed to create order', [
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('products'), // avoid logging sensitive data
+            ]);
             return redirect()->back()->withInput();
         }
 
@@ -188,9 +202,21 @@ class OrderController extends Controller
                     ]);
                 }
             }
+
+            EventLogger::log('Order Update', 'Order updated successfully', [
+                'order_id' => $order->order_id,
+                'user_id' => $request->user_id,
+                'order_total' => $request->order_total,
+                'purchase_date' => $request->purchase_date,
+                'status' => $request->status,
+            ]);
         } catch (\Exception $e) {
             Log::error('Error updating order:', ['error' => $e->getMessage()]);
             session()->flash('js_error', $e->getMessage());
+            EventLogger::log('Order Update Failed', 'Failed to update order', [
+                'error_message' => $e->getMessage(),
+                'input_data' => $request->except('products'),
+            ]);
             return redirect()->back()->withInput();
         }
 
@@ -202,9 +228,22 @@ class OrderController extends Controller
     {
         try {
             $order = Order::findOrFail($id);
+
+            EventLogger::log('Order Deletion', 'Order deleted successfully', [
+                'order_id' => $order->order_id,
+                'order_total' => $order->order_total,
+                'purchase_date' => $order->purchase_date,
+                'status' => $order->status,
+            ]);
+
             $order->delete();
         } catch (\Exception $e) {
             Log::error('Error deleting order:', ['error' => $e->getMessage()]);
+
+            EventLogger::log('Order Deletion Failed', 'Failed to delete order', [
+                'error_message' => $e->getMessage(),
+            ]);
+
             return redirect()->route('all-transaction.index')->with('error', 'Failed to delete order.');
         }
         Log::info('Successfully deleted order', ['order_id' => $id]);

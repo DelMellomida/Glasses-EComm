@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Helpers\EventLogger;
 use App\Models\Cart;
 use App\Models\CartItem;
 
@@ -16,7 +19,7 @@ class CartController extends Controller
         ]);
 
         $cart = Cart::firstOrCreate(
-            ['user_id' => auth()->id()],
+            ['user_id' => Auth::id()],
             ['session_id' => session()->getId()]
         );
 
@@ -30,13 +33,19 @@ class CartController extends Controller
             ]
         );
 
+        EventLogger::log('Cart Update', 'Item added to cart', [
+            'cart_id' => $cart->id,
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+        ]);
+
         return response()->json(['message' => 'Item added to cart successfully!', 'cartItem' => $cartItem]);
     }
 
     public function showCart()
     {
         $cart = Cart::with('items.product') // Eager load the product relationship
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->orWhere('session_id', session()->getId())
             ->first();
 

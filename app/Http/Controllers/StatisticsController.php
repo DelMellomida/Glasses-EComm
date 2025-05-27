@@ -156,7 +156,7 @@ class StatisticsController extends Controller
             ],
         ];
 
-        return view('admin.statistics.index', compact(
+        return view('admin.home', compact(
             'orderCounts',
             'userCount',
             'productCount',
@@ -166,4 +166,88 @@ class StatisticsController extends Controller
             'orderStatusCounts'
         ));
     }
+
+    public function extraDetails()
+    {
+        // Top 10 Products by Quantity Sold
+        $topByQuantity = \App\Models\Order::where('orders.status', 'successful')
+            ->join('order_details', 'orders.order_id', '=', 'order_details.order_id')
+            ->join('products', 'order_details.product_id', '=', 'products.product_id')
+            ->select(
+                'products.product_name',
+                DB::raw('SUM(order_details.quantity) as total_quantity')
+            )
+            ->groupBy('products.product_name')
+            ->orderByDesc('total_quantity')
+            ->limit(10)
+            ->get();
+
+        $quantityNames = $topByQuantity->pluck('product_name');
+        $quantityTotals = $topByQuantity->pluck('total_quantity');
+
+        // Top 10 Products by Sales Amount (using products.price)
+        $topBySales = \App\Models\Order::where('orders.status', 'successful')
+            ->join('order_details', 'orders.order_id', '=', 'order_details.order_id')
+            ->join('products', 'order_details.product_id', '=', 'products.product_id')
+            ->select(
+                'products.product_name',
+                DB::raw('SUM(order_details.quantity * products.price) as total_sales')
+            )
+            ->groupBy('products.product_name', 'products.price')
+            ->orderByDesc('total_sales')
+            ->limit(10)
+            ->get();
+
+        $salesNames = $topBySales->pluck('product_name');
+        $salesTotals = $topBySales->pluck('total_sales');
+
+        // Monthly Revenue Trend (last 12 months)
+        $monthlyRevenue = \App\Models\Order::select(
+                DB::raw("DATE_FORMAT(purchase_date, '%Y-%m') as month"),
+                DB::raw('SUM(order_total) as revenue')
+            )
+            ->where('status', 'successful')
+            ->where('purchase_date', '>=', now()->subMonths(11)->startOfMonth())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $months = $monthlyRevenue->pluck('month');
+        $revenues = $monthlyRevenue->pluck('revenue');
+
+        // User Registrations per Month (last 12 months)
+        $userRegistrations = \App\Models\User::select(
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
+                DB::raw('COUNT(*) as count')
+            )
+            ->where('created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $userMonths = $userRegistrations->pluck('month');
+        $userCounts = $userRegistrations->pluck('count');
+
+        // Order Status Distribution (Pie Chart)
+        $statusCounts = \App\Models\Order::select('status', DB::raw('COUNT(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status');
+
+        return view('admin.statistics.index', [
+            // By quantity
+            'quantityNames' => $quantityNames,
+            'quantityTotals' => $quantityTotals,
+            // By sales
+            'salesNames' => $salesNames,
+            'salesTotals' => $salesTotals,
+            // Other stats
+            'months' => $months,
+            'revenues' => $revenues,
+            'userMonths' => $userMonths,
+            'userCounts' => $userCounts,
+            'statusCounts' => $statusCounts,
+        ]);
+    }
+
+
 }

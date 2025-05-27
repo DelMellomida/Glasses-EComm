@@ -73,9 +73,9 @@ Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUs
 
 
 Route::middleware(['admin'])->group(function () {
-    Route::get('/admin/home', [AdminController::class, 'index'])->name("admin.dashboard");
+    Route::get('/admin/home', [StatisticsController::class, 'index'])->name("admin.dashboard");
 
-    Route::get('admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
+    Route::get('admin/statistics', [StatisticsController::class, 'extraDetails'])->name('admin.statistics');
     
     Route::get('/admin/list-products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/admin/list-products/data', [ProductController::class, 'listProducts'])->name('admin.list-products');
@@ -120,5 +120,10 @@ Route::middleware(['admin'])->group(function () {
 
     Route::post('/admin/change-user-role/{id}', [AdminController::class, 'changeUserRole'])->name('admin.change-user-role');
     Route::delete('/admin/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.delete-user');
+
+    Route::get('/admin/event-logs', [\App\Http\Controllers\EventLogController::class, 'index'])->name('admin.event-logs');
 });
 
+Route::get('/datatable-test', function() {
+    return view('datatable-test');
+});

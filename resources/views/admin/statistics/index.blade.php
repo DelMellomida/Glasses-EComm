@@ -1,190 +1,189 @@
 <x-admin-layout>
     <div class="max-w-6xl mx-auto py-10 space-y-8">
+        <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-[#3d405b]">Advanced Statistics Dashboard</h2>
 
-        <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-[#3d405b]">Order & Sales Dashboard</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#06d6a0]">
-                <div class="text-4xl font-extrabold text-[#06d6a0]">{{ $orderCounts['successful'] }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Successful Orders</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <!-- Top 10 Products by Quantity Sold -->
+            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Top 10 Products by Quantity Sold</h3>
+                <canvas id="productQuantityChart" height="120"></canvas>
             </div>
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ef476f]">
-                <div class="text-4xl font-extrabold text-[#ef476f]">{{ $orderCounts['failed'] }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Failed Orders</div>
-            </div>
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ffd166]">
-                <div class="text-4xl font-extrabold text-[#ffd166]">{{ $orderCounts['pending'] }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Pending Orders</div>
+            <!-- Top 10 Products by Sales Amount -->
+            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Top 10 Products by Sales Amount</h3>
+                <canvas id="productSalesChart" height="120"></canvas>
             </div>
         </div>
-
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-                <h3 class="text-xl font-bold text-[#3d405b]">Order Overview</h3>
-                <div>
-                    <label for="orders-interval" class="font-semibold mr-2 text-[#3d405b]">Show orders by:</label>
-                    <select id="orders-interval" class="border border-[#ef476f] rounded px-2 py-1 focus:ring focus:ring-[#ffd166] bg-[#ffd6e0] text-[#3d405b]">
-                        <option value="total" selected>Total</option>
-                        <option value="week">Day of Week</option>
-                        <option value="month">Month</option>
-                        <option value="year">Year</option>
-                    </select>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <!-- Monthly Revenue Trend -->
+            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Monthly Revenue (₱)</h3>
+                <canvas id="monthlyRevenueChart" height="120"></canvas>
             </div>
-            <canvas id="ordersChart" height="100"></canvas>
+            <!-- User Registrations per Month -->
+            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl font-bold text-[#3d405b] mb-4">User Registrations per Month</h3>
+                <canvas id="userRegistrationsChart" height="120"></canvas>
+            </div>
         </div>
-
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-                <h3 class="text-xl font-bold text-[#3d405b]">Sales (₱)</h3>
-                <div>
-                    <label for="sales-interval" class="font-semibold mr-2 text-[#3d405b]">Show sales by:</label>
-                    <select id="sales-interval" class="border border-[#ef476f] rounded px-2 py-1 focus:ring focus:ring-[#ffd166] bg-[#ffd6e0] text-[#3d405b]">
-                        <option value="month" selected>Month</option>
-                        <option value="week">Day of Week</option>
-                        <option value="year">Year</option>
-                    </select>
-                </div>
-            </div>
-            <canvas id="salesChart" height="100"></canvas>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#118ab2]">
-                <div class="text-3xl font-bold text-[#118ab2]">₱{{ number_format($totalIncome, 2) }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Total Income</div>
-            </div>
-            <a href="{{ route('user.index') }}" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#3d405b] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
-                <div class="text-3xl font-bold text-[#3d405b]">{{ $userCount }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Total Users</div>
-            </a>
-            <a href="#" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#b8c6db] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
-                <div class="text-3xl font-bold text-[#b8c6db]">{{ $productCount }}</div>
-                <div class="text-[#3d405b] mt-2 font-semibold">Total Products</div>
-            </a>
+        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0] mt-8">
+            <h3 class="text-xl font-bold text-[#3d405b] mb-4">Order Status Distribution</h3>
+            <canvas id="orderStatusPie" height="120"></canvas>
         </div>
     </div>
 
-    <div id="sales-data"
-        data-sales='@json($salesData)'
-        data-order-status-counts='@json($orderStatusCounts)'
-        data-order-counts='@json([
-            $orderCounts["successful"] ?? 0,
-            $orderCounts["failed"] ?? 0,
-            $orderCounts["pending"] ?? 0
-        ])'
-        data-income-status='@json([
-            $incomeByStatus["successful"] ?? 0,
-            $incomeByStatus["failed"] ?? 0,
-            $incomeByStatus["pending"] ?? 0
-        ])'
+    <!-- Hidden div for passing JSON data to JS -->
+    <div id="statistics-data"
+        data-quantity-names='@json($quantityNames ?? [])'
+        data-quantity-totals='@json($quantityTotals ?? [])'
+        data-sales-names='@json($salesNames ?? [])'
+        data-sales-totals='@json($salesTotals ?? [])'
+        data-months='@json($months ?? [])'
+        data-revenues='@json($revenues ?? [])'
+        data-user-months='@json($userMonths ?? [])'
+        data-user-counts='@json($userCounts ?? [])'
+        data-status-counts='@json($statusCounts ?? [])'
         style="display:none"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const salesData = JSON.parse(document.getElementById('sales-data').dataset.sales);
-        const orderStatusCounts = JSON.parse(document.getElementById('sales-data').dataset.orderStatusCounts);
-        const orderCounts = JSON.parse(document.getElementById('sales-data').dataset.orderCounts);
-        const incomeByStatus = JSON.parse(document.getElementById('sales-data').dataset.incomeStatus);
+        // Get data from hidden div
+        const statsDiv = document.getElementById('statistics-data');
+        const quantityNames = JSON.parse(statsDiv.dataset.quantityNames || '[]');
+        const quantityTotals = JSON.parse(statsDiv.dataset.quantityTotals || '[]');
+        const salesNames = JSON.parse(statsDiv.dataset.salesNames || '[]');
+        const salesTotals = JSON.parse(statsDiv.dataset.salesTotals || '[]');
+        const months = JSON.parse(statsDiv.dataset.months || '[]');
+        const revenues = JSON.parse(statsDiv.dataset.revenues || '[]');
+        const userMonths = JSON.parse(statsDiv.dataset.userMonths || '[]');
+        const userCounts = JSON.parse(statsDiv.dataset.userCounts || '[]');
+        const statusCounts = JSON.parse(statsDiv.dataset.statusCounts || '{}');
 
-        function getOrderChartData(interval) {
-            if (interval === 'total') {
-                return {
-                    labels: ['Successful', 'Failed', 'Pending'],
+        // Top 10 Products by Quantity Sold
+        if (quantityNames.length) {
+            new Chart(document.getElementById('productQuantityChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: quantityNames,
                     datasets: [{
-                        label: 'Orders',
-                        data: [
-                            orderStatusCounts.total.successful,
-                            orderStatusCounts.total.failed,
-                            orderStatusCounts.total.pending
-                        ],
-                        backgroundColor: [
-                            '#06d6a0',
-                            '#ef476f',
-                            '#ffd166'
-                        ]
+                        label: 'Quantity Sold',
+                        data: quantityTotals,
+                        backgroundColor: '#ffd166',
+                        borderColor: '#ffd166',
+                        borderWidth: 1,
+                        borderRadius: 8,
                     }]
-                };
-            } else {
-                return {
-                    labels: orderStatusCounts[interval].labels,
-                    datasets: [
-                        {
-                            label: 'Successful',
-                            data: orderStatusCounts[interval].successful,
-                            backgroundColor: '#06d6a0'
-                        },
-                        {
-                            label: 'Failed',
-                            data: orderStatusCounts[interval].failed,
-                            backgroundColor: '#ef476f'
-                        },
-                        {
-                            label: 'Pending',
-                            data: orderStatusCounts[interval].pending,
-                            backgroundColor: '#ffd166'
-                        }
-                    ]
-                };
-            }
-        }
-
-        let ordersInterval = 'total';
-        const ordersChartCtx = document.getElementById('ordersChart').getContext('2d');
-        let ordersChart = new Chart(ordersChartCtx, {
-            type: 'bar',
-            data: getOrderChartData(ordersInterval),
-            options: {
-                responsive: true,
-                plugins: { legend: { position: 'top' } },
-                scales: { y: { beginAtZero: true, title: { display: true, text: 'Orders' } } }
-            }
-        });
-
-        document.getElementById('orders-interval').addEventListener('change', function() {
-            ordersInterval = this.value;
-            ordersChart.data = getOrderChartData(ordersInterval);
-            ordersChart.update();
-        });
-
-        let currentInterval = 'month';
-        const salesChartCtx = document.getElementById('salesChart').getContext('2d');
-        let salesChart = new Chart(salesChartCtx, {
-            type: 'line',
-            data: {
-                labels: salesData[currentInterval].labels,
-                datasets: [{
-                    label: 'Sales (₱)',
-                    data: salesData[currentInterval].totals,
-                    borderColor: '#118ab2',
-                    backgroundColor: 'rgba(17,138,178,0.15)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Sales (₱)' }
-                    },
-                    x: {
-                        title: { display: true, text: 'Date' }
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Quantity' } },
+                        x: { title: { display: true, text: 'Product' } }
                     }
                 }
-            }
-        });
+            });
+        }
 
-        document.getElementById('sales-interval').addEventListener('change', function() {
-            currentInterval = this.value;
-            salesChart.data.labels = salesData[currentInterval].labels;
-            salesChart.data.datasets[0].data = salesData[currentInterval].totals;
-            salesChart.config.type = (currentInterval === 'week') ? 'bar' : 'line';
-            salesChart.update();
-        });
+        // Top 10 Products by Sales Amount
+        if (salesNames.length) {
+            new Chart(document.getElementById('productSalesChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: salesNames,
+                    datasets: [{
+                        label: 'Sales (₱)',
+                        data: salesTotals,
+                        backgroundColor: '#ef476f',
+                        borderColor: '#ef476f',
+                        borderWidth: 1,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Sales (₱)' } },
+                        x: { title: { display: true, text: 'Product' } }
+                    }
+                }
+            });
+        }
+
+        // Monthly Revenue Trend
+        if (months.length) {
+            new Chart(document.getElementById('monthlyRevenueChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Revenue (₱)',
+                        data: revenues,
+                        borderColor: '#118ab2',
+                        backgroundColor: 'rgba(17,138,178,0.15)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Revenue (₱)' } },
+                        x: { title: { display: true, text: 'Month' } }
+                    }
+                }
+            });
+        }
+
+        // User Registrations per Month
+        if (userMonths.length) {
+            new Chart(document.getElementById('userRegistrationsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: userMonths,
+                    datasets: [{
+                        label: 'Registrations',
+                        data: userCounts,
+                        backgroundColor: '#06d6a0',
+                        borderColor: '#06d6a0',
+                        borderWidth: 1,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Users' } },
+                        x: { title: { display: true, text: 'Month' } }
+                    }
+                }
+            });
+        }
+
+        // Order Status Distribution Pie
+        if (Object.keys(statusCounts).length) {
+            new Chart(document.getElementById('orderStatusPie').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        data: Object.values(statusCounts),
+                        backgroundColor: [
+                            '#06d6a0', // successful
+                            '#ef476f', // failed
+                            '#ffd166', // pending
+                            '#118ab2', // others
+                        ],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
     </script>
 </x-admin-layout>

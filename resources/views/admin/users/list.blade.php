@@ -87,7 +87,20 @@
 
     @push('scripts')
     <script>
+        // window.addEventListener('load', function() {
+        //     // Additional check to ensure DataTables is available
+        //     if (typeof $.fn.DataTable !== 'undefined' && typeof $.fn.DataTable.ext.buttons.csvHtml5 !== 'undefined') {
+        //         initializeDataTable();
+        //     } else {
+        //         console.error('DataTables or buttons not loaded');
+        //     }
+        // });
         $(document).ready(function() {
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('DataTables loaded:', typeof $.fn.DataTable);
+            console.log('Buttons loaded:', typeof $.fn.DataTable.Buttons);
+            console.log('HTML5 buttons loaded:', $.fn.DataTable.ext.buttons.csvHtml5 ? 'Yes' : 'No');
+
             $('#user_list').DataTable({
                 processing: true,
                 serverSide: true,

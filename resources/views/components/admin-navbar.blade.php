@@ -1,4 +1,4 @@
-<nav class="bg-gradient-to-r from-[#ffe5ec] to-[#b8c6db] border-b border-[#f8edeb] fixed top-0 left-0 w-full z-[9999] shadow">
+<nav class="bg-[#ffd6e0] border-b border-[#f8edeb] fixed top-0 left-0 w-full z-[9999] shadow">
     <div class="flex items-center justify-between px-6 py-3">
         <!-- Logo -->
         <a href="{{ route('guest.guest-home') }}" class="flex items-center space-x-3">

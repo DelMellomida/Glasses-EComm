@@ -82,7 +82,7 @@
                   </a>
                </li>
                <li>
-                  <a href="#" class="flex items-center w-full p-2 pl-8 text-[#3d405b] rounded-lg group hover:bg-[#f8edeb]">
+                  <a href="{{ route('admin.product.create') }}" class="flex items-center w-full p-2 pl-8 text-[#3d405b] rounded-lg group hover:bg-[#f8edeb]">
                      <!-- Plus Icon -->
                      <svg class="w-5 h-5 mr-2 text-[#ffd166]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -182,7 +182,7 @@
 
          <!-- Event Log -->
          <li>
-            <a href="#" class="flex items-center p-2 pl-2 text-[#3d405b] rounded-lg hover:bg-[#f8edeb] group">
+            <a href="{{ route('admin.event-logs') }}" class="flex items-center p-2 pl-2 text-[#3d405b] rounded-lg hover:bg-[#f8edeb] group">
                <!-- Clipboard Icon -->
                <svg class="w-5 h-5 text-[#ef476f] group-hover:text-[#118ab2]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <rect width="16" height="20" x="4" y="2" rx="2" ry="2"/>
@@ -206,14 +206,24 @@
 
          <!-- Logout -->
          <li>
-            <a href="#" class="flex items-center p-2 pl-2 text-[#3d405b] rounded-lg hover:bg-[#f8edeb] group">
+            <a href="#" 
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+               class="flex items-center p-2 pl-2 text-[#3d405b] rounded-lg hover:bg-[#f8edeb] group">
+               
                <!-- Logout Icon -->
                <svg class="w-5 h-5 text-[#ef476f] group-hover:text-[#118ab2]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3 12a9 9 0 0118 0"/>
                </svg>
-               <span class="ms-2">Logout</span>
+
+               <!-- Logout Text -->
+               <span class="ms-2 text-[#3d405b]">Logout</span>
             </a>
+
+            <!-- Hidden Form -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+               @csrf
+            </form>
          </li>
       </ul>
    </div>

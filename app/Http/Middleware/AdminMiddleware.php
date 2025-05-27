@@ -26,7 +26,7 @@ class AdminMiddleware
             'url' => $request->fullUrl(),
         ]);
 
-        return redirect('welcome')->with('error', 'Unauthorized access.');
+        return redirect('/')->with('error', 'Unauthorized access.');
     }
 }
 

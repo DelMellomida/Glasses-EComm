@@ -28,5 +28,9 @@ class AdminMiddleware
 
         return redirect('/')->with('error', 'Unauthorized access.');
     }
+
+    public static function isAdmin($user){
+        return $user && $user->type === 'admin';
+    }
 }
 

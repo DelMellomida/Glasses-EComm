@@ -73,6 +73,7 @@ Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUs
 
 
 Route::middleware(['admin'])->group(function () {
+
     Route::get('/admin/home', [StatisticsController::class, 'index'])->name("admin.dashboard");
 
     Route::get('admin/statistics', [StatisticsController::class, 'extraDetails'])->name('admin.statistics');

@@ -8,7 +8,7 @@
     class="container mx-auto px-2 md:px-4 py-4 md:py-8"
 >
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        @forelse ($products->where('category_id', 2) as $product)
+        @forelse ($products->where('category_id', 3) as $product)
             @php
                 $hasImage = false;
                 $imagePath = null;

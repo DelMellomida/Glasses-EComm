@@ -18,6 +18,8 @@
             <x-product-card-female :products="$products" :productImages="$productImages" />
         </x-product-outwrapper-right>
 
+        
+
 
     </x-guest-layout>
 

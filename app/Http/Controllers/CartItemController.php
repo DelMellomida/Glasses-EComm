@@ -66,4 +66,46 @@ class CartItemController extends Controller
 
         return response()->json(['message' => 'Cart item removed successfully!']);
     }
+
+    public function increment($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+
+        $cartItem->update([
+            'quantity' => $cartItem->quantity + 1,
+        ]);
+
+        EventLogger::log('Cart Item Increment', 'Cart item quantity incremented', [
+            'cart_item_id' => $cartItem->id,
+            'quantity' => $cartItem->quantity,
+        ]);
+
+        return response()->json(['message' => 'Cart item updated successfully!', 'cartItem' => $cartItem]);
+    }
+
+    public function decrement($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+
+        if ($cartItem->quantity > 1) {
+            $cartItem->update([
+                'quantity' => $cartItem->quantity - 1,
+            ]);
+
+            EventLogger::log('Cart Item Decrement', 'Cart item quantity decremented', [
+                'cart_item_id' => $cartItem->id,
+                'quantity' => $cartItem->quantity,
+            ]);
+
+            return response()->json(['message' => 'Cart item updated successfully!', 'cartItem' => $cartItem]);
+        } else {
+            $cartItem->delete();
+
+            EventLogger::log('Cart Item Delete', 'Cart item removed due to zero quantity', [
+                'cart_item_id' => $cartItem->id,
+            ]);
+
+            return response()->json(['message' => 'Cart item removed successfully!']);
+        }
+    }
 }

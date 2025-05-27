@@ -14,6 +14,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 
 use function PHPUnit\Framework\isNull;
 
@@ -43,8 +44,10 @@ Route::get('/contacts', function () {
 })->name('contacts');
 
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart-home');
-
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart-item/{id}', [CartItemController::class, 'destroy'])->name('cart-item.destroy');
+Route::patch('/cart-item/{id}/increment', [CartItemController::class, 'increment'])->name('cart-item.increment');
+Route::patch('/cart-item/{id}/decrement', [CartItemController::class, 'decrement'])->name('cart-item.decrement');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

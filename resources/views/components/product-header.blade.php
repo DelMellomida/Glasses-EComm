@@ -1,6 +1,8 @@
 <style>
   html, body {
-    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
 
   @keyframes gradient-move {
@@ -25,8 +27,7 @@
   .slide-wrapper {
     display: inline-flex;
     white-space: nowrap;
-    /* Set width to fit all text plus spacing */
-    width: max-content; /* Automatically fit content width */
+    width: max-content;
     animation: slide-slow 60s linear infinite;
   }
 
@@ -35,18 +36,17 @@
     white-space: nowrap;
   }
 
-  /* Smooth continuous slide from right outside viewport to left outside viewport */
   @keyframes slide-slow {
     0% {
-      transform: translateX(100vw); /* Start fully off right viewport */
+      transform: translateX(100vw);
     }
     100% {
-      transform: translateX(calc(-1 * var(--slide-width) - 100vw)); /* Fully off left viewport */
+      transform: translateX(calc(-1 * var(--slide-width) - 100vw));
     }
   }
 
   .slider-h1 {
-    font-size: 6rem;
+    font-size: 3rem;
     font-weight: 900;
     color: white;
     text-shadow: 0 0 15px rgba(0,0,0,0.8);
@@ -54,24 +54,20 @@
   }
 
   .slider-p {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.85);
     text-shadow: 0 0 8px rgba(0,0,0,0.5);
     letter-spacing: 0.07em;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 </style>
-<div class="w-full min-h-screen flex flex-col items-center justify-center text-center px-6 md:px-12 lg:px-24 animated-gradient">
+
+<div class="w-full h-[35vh] flex flex-col items-center justify-center text-center px-6 md:px-12 lg:px-24 animated-gradient">
 
   <!-- Heading slider -->
-  <div class="slider-container mb-12">
+  <div class="slider-container mb-6">
     <div class="slide-wrapper slider-h1" id="heading-slider">
-      <span class="slide-item">Elevate Your Style with Sarabia</span>
-      <span class="slide-item">Find Your Perfect Eyewear Today</span>
-      <span class="slide-item">Trendy Designs for Every Occasion</span>
-      <span class="slide-item">See the Difference with Quality Shades</span>
-      <span class="slide-item">Affordable Fashion Eyewear for All</span>
       <span class="slide-item">Elevate Your Style with Sarabia</span>
       <span class="slide-item">Find Your Perfect Eyewear Today</span>
       <span class="slide-item">Trendy Designs for Every Occasion</span>
@@ -88,18 +84,12 @@
       <span class="slide-item">Shop now to find your perfect match.</span>
       <span class="slide-item">Quality craftsmanship you can trust.</span>
       <span class="slide-item">Unleash your unique style with our collections.</span>
-      <span class="slide-item">Discover trendy and affordable eyewear for every look.</span>
-      <span class="slide-item">Comfort meets style in every pair we offer.</span>
-      <span class="slide-item">Shop now to find your perfect match.</span>
-      <span class="slide-item">Quality craftsmanship you can trust.</span>
-      <span class="slide-item">Unleash your unique style with our collections.</span>
     </div>
   </div>
 
 </div>
 
 <script>
-  // Dynamically set CSS variable for slide width to match actual content width
   function setSlideWidth(id) {
     const slider = document.getElementById(id);
     if (slider) {
@@ -108,13 +98,11 @@
     }
   }
 
-  // Set on page load
   window.addEventListener('load', () => {
     setSlideWidth('heading-slider');
     setSlideWidth('paragraph-slider');
   });
 
-  // Optionally, update on window resize
   window.addEventListener('resize', () => {
     setSlideWidth('heading-slider');
     setSlideWidth('paragraph-slider');

@@ -13,7 +13,7 @@
                 $hasImage = false;
                 $imagePath = null;
                 foreach ($productImages as $productImage) {
-                    if ($product->product_image_id == $productImage->product_id) {
+                    if ($product->product_id == $productImage->product_id) {
                         $hasImage = true;
                         $imagePath = $productImage->image_path;
                         break;

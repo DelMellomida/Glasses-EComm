@@ -1,4 +1,3 @@
-
 @if (auth()->user())
         <x-nav-user></x-nav-user>
     @else
@@ -15,7 +14,29 @@
                 <div class="bg-white rounded-lg shadow-md p-4">
                     <div class="flex items-center">
                         @if ($item->product)
-                            <img src="{{ $item->product->image_path }}" alt="{{ $item->product->product_name }}" class="w-16 h-16 object-cover rounded-md">
+                            @php
+                                $hasImage = false;
+                                $imagePath = null;
+                                // Check if productImages is available and find matching image
+                                if (isset($productImages)) {
+                                    foreach ($productImages as $productImage) {
+                                        if ($item->product->product_id == $productImage->product_id) {
+                                            $hasImage = true;
+                                            $imagePath = $productImage->image_path;
+                                            break;
+                                        }
+                                    }
+                                }
+                            @endphp
+                            
+                            @if ($hasImage)
+                                <img src="{{ $imagePath }}" alt="{{ $item->product->product_name }}" class="w-16 h-16 object-cover rounded-md">
+                            @else
+                                <div class="w-16 h-16 bg-gray-200 flex items-center justify-center rounded-md">
+                                    <span class="text-gray-400 text-xs">No image</span>
+                                </div>
+                            @endif
+                            
                             <div class="ml-4">
                                 <h3 class="text-lg font-semibold">{{ $item->product->product_name }}</h3>
                                 <p class="text-gray-600 text-sm">Price: P{{ number_format($item->product->price, 2) }}</p>
@@ -66,7 +87,6 @@
     @endif
 </div>
 </x-guest-layout>
-
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>

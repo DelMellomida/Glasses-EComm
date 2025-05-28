@@ -25,9 +25,9 @@ Route::get('/redirect-after-login', function () {
         return redirect('/');
 });
 
-Route::get('/products', function () {
-    return view('product.home');
-})->name('product.home');
+// Route::get('/products', function () {
+//     return view('product.home');
+// })->name('product.home');
 
 // ✅ FIX: Assign product.home to /products only
 Route::get('/products', [ProductController::class, 'showAllProductsInProductsView'])->name('product.home');

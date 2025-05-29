@@ -20,13 +20,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call([
-            BranchSeeder::class,
-            CategorySeeder::class,
-            ProductSeeder::class,
-            ProductImageSeeder::class,
-        ]);
-
         User::firstOrCreate([
             'email' => 'admin@example.com',
         ], [
@@ -42,5 +35,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('user1234'),
             'type' => 'user',
             ]);
+
+        $this->call([
+            BranchSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductImageSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
+        ]);
     }
 }

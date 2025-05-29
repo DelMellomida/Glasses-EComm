@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('category_id');
             $table->string('category_name');
             $table->string('category_desc');
+            $table->enum("availability_type", ['online', 'on-branch'])->default('online');
             $table->timestamps();
         });
     }

@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             BranchSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductImageSeeder::class,
         ]);
 
         User::firstOrCreate([

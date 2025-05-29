@@ -13,6 +13,7 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Name</th>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Availability Type</th>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Action</th>
                         </tr>
                     </thead>
@@ -96,6 +97,7 @@
                 columns: [
                     { data: "category_name", name: "category_name" },
                     { data: "category_desc", name: "category_desc" },
+                    { data: "availability_type", name: "availability_type" },
                     { data: "action", name: "action", orderable: false, searchable: false }
                 ],
                 dom: 'lfrtipB',

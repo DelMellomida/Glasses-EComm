@@ -3,12 +3,14 @@
         open: false, 
         modalProduct: null, 
         modalImage: null, 
+        modalAvailability: null,
         isAuthenticated: {{ auth()->check() ? 'true' : 'false' }}
     }" 
     class="container mx-auto px-2 md:px-4 py-4 md:py-8"
 >
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        @forelse ($products->where('category_id', 1) as $product)
+        @if($products && $products->count())
+        @forelse ($products->whereIn('gender', ['male', 'unisex']) as $product)
             @php
                 $hasImage = false;
                 $imagePath = null;
@@ -23,7 +25,7 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col w-60 md:w-72 h-[340px] md:h-[380px] mb-12">
                 <div
                     class="h-44 md:h-56 overflow-hidden flex items-center justify-center cursor-pointer"
-                    @click="open = true; modalProduct = {{ json_encode($product) }}; modalImage = '{{ $imagePath }}';"
+                    @click="open = true; modalProduct = {{ json_encode($product) }}; modalImage = '{{ $imagePath }}'; modalAvailability = '{{ $product->category->availability_type ?? '' }}';"
                 >
                     @if ($hasImage)
                         <img src="{{ $imagePath }}" alt="{{ $product->product_name }}" class="w-full h-full object-cover">
@@ -45,23 +47,32 @@
                     <div>
                         @if (auth()->user())
                             <div class="flex gap-2">
-                                <button
-                                    class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
-                                    style="background-color: #14b8a6 !important;"
-                                >
-                                    BUY
-                                </button>
-                                <button
-                                    class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center add-to-cart-btn"
-                                    style="background-color: #14b8a6 !important;"
-                                    title="Add to Cart"
-                                    :data-product-id="{{ $product->product_id }}"
-                                    @click.stop="addToCart({{ $product->product_id }})"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
-                                    </svg>
-                                </button>
+                                <template x-if="modalAvailability === 'online'">
+                                    <button
+                                        class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
+                                        style="background-color: #14b8a6 !important;"
+                                    >
+                                        BUY
+                                    </button>
+                                    <button
+                                        class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center add-to-cart-btn"
+                                        style="background-color: #14b8a6 !important;"
+                                        title="Add to Cart"
+                                        data-product-id="{{ $product->product_id }}"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
+                                        </svg>
+                                    </button>
+                                </template>
+                                <template x-if="modalAvailability !== 'online'">
+                                    <button
+                                        class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
+                                        style="background-color: #14b8a6 !important;"
+                                    >
+                                        <a href="{{ route('appointments.index') }}">Create Appointment</a>
+                                    </button>
+                                </template>
                             </div>
                         @else
                             <a href="{{ route('login') }}" class="block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Buy</a>
@@ -74,6 +85,11 @@
                 <p class="text-gray-500 text-base md:text-lg">No products found.</p>
             </div>
         @endforelse
+        @else
+            <div class="col-span-full py-4 md:py-8 text-center">
+                <p class="text-gray-500 text-base md:text-lg">No products available.</p>
+            </div>
+        @endif
     </div>
 
     <!-- Modal -->
@@ -111,23 +127,32 @@
                     <!-- Authentication-based button -->
                     @if (auth()->user())
                         <div class="bottom-6 flex gap-2">
-                            <button
-                                class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
-                                style="background-color: #14b8a6 !important;"
-                            >
-                                BUY
-                            </button>
-                            <button
-                                class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center"
-                                style="background-color: #14b8a6 !important;"
-                                title="Add to Cart"
-                                :data-product-id="modalProduct?.product_id"
-                                @click="addToCart(modalProduct?.product_id)"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
-                                </svg>
-                            </button>
+                            <template x-if="modalAvailability === 'online'">
+                                    <button
+                                        class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
+                                        style="background-color: #14b8a6 !important;"
+                                    >
+                                        BUY
+                                    </button>
+                                    <button
+                                        class="bg-teal-500 hover:bg-teal-600 text-white px-2 py-1.5 md:py-2 rounded-md transition-colors duration-300 flex items-center justify-center add-to-cart-btn"
+                                        style="background-color: #14b8a6 !important;"
+                                        title="Add to Cart"
+                                        data-product-id="{{ $product->product_id }}"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M7 13l-1.4 7M7 13h10m0 0l1.4 7M7 20a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
+                                        </svg>
+                                    </button>
+                                </template>
+                                <template x-if="modalAvailability !== 'online'">
+                                    <button
+                                        class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
+                                        style="background-color: #14b8a6 !important;"
+                                    >
+                                        <a href="{{ route('appointments.index') }}">Create Appointment</a>
+                                    </button>
+                                </template>
                         </div>
                     @else
                         <a href="{{ route('login') }}" class="bottom-6 block w-full text-center bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300">Buy</a>

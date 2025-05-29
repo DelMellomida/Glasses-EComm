@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Helpers\EventLogger;
 
 use App\Models\Product;
@@ -23,7 +24,8 @@ class ProductController extends Controller
     public function listProducts(Request $request)
     {
         if ($request->ajax()) {
-            $products = Product::with('images')->select(['product_id', 'product_name', 'product_description', 'price', 'stock', 'category_id']);
+            $products = Product::with('images')->select(['product_id', 'product_name', 'product_description', 'price', 'stock', 'category_id', 'gender', 'status'])
+                ->orderBy('created_at', 'desc');
 
             return DataTables::of($products)
                 ->addColumn('images', function($row) {
@@ -84,6 +86,8 @@ class ProductController extends Controller
             'price' => 'required|integer|min:0',
             'category_id' => 'required|exists:category,category_id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'gender' => 'required|in:male,female,unisex',
+            'status' => 'required|in:active,inactive',
         ]);
 
         DB::beginTransaction();
@@ -100,6 +104,8 @@ class ProductController extends Controller
                 'stock' => $request->stock,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
+                'gender' => $request->gender,
+                'status' => $request->status,
             ]);
 
             Log::info('Product created', [
@@ -136,9 +142,11 @@ class ProductController extends Controller
                         }
 
                         $tempPath = $image->getRealPath();
+                        $randomSuffix = Str::random(5);
+                        $folderName = 'products/product' . $product->getKey() . $randomSuffix;
                         
                         $uploadResult = $cloudinary->uploadApi()->upload($tempPath, [
-                            'folder' => 'products/' . $product->getKey(),
+                            'folder' => $folderName,
                             'resource_type' => 'image',
                             'transformation' => [
                                 'quality' => 'auto',
@@ -160,12 +168,14 @@ class ProductController extends Controller
                             'product_id' => $product->getKey(),
                             'image_path' => $uploadResult['secure_url'],
                             'cloudinary_public_id' => $uploadResult['public_id'] ?? null,
+                            'public_id' => $folderName,
                         ]);
 
                         Log::info('ProductImage created', [
                             'image_id' => $productImage->id,
                             'product_id' => $productImage->product_id,
-                            'image_data' => $productImage->toArray()
+                            'image_data' => $productImage->toArray(),
+                            'public_id' => $productImage->public_id,
                         ]);
 
                         $uploadedImages[] = [
@@ -271,6 +281,8 @@ class ProductController extends Controller
             'price' => 'required|integer|min:0',
             'category_id' => 'required|exists:category,category_id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'gender' => 'required|in:male,female,unisex',
+            'status' => 'required|in:active,inactive',
         ]);
 
         $product = Product::findOrFail($id);
@@ -284,6 +296,8 @@ class ProductController extends Controller
                 'stock' => $request->stock,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
+                'gender' => $request->gender,
+                'status' => $request->status,
             ]);
 
             if ($request->hasFile('images')) {
@@ -315,9 +329,10 @@ class ProductController extends Controller
                         }
 
                         $tempPath = $image->getRealPath();
+                        $folderName = $product->product_images->public_id;
                         
                         $uploadResult = $cloudinary->uploadApi()->upload($tempPath, [
-                            'folder' => 'products/' . $product->getKey(),
+                            'folder' => $folderName,
                             'resource_type' => 'image',
                             'transformation' => [
                                 'quality' => 'auto',
@@ -330,6 +345,7 @@ class ProductController extends Controller
                                 'product_id' => $product->getKey(),
                                 'image_path' => $uploadResult['secure_url'],
                                 'cloudinary_public_id' => $uploadResult['public_id'] ?? null,
+                                'public_id' => $folderName,
                             ]);
                         }
 
@@ -549,7 +565,7 @@ class ProductController extends Controller
 
         // $products = Product::select('product_name', 'product_description', 'price', 'category_id')->get();
 
-        $products = Product::select('product_id','product_name', 'product_description', 'price', 'category_id')->get();
+        $products = Product::select('product_id','product_name', 'product_description', 'price', 'category_id', 'gender', 'status')->get();
 
         $productImages = ProductImage::all();
         
@@ -557,7 +573,7 @@ class ProductController extends Controller
 
     }
       public function showAllProductsInProductsView()    {
-        $products = Product::select('product_id','product_name', 'product_description', 'price','category_id')->get();
+        $products = Product::select('product_id','product_name', 'product_description', 'price','category_id', 'gender', 'status')->get();
 
         $productImages = ProductImage::all();
         

@@ -20,6 +20,14 @@
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">{{ old('category_desc') }}</textarea>
                         @error('category_desc') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Availability</label>
+                        <select name="availability_type" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                            <option value="online" {{ old('availability_type') == 'online' ? 'selected' : '' }} selected >Online</option>
+                            <option value="on-branch" {{ old('availability_type') == 'on-branch' ? 'selected' : '' }}>On-branch</option>
+                        </select>
+                        @error('availability_type') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
+                    </div>
                 </div>
                 <div class="flex justify-between items-center mt-8">
                     <a href="{{ route('category.index') }}"

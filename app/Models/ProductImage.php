@@ -11,6 +11,7 @@ class ProductImage extends Model
         'product_id',
         'image_path',
         'cloudinary_public_id',
+        'public_id',
     ];
 
     public function product()

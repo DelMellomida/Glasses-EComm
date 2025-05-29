@@ -21,7 +21,7 @@ class AdminMiddleware
         }
 
         EventLogger::log('Unauthorized Access', 'User attempted to access admin area without permission', [
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id() ?? 0,
             'ip_address' => $request->ip(),
             'url' => $request->fullUrl(),
         ]);

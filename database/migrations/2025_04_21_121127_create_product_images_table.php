@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->string('image_path')->nullable();
             $table->string('cloudinary_public_id');
+            $table->string('public_id')->nullable();
 
             $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
             $table->timestamps();

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('product_description')->nullable();
             $table->integer('price')->default(0);
             $table->integer('stock')->default(0);
+            $table->enum('gender', ['male','female', 'unisex'])->default('unisex');
+            $table->enum('status', ['active', 'inactive'])->default('active');
 
             $table->unsignedBigInteger('category_id')->required();
 

@@ -45,6 +45,23 @@
                         @error('category_id') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Gender</label>
+                        <select name="gender" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                            <option value="unisex" {{ old('gender') == 'unisex' ? 'selected' : '' }} selected >Unisex</option>
+                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }} >Male</option>
+                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                        </select>
+                        @error('gender') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Status</label>
+                        <select name="status" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }} selected >Active</option>
+                            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }} >Inactive</option>
+                        </select>
+                        @error('status') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
+                    </div>
+                    <div>
                         <label class="block text-gray-700 font-semibold mb-2">Product Images</label>
                         <input type="file" name="images[]" multiple class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">
                         @error('images') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror

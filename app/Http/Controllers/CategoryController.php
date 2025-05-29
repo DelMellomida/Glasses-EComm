@@ -23,7 +23,8 @@ class CategoryController extends Controller
     public function listCategories(Request $request)
     {
         if ($request->ajax()) {
-            $categories = Category::select(['category_id', 'category_name', 'category_desc']);
+            $categories = Category::select(['category_id', 'category_name', 'category_desc', 'availability_type'])
+                ->orderBy('created_at', 'desc');
             return DataTables::of($categories)
                 ->addColumn('action', function($row) {
                     $editUrl = route('admin.category.edit', ['id' => $row->category_id]);
@@ -54,18 +55,21 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|string|max:255',
             'category_desc'=> 'required|string|max:255',
+            'availability_type' => 'required|in:online,on-branch',
         ]);
 
         try{
             $branch = Category::create($request->only([
                 'category_name',
-                'category_desc'
+                'category_desc',
+                'availability_type'
             ]));
 
             EventLogger::log('Category Creation', 'Category created successfully', [
                 'category_id' => $branch->category_id,
                 'category_name' => $branch->category_name,
                 'category_desc' => $branch->category_desc,
+                'availability_type' => $branch->availability_type,
             ]);
         }
         catch(\Exception $e){
@@ -98,17 +102,20 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|string|max:255',
             'category_desc'=> 'required|string|max:255',
+            'availability_type' => 'required|in:online,on-branch',
         ]);
         try{
             $category = Category::findOrFail($id);
             $category->update($request->only([
                 'category_name',
-                'category_desc'
+                'category_desc',
+                'availability_type'
             ]));
             EventLogger::log('Category Update', 'Category updated successfully', [
                 'category_id' => $category->category_id,
                 'category_name' => $category->category_name,
                 'category_desc' => $category->category_desc,
+                'availability_type' => $category->availability_type,
             ]);
         }
         catch(\Exception $e){
@@ -134,6 +141,7 @@ class CategoryController extends Controller
                 'category_id' => $category->category_id,
                 'category_name' => $category->category_name,
                 'category_desc' => $category->category_desc,
+                'availability_type' => $category->availability_type,
             ]);
             $category->delete();
         }

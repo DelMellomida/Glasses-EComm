@@ -11,8 +11,8 @@ class ProductSeeder extends Seeder
     {
         $products = [
             [
-                'product_name' => 'Female Eyeglass',
-                'product_description' => 'Just your typical female eyeglass',
+                'product_name' => 'Female Graded Eyeglass',
+                'product_description' => 'Just your typical female graded eyeglass',
                 'price' => 1499,
                 'stock' => 100,
                 'gender' => 'female',
@@ -20,8 +20,8 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
             ],
             [
-                'product_name' => 'Male Eyeglass',
-                'product_description' => 'Just your typical male eyeglass',
+                'product_name' => 'Male Graded Eyeglass',
+                'product_description' => 'Just your typical male graded eyeglass',
                 'price' => 1499,
                 'stock' => 100,
                 'gender' => 'male',
@@ -29,8 +29,8 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
             ],
             [
-                'product_name' => 'Unisex Eyeglass',
-                'product_description' => 'Just your typical unisex eyeglass',
+                'product_name' => 'Unisex Fashion Eyeglass',
+                'product_description' => 'Just your typical unisex fashion eyeglass',
                 'price' => 1499,
                 'stock' => 100,
                 'gender' => 'unisex',

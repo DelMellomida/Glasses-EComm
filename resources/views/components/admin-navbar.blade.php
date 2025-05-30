@@ -6,6 +6,37 @@
             <span class="text-2xl font-semibold text-[#3d405b]">Sarabia Optical</span>
         </a>
 
+        <!-- Hamburger for mobile -->
+        <div class="flex items-center md:hidden" x-data="{ open: false }">
+            <button @click="open = !open" class="p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#ffd6e0]">
+                <svg class="w-6 h-6 text-[#ef476f]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <!-- Mobile menu dropdown -->
+            <div x-show="open" @click.away="open = false" class="absolute top-16 right-4 w-56 bg-white rounded shadow-lg z-50 border border-[#ffd6e0]">
+                <ul class="py-2">
+                    <li><a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Dashboard</a></li>
+                    <li><a href="{{ route('user.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Users</a></li>
+                    <li><a href="{{ route('admin.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Administrators</a></li>
+                    <li><a href="{{ route('products.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">All Products</a></li>
+                    <li><a href="{{ route('admin.product.create') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Add Product</a></li>
+                    <li><a href="{{ route('category.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Categories</a></li>
+                    <li><a href="{{ route('all-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">All Transactions</a></li>
+                    <li><a href="{{ route('failed-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Failed Transactions</a></li>
+                    <li><a href="{{ route('successful-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Successful Transactions</a></li>
+                    <li><a href="{{ route('admin.statistics') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Statistics & Graphs</a></li>
+                    <li><a href="{{ route('admin.event-logs') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Event Log</a></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-4 py-2 text-[#ef476f] hover:bg-[#ffd6e0]">Sign out</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <!-- User Dropdown (Alpine.js for toggle) -->
         <div x-data="{ open: false }" class="relative flex items-center">
           <button @click="open = !open" @keydown.escape="open = false"

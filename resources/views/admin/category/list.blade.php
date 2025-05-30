@@ -8,6 +8,7 @@
                         + Add Category
                     </a>
                 </div>
+                <div class="overflow-x-auto">
                 <table id="category_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
@@ -21,6 +22,7 @@
                         <!-- DataTables will populate rows here -->
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -91,14 +93,15 @@
             $('#category_list').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: {
                     url: "{{ route('admin.list-categories') }}",
                 },
                 columns: [
-                    { data: "category_name", name: "category_name" },
-                    { data: "category_desc", name: "category_desc" },
-                    { data: "availability_type", name: "availability_type" },
-                    { data: "action", name: "action", orderable: false, searchable: false }
+                    { data: "category_name", name: "category_name", responsivePriority: 1 },
+                    { data: "category_desc", name: "category_desc", responsivePriority: 3 },
+                    { data: "availability_type", name: "availability_type", responsivePriority: 2 },
+                    { data: "action", name: "action", orderable: false, searchable: false, responsivePriority: 1 }
                 ],
                 dom: 'lfrtipB',
                 buttons: [

@@ -33,6 +33,11 @@
 
         <!-- DataTables CSS -->
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+        <!-- DataTables Responsive CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" />
+        <!-- DataTables Responsive JS -->
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
         
         <!-- DataTables Buttons CSS -->
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
@@ -62,7 +67,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="ml-[225px] flex-1 overflow-auto">
+            <main class="md:ml-[225px] flex-1 overflow-auto">
                 {{ $slot }}
             </main>
         </div>

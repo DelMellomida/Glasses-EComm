@@ -11,10 +11,21 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'category_name' => 'Eyeglass',
-                'category_desc' => 'Eyeglass',
+                'category_name' => 'Graded Eyeglass',
+                'category_desc' => 'Just your typical eyeglass',
                 'availability_type' => 'on-branch',
             ],
+            [
+                'category_name' => 'Contact Lens',
+                'category_desc' => 'Contact lens for your eyes',
+                'availability_type' => 'online',
+            ],
+            [
+                'category_name' => 'Fashion Eyeglass',
+                'category_desc' => 'Fashionable eyeglass for your style',
+                'availability_type' => 'online',
+            ]
+
         ];
 
         foreach ($categories as $category) {

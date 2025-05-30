@@ -22,7 +22,11 @@ Route::get('/redirect-after-login', function () {
     if (Auth::check() && Auth::user()->type === 'admin') {
         return redirect('/admin/home');
     }
-        return redirect('/');
+        return redirect()->route('guest.guest-home')->with('notification', [
+        'type' => 'success',
+        'title' => 'Logged In',
+        'message' => 'You have successfully logged in!'
+    ]);
 });
 
 // Route::get('/products', function () {

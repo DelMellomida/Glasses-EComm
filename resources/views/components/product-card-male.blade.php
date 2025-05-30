@@ -168,12 +168,12 @@
                             })
                             .then(response => response.json())
                             .then(data => { 
-                                alert('Product added to cart!'); 
+                                showNotification('success', 'Added to Cart', 'Product added to cart!');
                                 buyingModal = false; 
                                 open = false; 
                                 quantity = 1;
                             })
-                            .catch(error => { alert('An error occurred.'); });
+                            .catch(error => { showNotification('error', 'Error', 'An error occurred.');});
                         "
                     >
                         Add to Cart

@@ -5,7 +5,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class notification extends Component
+class Notification extends Component
 {
     public $position;
     public $maxNotifications;

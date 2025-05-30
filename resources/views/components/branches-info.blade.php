@@ -1,11 +1,8 @@
 <div class="max-w-7xl mx-auto px-6 py-16 bg-gradient-to-b from-white via-gray-50 to-white" x-data="branchesCarousel()">
-<p class="text-5xl font-extrabold text-center mb-14 tracking-wide"
-   style="color: #0f7b99; line-height: 1.2;">
-  R. SARABIA OPTICAL BRANCHES
-</p>
-
-
-
+  <p class="text-5xl font-extrabold text-center mb-14 tracking-wide"
+     style="color: #0f7b99; line-height: 1.2;">
+    R. SARABIA OPTICAL BRANCHES
+  </p>
 
   <div class="relative">
     <!-- Prev Button -->
@@ -33,7 +30,7 @@
     </button>
 
     <!-- Branches Carousel -->
-    <div class="flex space-x-8 overflow-hidden">
+    <div class="flex space-x-8 overflow-hidden px-16"> <!-- Add px-16 for horizontal padding -->
       <template x-for="(branch, index) in visibleBranches" :key="index">
         <div
           class="flex-none w-80 bg-white rounded-3xl shadow-lg p-6 cursor-pointer transition-all duration-300 ease-in-out hover:shadow-2xl hover:border-2 hover:border-[#eb5638] hover:scale-[1.05]"
@@ -139,21 +136,30 @@
 </script>
 
 <style>
-  .scroll-button {
-    background-color: #eb5638;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 9999px;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    user-select: none;
-    box-shadow: 0 3px 8px rgb(235 86 56 / 0.6);
-  }
-  .scroll-button:hover {
-    background-color: #d13e2b;
-    transform: scale(1.1);
-  }
+ .scroll-button {
+  background-color: #eb5638;
+  color: white;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  cursor: pointer;
+
+  display: flex;           /* Use flex to center */
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+
+  font-size: 1.75rem;      /* Adjust arrow size */
+  line-height: 1;          /* Prevent vertical misalignment */
+
+  user-select: none;
+  box-shadow: 0 3px 8px rgb(235 86 56 / 0.6);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-button:hover {
+  background-color: #d13e2b;
+  transform: scale(1.1);
+}
+
 </style>

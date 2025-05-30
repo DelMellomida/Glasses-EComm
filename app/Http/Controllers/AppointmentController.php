@@ -14,7 +14,9 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::where('user_id', Auth::id())->get();
+        $appointments = Appointment::with(['branch', 'product'])
+            ->where('user_id', Auth::id())
+            ->get();
         $branches = Branch::all();
         return view('appointments.index', compact('appointments', 'branches'));
     }
@@ -94,6 +96,7 @@ class AppointmentController extends Controller
                 'appointment_time' => 'required',
                 'type' => 'required|string',
                 'branch_id' => 'required|exists:branch,id',
+                'product_id' => 'nullable|exists:products,product_id',
             ]);
 
             $startTime = $request->appointment_time;
@@ -113,13 +116,19 @@ class AppointmentController extends Controller
                 ])->withInput();
             }
 
-            $appointment = Appointment::create([
+            $data = [
                 'user_id' => Auth::id(),
                 'appointment_date' => $request->appointment_date,
                 'appointment_time' => $request->appointment_time,
                 'type' => $request->type,
                 'branch_id' => $request->branch_id,
-            ]);
+            ];
+
+            if ($request->filled('product_id')) {
+                $data['product_id'] = $request->product_id;
+            }
+
+            $appointment = Appointment::create($data);
 
             EventLogger::log('Appointment Booking', 'Appointment booked successfully', [
                 'appointment_id' => $appointment->id,
@@ -128,7 +137,12 @@ class AppointmentController extends Controller
                 'appointment_time' => $appointment->appointment_time,
                 'branch_id' => $appointment->branch_id,
                 'type' => $appointment->type,
+                'product_id' => $appointment->product_id,
             ]);
+
+            if ($request->ajax()) {
+                return response()->json(['success' => true]);
+            }
 
             return redirect()->route('appointments.index')->with('success', 'Appointment booked!');
         } catch (\Exception $e) {
@@ -200,6 +214,7 @@ class AppointmentController extends Controller
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['success' => true]);
             }
+            
             return redirect()->route('appointments.index')->with('success', 'Appointment updated!');
         } catch (\Exception $e) {
             EventLogger::log('Appointment Update Failed', 'Failed to update appointment', [

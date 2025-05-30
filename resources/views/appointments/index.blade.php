@@ -1,4 +1,8 @@
 <x-app-layout>
+    @php
+        $productId = request('product_id');
+        $productName = request('product_name');
+    @endphp
     <div class="bg-gray-100 min-h-screen py-8 px-0 mt-16">
         <div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Left: Calendar and Booking -->
@@ -24,6 +28,9 @@
                                 <span class="block"><span class="font-medium">Branch:</span> {{ $appt->branch->branch_name ?? '' }}</span>
                                 <span class="block"><span class="font-medium">Address:</span> {{ $appt->branch->branch_address ?? '' }}</span>
                                 <span class="block"><span class="font-medium">Contact:</span> {{ $appt->branch->branch_phone ?? '' }}</span>
+                                @if($appt->product_id && $appt->product)
+                                    <span class="block"><span class="font-medium">Product:</span> {{ $appt->product->product_name }}</span>
+                                @endif
                             </div>
                         </div>
                     @empty
@@ -34,7 +41,7 @@
         </div>
     </div>
 
-    <!-- Book Appointment Modal (unchanged) -->
+    <!-- Book Appointment Modal -->
     <div id="appointment-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
         <div class="bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-8 w-full max-w-md">
             <div class="flex items-center mb-6">
@@ -60,10 +67,18 @@
                         <!-- Options will be filled by JS -->
                     </select>
                 </div>
+                @if($productName)
+                    <div class="mb-4 p-3 bg-blue-50 rounded text-blue-700 font-semibold">
+                        For Product: {{ $productName }}
+                    </div>
+                @endif
                 <div class="mb-4">
                     <label for="type" class="block font-semibold mb-1 text-gray-700">Type</label>
                     <input type="text" name="type" id="type" class="border rounded px-3 py-2 w-full" required>
                 </div>
+                @if($productId)
+                    <input type="hidden" name="product_id" value="{{ $productId }}">
+                @endif
                 <div class="flex justify-end space-x-2 mt-6">
                     <button type="button" id="close-modal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
                     <button type="submit" style="background-color:#2563eb!important;color:white!important;padding:0.5rem 1rem!important;border-radius:0.375rem!important;" class="hover:bg-blue-700">Book</button>
@@ -72,7 +87,7 @@
         </div>
     </div>
 
-    <!-- Edit Appointment Modal (all buttons in one row, delete via JS/hidden form) -->
+    <!-- Edit Appointment Modal -->
     <div id="edit-appointment-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
         <div class="bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-8 w-full max-w-md">
             <div class="flex items-center mb-6">
@@ -110,6 +125,8 @@
                     <label for="edit_type" class="block font-semibold mb-1 text-gray-700">Type</label>
                     <input type="text" name="type" id="edit_type" class="border rounded px-3 py-2 w-full" required>
                 </div>
+                <!-- Product name display (filled by JS) -->
+                <div id="edit-product-name" class="mb-4 p-3 bg-blue-50 rounded text-blue-700 font-semibold" style="display:none"></div>
                 <div class="flex items-center justify-between mt-6">
                     <button type="button" id="delete-appointment-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
                     <div class="flex gap-2">
@@ -139,16 +156,36 @@
             return await res.json();
         }
 
+        // Helper function to close modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Helper function to refresh calendar and sidebar - UPDATED WITH LONGER DELAY
+        function refreshCalendarAndSidebar() {
+            // Refresh calendar events
+            if (window.calendar) {
+                window.calendar.refetchEvents();
+            }
+            // Reload the page to refresh the sidebar after notification shows
+            setTimeout(() => {
+                window.location.reload();
+            }, 4000); // Changed from 2000 to 4000ms (4 seconds) - gives more time for notifications
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const calendarEl = document.getElementById('calendar');
             const modal = document.getElementById('appointment-modal');
-            const closeModal = document.getElementById('close-modal');
+            const closeModalBtn = document.getElementById('close-modal');
             const dateInput = document.getElementById('appointment_date');
             const branchSelect = document.getElementById('branch_id');
             const timeSelect = document.getElementById('appointment_time');
 
             const editModal = document.getElementById('edit-appointment-modal');
-            const closeEditModal = document.getElementById('close-edit-modal');
+            const closeEditModalBtn = document.getElementById('close-edit-modal');
             const editAppointmentId = document.getElementById('edit_appointment_id');
             const editAppointmentTime = document.getElementById('edit_appointment_time');
             const editType = document.getElementById('edit_type');
@@ -157,6 +194,7 @@
             const editAppointmentForm = document.getElementById('edit-appointment-form');
             const deleteAppointmentForm = document.getElementById('delete-appointment-form');
             const deleteAppointmentBtn = document.getElementById('delete-appointment-btn');
+            const editProductNameDiv = document.getElementById('edit-product-name');
 
             let selectedEventId = null;
             let selectedEditDate = null;
@@ -202,19 +240,46 @@
                         editAppointmentTime.value = `${hours}:${minutes}`;
                     });
 
+                    // Set product name in edit modal
+                    if (info.event.extendedProps.product_name) {
+                        editProductNameDiv.textContent = 'For Product: ' + info.event.extendedProps.product_name;
+                        editProductNameDiv.style.display = '';
+                    } else {
+                        editProductNameDiv.textContent = '';
+                        editProductNameDiv.style.display = 'none';
+                    }
+
                     editAppointmentForm.action = `/appointments/${selectedEventId}/edit`;
                     deleteAppointmentForm.action = `/appointments/${selectedEventId}`;
 
                     editModal.classList.remove('hidden');
                 }
             });
+            
+            // Make calendar globally accessible
+            window.calendar = calendar;
             calendar.render();
 
-            closeModal.addEventListener('click', function() {
-                modal.classList.add('hidden');
+            // Modal close event listeners
+            closeModalBtn.addEventListener('click', function() {
+                closeModal('appointment-modal');
             });
-            closeEditModal.addEventListener('click', function() {
-                editModal.classList.add('hidden');
+            
+            closeEditModalBtn.addEventListener('click', function() {
+                closeModal('edit-appointment-modal');
+            });
+
+            // Close modals when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal('appointment-modal');
+                }
+            });
+
+            editModal.addEventListener('click', function(e) {
+                if (e.target === editModal) {
+                    closeModal('edit-appointment-modal');
+                }
             });
 
             branchSelect.addEventListener('change', updateTimeOptions);
@@ -251,11 +316,108 @@
                 });
             }
 
+            // --- EDIT APPOINTMENT AJAX ---
+            editAppointmentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Disable the submit button to prevent double-clicking
+                const submitBtn = editAppointmentForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Updating...';
+                
+                const formData = new FormData(editAppointmentForm);
+                
+                fetch(editAppointmentForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success || data.status === 'success') {
+                        showNotification('success', 'Updated', 'Appointment updated successfully!');
+                        // Close modal immediately
+                        closeModal('edit-appointment-modal');
+                        // Refresh calendar and sidebar
+                        refreshCalendarAndSidebar();
+                    } else {
+                        showNotification('error', 'Error', data.message || 'Failed to update appointment.');
+                        // Re-enable the button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                })
+                .catch(error => {
+                    console.error('Update error:', error);
+                    showNotification('error', 'Error', 'Failed to update appointment.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                });
+            });
+
+            // --- DELETE APPOINTMENT AJAX ---
             deleteAppointmentBtn.addEventListener('click', function() {
                 if (confirm('Are you sure you want to delete this appointment?')) {
-                    deleteAppointmentForm.submit();
+                    deleteAppointmentBtn.disabled = true;
+                    deleteAppointmentBtn.textContent = 'Deleting...';
+                    
+                    fetch(deleteAppointmentForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'X-HTTP-Method-Override': 'DELETE',
+                            'Accept': 'application/json'
+                        },
+                        body: new FormData(deleteAppointmentForm)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success || data.status === 'success') {
+                            showNotification('success', 'Deleted', 'Appointment deleted successfully!');
+                            // Close modal immediately
+                            closeModal('edit-appointment-modal');
+                            // Refresh calendar and sidebar
+                            refreshCalendarAndSidebar();
+                        } else {
+                            showNotification('error', 'Error', data.message || 'Failed to delete appointment.');
+                            // Re-enable the button
+                            deleteAppointmentBtn.disabled = false;
+                            deleteAppointmentBtn.textContent = 'Delete';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Delete error:', error);
+                        showNotification('error', 'Error', 'Failed to delete appointment.');
+                        // Re-enable the button
+                        deleteAppointmentBtn.disabled = false;
+                        deleteAppointmentBtn.textContent = 'Delete';
+                    });
                 }
             });
         });
+
+        // Updated showNotification function to use your custom notification manager
+        function showNotification(type, title, message) {
+            // Check if your custom notification manager is available
+            if (typeof window.showNotification === 'function' && window.notificationManager) {
+                // Use your custom notification manager
+                window.notificationManager.show(type, title, message);
+            } else if (typeof window.showToast === 'function') {
+                window.showToast(type, title, message);
+            } else if (typeof window.Swal !== 'undefined') {
+                Swal.fire({
+                    icon: type === 'success' ? 'success' : 'error',
+                    title: title,
+                    text: message,
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            }
+            // Removed alert fallback
+        }
     </script>
 </x-app-layout>

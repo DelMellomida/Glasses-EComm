@@ -15,6 +15,7 @@ class Appointment extends Model
         'appointment_time',
         'type',
         'branch_id',
+        'product_id',
     ];
     public function user()
     {
@@ -24,5 +25,10 @@ class Appointment extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(\App\Models\Product::class, 'product_id');
     }
 }

@@ -78,7 +78,7 @@
                                         class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
                                         style="background-color: #14b8a6 !important;"
                                     >
-                                        <a href="{{ route('appointments.index') }}">Create Appointment</a>
+                                        <a href="{{ route('appointments.index', ['product_id' => $product->product_id, 'product_name' => $product->product_name]) }}">Create Appointment</a>
                                     </button>
                                 @endif
                             </div>
@@ -146,7 +146,7 @@
                                     class="flex-1 bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-300"
                                     style="background-color: #14b8a6 !important;"
                                 >
-                                    <a href="{{ route('appointments.index') }}">Create Appointment</a>
+                                    <a href="{{ route('appointments.index', ['product_id' => $product->product_id, 'product_name' => $product->product_name]) }}">Create Appointment</a>
                                 </button>
                             </template>
                         </div>

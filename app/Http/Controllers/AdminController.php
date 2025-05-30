@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\User;
 use App\Helpers\EventLogger;
+use App\Models\UserDetails;
 
 
 class AdminController extends Controller
@@ -49,6 +50,14 @@ class AdminController extends Controller
                 'email' => $validated['email'],
                 'password' => bcrypt($validated['password']),
                 'type' => 'user',
+            ]);
+
+            UserDetails::create([
+                'user_id' => $user->id,
+                'address' => '',
+                'phone_number' => '',
+                'gender' => 'male',
+                'date_of_birth' => null,
             ]);
 
             EventLogger::log('User Creation', 'User created successfully', [
@@ -240,6 +249,7 @@ class AdminController extends Controller
                 'email' => $user->email,
             ]);
 
+            UserDetails::where('user_id', $user->id)->delete();
             $user->delete();
 
             return redirect()->route('user.index')->with('success', 'User deleted successfully.');

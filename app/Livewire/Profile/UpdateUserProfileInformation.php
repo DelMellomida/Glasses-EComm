@@ -5,6 +5,9 @@ namespace App\Livewire\Profile;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserDetailsController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\UserDetails;
 
 class UpdateUserProfileInformation extends Component
 {
@@ -13,8 +16,9 @@ class UpdateUserProfileInformation extends Component
 
     public function mount()
     {
-        
-        $this->state = auth()->user()->only([
+        $this->state = UserDetails::where('user_id', Auth::id())
+        ->first()
+        ->only([
             'address',
             'phone_number',
             'gender',

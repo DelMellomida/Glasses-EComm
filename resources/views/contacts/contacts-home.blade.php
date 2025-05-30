@@ -14,9 +14,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-96">
                 <div class="p-8 lg:p-12 flex flex-col justify-center">
                     <p class="text-gray-600 leading-relaxed mb-6">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum tempus arcu, sit amet rhoncus libero tincidunt vel. In finibus egestas odio. Aliquam cursus non ante in porttitor. Nam accumsan nisi a congue efficitur. 
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur sed libero ut lectus mollis auctor. Morbi suscipit elit at cursus blandit. Pellentesque massa libero, fermentum non tellus sit amet,
-                        bibendum rhoncus urna. In eu risus aliquam, tincidunt erat at, ultricies velit.
+                    We’d love to hear from you! If you have any questions about our eye care services, optical products, eye exams, or if you need help with a previous visit or purchase, don’t hesitate to reach out. You can send us a message directly through this page, and we’ll get back to you as soon as possible. You can also contact us via our official Facebook and Instagram pages for updates, inquiries, or faster communication. At Sarabia Optical, we’re committed to providing clear vision and excellent customer service, your satisfaction and eye health are our top priorities.
                     </p>
                     
                     

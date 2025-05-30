@@ -255,4 +255,12 @@ class OrderController extends Controller
         Log::info('Successfully deleted order', ['order_id' => $id]);
         return redirect()->route('all-transaction.index')->with('success', 'Order deleted successfully.');
     }
+
+    public function processPayment(){
+        return redirect()->route('guest.guest-home')->with('notification', [
+        'type' => 'success',
+        'title' => 'Process Payment',
+        'message' => 'Your payment has been processed successfully. Thank you for your order!',
+        ]);
+    }
 }

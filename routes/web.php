@@ -70,6 +70,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/appointments/json', [AppointmentController::class, 'appointments'])->name('appointments.json');
 
     Route::view('/payment-method', 'payment.method')->name('payment.method');
+
+    Route::post('/payment', [OrderController::class, 'processPayment'])->name('payment.process');
 });
 
 Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');

@@ -46,7 +46,6 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased bg-gray-50">
-        <!-- <x-notification /> -->
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">

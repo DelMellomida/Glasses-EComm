@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\EventLogger;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\ProductImage;
 
 class CartController extends Controller
 {
@@ -56,7 +57,9 @@ class CartController extends Controller
             ->orWhere('session_id', session()->getId())
             ->first();
 
-        return view('cart.cart-home', compact('cart'));
+        $productImages = ProductImage::whereIn('product_id', $cart->items->pluck('product.product_id'))->get();
+
+        return view('cart.cart-home', compact('cart', 'productImages'));
     }
 
     

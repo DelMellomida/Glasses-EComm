@@ -13,7 +13,7 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        // You can implement this method as needed.
+        return view('cart.checkout');
     }
 
     /**

@@ -1,36 +1,36 @@
-<nav class="bg-[#ffd6e0] border-b border-[#f8edeb] fixed top-0 left-0 w-full z-[9999] shadow">
+<nav class="bg-[#055970] border-b border-[#f8edeb] fixed top-0 left-0 w-full z-[9999] shadow">
     <div class="flex items-center justify-between px-6 py-3">
         <!-- Logo -->
         <a href="{{ route('guest.guest-home') }}" class="flex items-center space-x-3">
             <img src="{{ asset('build/assets/Images/Sarabia-Logo-Blue-Col.jpg') }}" class="h-8" alt="Logo" />
-            <span class="text-2xl font-semibold text-[#3d405b]">Sarabia Optical</span>
+            <span class="text-2xl font-semibold text-[#ffffff]">SARABIA OPTICAL</span>
         </a>
 
         <!-- Hamburger for mobile -->
         <div class="flex items-center md:hidden" x-data="{ open: false }">
             <button @click="open = !open" class="p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#ffd6e0]">
-                <svg class="w-6 h-6 text-[#ef476f]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-[#ffffff]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
             <!-- Mobile menu dropdown -->
             <div x-show="open" @click.away="open = false" class="absolute top-16 right-4 w-56 bg-white rounded shadow-lg z-50 border border-[#ffd6e0]">
                 <ul class="py-2">
-                    <li><a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Dashboard</a></li>
-                    <li><a href="{{ route('user.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Users</a></li>
-                    <li><a href="{{ route('admin.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Administrators</a></li>
-                    <li><a href="{{ route('products.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">All Products</a></li>
-                    <li><a href="{{ route('admin.product.create') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Add Product</a></li>
-                    <li><a href="{{ route('category.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Categories</a></li>
-                    <li><a href="{{ route('all-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">All Transactions</a></li>
-                    <li><a href="{{ route('failed-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Failed Transactions</a></li>
-                    <li><a href="{{ route('successful-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Successful Transactions</a></li>
-                    <li><a href="{{ route('admin.statistics') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Statistics & Graphs</a></li>
-                    <li><a href="{{ route('admin.event-logs') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#ffd6e0]">Event Log</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Dashboard</a></li>
+                    <li><a href="{{ route('user.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Users</a></li>
+                    <li><a href="{{ route('admin.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Administrators</a></li>
+                    <li><a href="{{ route('products.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">All Products</a></li>
+                    <li><a href="{{ route('admin.product.create') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Add Product</a></li>
+                    <li><a href="{{ route('category.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Categories</a></li>
+                    <li><a href="{{ route('all-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">All Transactions</a></li>
+                    <li><a href="{{ route('failed-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Failed Transactions</a></li>
+                    <li><a href="{{ route('successful-transaction.index') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Successful Transactions</a></li>
+                    <li><a href="{{ route('admin.statistics') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Statistics & Graphs</a></li>
+                    <li><a href="{{ route('admin.event-logs') }}" class="block px-4 py-2 text-[#3d405b] hover:bg-[#055970]">Event Log</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-[#ef476f] hover:bg-[#ffd6e0]">Sign out</button>
+                            <button type="submit" class="w-full text-left px-4 py-2 text-[#ef476f] hover:bg-[#055970]">Sign out</button>
                         </form>
                     </li>
                 </ul>
@@ -50,26 +50,26 @@
               x-cloak>
               <div class="px-4 py-3 border-b border-[#ffd6e0]">
                   <span class="block text-sm font-semibold text-[#3d405b]">{{ Auth::user()->name ?? 'Admin User' }}</span>
-                  <span class="block text-xs text-[#ef476f] truncate">{{ Auth::user()->email ?? 'admin@email.com' }}</span>
+                  <span class="block text-xs text-[#055970] truncate">{{ Auth::user()->email ?? 'admin@email.com' }}</span>
               </div>
               <ul class="py-2">
                   <li>
                       <a href="{{ route('admin.dashboard') }}"
-                        class="block px-4 py-2 text-sm text-[#3d405b] hover:bg-[#ffd6e0]">Dashboard</a>
+                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Dashboard</a>
                   </li>
                   <li>
                       <a href="#"
-                        class="block px-4 py-2 text-sm text-[#3d405b] hover:bg-[#ffd6e0]">Settings</a>
+                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Settings</a>
                   </li>
                   <li>
                       <a href="#"
-                        class="block px-4 py-2 text-sm text-[#3d405b] hover:bg-[#ffd6e0]">Earnings</a>
+                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Earnings</a>
                   </li>
                   <li>
                       <form method="POST" action="{{ route('logout') }}">
                           @csrf
                           <button type="submit"
-                              class="w-full text-left px-4 py-2 text-sm text-[#ef476f] hover:bg-[#ffd6e0]">
+                              class="w-full text-left px-4 py-2 text-sm text-[#ef476f] group-hover:text-[#ffffff] hover:bg-[#055970]">
                               Sign out
                           </button>
                       </form>

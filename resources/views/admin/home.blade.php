@@ -4,21 +4,21 @@
         <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-[#3d405b]">Order & Sales Dashboard</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#06d6a0]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-dashed">
                 <div class="text-4xl font-extrabold text-[#06d6a0]">{{ $orderCounts['successful'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Successful Orders</div>
             </div>
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ef476f]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#ef476f]">
                 <div class="text-4xl font-extrabold text-[#ef476f]">{{ $orderCounts['failed'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Failed Orders</div>
             </div>
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#ffd166]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#ffd166]">
                 <div class="text-4xl font-extrabold text-[#ffd166]">{{ $orderCounts['pending'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Pending Orders</div>
             </div>
         </div>
 
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+        <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
                 <h3 class="text-xl font-bold text-[#3d405b]">Order Overview</h3>
                 <div>
@@ -34,7 +34,7 @@
             <canvas id="ordersChart" height="100"></canvas>
         </div>
 
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+        <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
                 <h3 class="text-xl font-bold text-[#3d405b]">Sales (₱)</h3>
                 <div>
@@ -50,15 +50,15 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#118ab2]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#118ab2]">
                 <div class="text-3xl font-bold text-[#118ab2]">₱{{ number_format($totalIncome, 2) }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Total Income</div>
             </div>
-            <a href="{{ route('user.index') }}" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#3d405b] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
+            <a href="{{ route('user.index') }}" class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#3d405b] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
                 <div class="text-3xl font-bold text-[#3d405b]">{{ $userCount }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Total Users</div>
             </a>
-            <a href="#" class="bg-[#fff1f1] p-8 rounded-xl shadow text-center border-t-4 border-[#b8c6db] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
+            <a href="#" class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#b8c6db] transition hover:shadow-lg hover:bg-[#f8edeb] cursor-pointer block">
                 <div class="text-3xl font-bold text-[#b8c6db]">{{ $productCount }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Total Products</div>
             </a>

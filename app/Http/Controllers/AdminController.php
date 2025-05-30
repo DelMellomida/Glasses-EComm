@@ -163,7 +163,7 @@ class AdminController extends Controller
                 'address' => 'nullable|string|max:255',
                 'phone_number' => 'nullable|string|max:20',
                 'date_of_birth' => 'nullable|date',
-                'gender' => 'nullable|in:male,female',
+                'gender' => 'nullable|in:male,female,other',
             ]);
 
             $user->update([

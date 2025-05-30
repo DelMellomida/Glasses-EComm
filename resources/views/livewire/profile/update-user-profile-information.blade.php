@@ -27,7 +27,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-label for="gender" value="{{ __('Gender') }}" />
     
-            <select id="gender" class="mt-1 block w-full" wire:model="state.gender" required autocomplete="gender">
+            <select id="gender" class="mt-1 block w-full rounded-md" wire:model="state.gender" required autocomplete="gender">
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -49,12 +49,12 @@
                 {{ __('Saved.') }}
             </x-action-message>
 
-            <x-button wire:loading.attr="disabled" wire:target="state.address">
+            <x-button wire:loading.attr="disabled">
                 {{ __('Save') }}
             </x-button>
         </x-slot>
 
     </x-slot>
 
-
 </x-form-section>
+

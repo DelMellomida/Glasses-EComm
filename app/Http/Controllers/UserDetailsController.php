@@ -43,7 +43,7 @@ class UserDetailsController extends Controller
             'address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15',
             'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female',
+            'gender' => 'required|in:male,female,other',
         ]);
 
         try {
@@ -88,7 +88,7 @@ class UserDetailsController extends Controller
             'address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15',
             'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female'
+            'gender' => 'required|in:male,female,other'
         ]);
 
         $user = Auth::user();

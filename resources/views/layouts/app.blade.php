@@ -13,6 +13,8 @@
 
         <!-- Add Bootstrap 5 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         
         <!-- FullCalendar with Bootstrap theme -->
         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
@@ -20,6 +22,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+
         <script src="https://unpkg.com/alpinejs" defer></script>
 
         <style>
@@ -32,6 +36,7 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
+        <x-notification />
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
@@ -53,6 +58,7 @@
         </div>
 
         @stack('modals')
+        @stack('notification-scripts')
 
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 

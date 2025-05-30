@@ -565,7 +565,8 @@ class ProductController extends Controller
 
         // $products = Product::select('product_name', 'product_description', 'price', 'category_id')->get();
 
-        $products = Product::select('product_id','product_name', 'product_description', 'price', 'category_id', 'gender', 'status')->get();
+        // $products = Product::select('product_id','product_name', 'product_description', 'price', 'category_id', 'gender', 'status')->get();
+        $products = Product::with('category')->get();
 
         $productImages = ProductImage::all();
         
@@ -573,7 +574,8 @@ class ProductController extends Controller
 
     }
       public function showAllProductsInProductsView()    {
-        $products = Product::select('product_id','product_name', 'product_description', 'price','category_id', 'gender', 'status')->get();
+        // $products = Product::select('product_id','product_name', 'product_description', 'price','category_id', 'gender', 'status')->get();
+        $products = Product::with('category')->get();
 
         $productImages = ProductImage::all();
         

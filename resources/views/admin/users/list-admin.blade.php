@@ -2,6 +2,7 @@
     <div class="flex h-screen bg-gradient-to-br from-[#ffe5ec] to-[#b8c6db]">
         <div class="flex-1 flex items-start justify-center py-12">
             <div class="w-full max-w-5xl mx-auto bg-[#fff1f1] rounded-xl shadow-lg p-6 mt-12 border border-[#ffd6e0]">
+                <div class="overflow-x-auto">
                 <table id="admin_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
@@ -14,6 +15,7 @@
                         <!-- DataTables will populate rows here -->
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -85,13 +87,14 @@
             $('#admin_list').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: {
                     url: "{{ route('admin.list-admins') }}",
                 },
                 columns: [
-                    { data: "name", name: "name" },
-                    { data: "email", name: "email" },
-                    { data: "action", name: "action", orderable: false, searchable: false }
+                    { data: "name", name: "name", responsivePriority: 1 },
+                    { data: "email", name: "email", responsivePriority: 2 },
+                    { data: "action", name: "action", orderable: false, searchable: false, responsivePriority: 1 }
                 ],
                 dom: 'lfrtipB',
                 buttons: [

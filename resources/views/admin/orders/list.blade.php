@@ -8,6 +8,7 @@
                         + Add Transaction
                     </a>
                 </div>
+                <div class="overflow-x-auto">
                 <table id="transactions_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
@@ -22,6 +23,7 @@
                         <!-- DataTables will populate rows here -->
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -58,13 +60,14 @@
             $('#transactions_list').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: { url: "{{ route('admin.all-transactions') }}" },
                 columns: [
-                    { data: "order_id", name: "order_id" },
-                    { data: "order_total", name: "order_total" },
-                    { data: "purchase_date", name: "purchase_date" },
-                    { data: "status", name: "status" },
-                    { data: "action", name: "action", orderable: false, searchable: false }
+                    { data: "order_id", name: "order_id", responsivePriority: 1 },
+                    { data: "order_total", name: "order_total", responsivePriority: 2 },
+                    { data: "purchase_date", name: "purchase_date", responsivePriority: 3 },
+                    { data: "status", name: "status", responsivePriority: 1 },
+                    { data: "action", name: "action", orderable: false, searchable: false, responsivePriority: 1 }
                 ],
                 dom: 'lfrtipB',
                 buttons: [

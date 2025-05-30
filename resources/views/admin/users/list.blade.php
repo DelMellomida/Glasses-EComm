@@ -8,6 +8,7 @@
                         + Add User
                     </a>
                 </div>
+                <div class="overflow-x-auto">
                 <table id="user_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
@@ -20,6 +21,7 @@
                         <!-- DataTables will populate rows here -->
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -104,13 +106,14 @@
             $('#user_list').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: {
                     url: "{{ route('admin.list-users') }}",
                 },
                 columns: [
-                    { data: "name", name: "name" },
-                    { data: "email", name: "email" },
-                    { data: "action", name: "action", orderable: false, searchable: false }
+                    { data: "name", name: "name" , responsivePriority: 1 },
+                    { data: "email", name: "email" , responsivePriority: 2 },
+                    { data: "action", name: "action", orderable: false, searchable: false, responsivePriority: 1 }
                 ],
                 dom: 'lfrtipB',
                 buttons: [

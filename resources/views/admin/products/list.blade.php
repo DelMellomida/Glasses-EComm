@@ -8,6 +8,7 @@
                         + Add Product
                     </a>
                 </div>
+                <div class="overflow-x-auto">
                 <table id="product_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
@@ -24,6 +25,7 @@
                         <!-- DataTables will populate rows here -->
                     </tbody>
                 </table>
+                </div> 
             </div>
         </div>
     </div>
@@ -94,17 +96,18 @@
             $('#product_list').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: {
                     url: "{{ route('admin.list-products') }}",
                 },
                 columns: [
-                    { data: "images", name: "images", orderable: false, searchable: false },
-                    { data: "product_name", name: "product_name" },
-                    { data: "product_description", name: "product_description" },
-                    { data: "price", name: "price" },
-                    { data: "gender", name: "gender" },
-                    { data: "status", name: "status" },
-                    { data: "action", name: "action", orderable: false, searchable: false }
+                    { data: "images", name: "images", orderable: false, searchable: false, responsivePriority: 5 },
+                    { data: "product_name", name: "product_name", responsivePriority: 1 },
+                    { data: "product_description", name: "product_description", responsivePriority: 3 },
+                    { data: "price", name: "price" , responsivePriority: 2 },
+                    { data: "gender", name: "gender" , responsivePriority: 4 },
+                    { data: "status", name: "status" , responsivePriority: 1 },
+                    { data: "action", name: "action", orderable: false, searchable: false , responsivePriority: 1 }
                 ],
                 dom: 'lfrtipB',
                 buttons: [

@@ -131,7 +131,6 @@ class AdminController extends Controller
                             </svg>
                         </button>
                     </form>
-                </div>
             ';
         })
         ->rawColumns(['action'])

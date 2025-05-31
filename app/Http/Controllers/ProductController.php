@@ -42,10 +42,18 @@ class ProductController extends Controller
                     $editUrl = route('admin.product.edit', ['id' => $row->product_id]);
                     $deleteUrl = route('admin.product.destroy', ['id' => $row->product_id]);
                     return '
-                        <a href="'.$editUrl.'" class="text-green-400 mr-2">Edit</a>
-                        <form action="'.$deleteUrl.'" method="POST" style="display:inline;">
+                        <a href="'.$editUrl.'" class="inline-flex items-center justify-center p-2 text-blue-600 hover:text-blue-800" title="Edit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h3l8-8a2.828 2.828 0 00-4-4l-8 8v3z"/>
+                            </svg>
+                        </a>
+                        <form action="'.$deleteUrl.'" method="POST" style="display:inline;" onsubmit="return confirm(\'Delete this product?\')">
                             '.csrf_field().method_field('DELETE').'
-                            <button type="submit" class="text-red-400" onclick="return confirm(\'Delete this product?\')">Delete</button>
+                            <button type="submit" class="inline-flex items-center justify-center p-2 text-red-600 hover:text-red-800" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                         </form>
                     ';
                 })

@@ -3,16 +3,16 @@
 
         <h2 class="text-3xl font-bold mt-5 mb-8 text-center text-[#3d405b]">Order & Sales Dashboard</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-dashed">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 ">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center">
                 <div class="text-4xl font-extrabold text-[#06d6a0]">{{ $orderCounts['successful'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Successful Orders</div>
             </div>
-            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#ef476f]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center">
                 <div class="text-4xl font-extrabold text-[#ef476f]">{{ $orderCounts['failed'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Failed Orders</div>
             </div>
-            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center border-t-4 border-[#ffd166]">
+            <div class="bg-[#ffffff] p-8 rounded-xl shadow text-center">
                 <div class="text-4xl font-extrabold text-[#ffd166]">{{ $orderCounts['pending'] }}</div>
                 <div class="text-[#3d405b] mt-2 font-semibold">Pending Orders</div>
             </div>

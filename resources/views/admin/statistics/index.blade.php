@@ -4,30 +4,30 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <!-- Top 10 Products by Quantity Sold -->
-            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Top 10 Products by Quantity Sold</h3>
+            <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl text-center font-bold text-[#3d405b] mb-4">Top 10 Products by Quantity Sold</h3>
                 <canvas id="productQuantityChart" height="120"></canvas>
             </div>
             <!-- Top 10 Products by Sales Amount -->
-            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Top 10 Products by Sales Amount</h3>
+            <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl text-center font-bold text-[#3d405b] mb-4">Top 10 Products by Sales Amount</h3>
                 <canvas id="productSalesChart" height="120"></canvas>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <!-- Monthly Revenue Trend -->
-            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-                <h3 class="text-xl font-bold text-[#3d405b] mb-4">Monthly Revenue (₱)</h3>
+            <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl text-center font-bold text-[#3d405b] mb-4">Monthly Revenue (₱)</h3>
                 <canvas id="monthlyRevenueChart" height="120"></canvas>
             </div>
             <!-- User Registrations per Month -->
-            <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
-                <h3 class="text-xl font-bold text-[#3d405b] mb-4">User Registrations per Month</h3>
+            <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
+                <h3 class="text-xl text-center font-bold text-[#3d405b] mb-4">User Registrations per Month</h3>
                 <canvas id="userRegistrationsChart" height="120"></canvas>
             </div>
         </div>
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0] mt-8">
-            <h3 class="text-xl font-bold text-[#3d405b] mb-4">Order Status Distribution</h3>
+        <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0] mt-8">
+            <h3 class="text-xl text-center font-bold text-[#3d405b] mb-4">Order Status Distribution</h3>
             <canvas id="orderStatusPie" height="120"></canvas>
         </div>
     </div>

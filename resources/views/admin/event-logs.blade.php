@@ -1,15 +1,15 @@
 <x-admin-layout>
     <div class="max-w-6xl mx-auto pt-24 pb-10"> <!-- Added mt-20 here -->
         <h2 class="text-3xl font-bold mb-8 text-center text-[#3d405b]">Event Logs</h2>
-        <div class="bg-[#fff1f1] rounded-xl shadow p-8 border border-[#ffd6e0]">
+        <div class="bg-[#ffffff] rounded-xl shadow p-8 border border-[#ffd6e0]">
             <table id="event_logs" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2 bg-[#ffd6e0] text-[#3d405b] font-bold">Date</th>
-                        <th class="px-4 py-2 bg-[#ffd6e0] text-[#3d405b] font-bold">User</th>
-                        <th class="px-4 py-2 bg-[#ffd6e0] text-[#3d405b] font-bold">Type</th>
-                        <th class="px-4 py-2 bg-[#ffd6e0] text-[#3d405b] font-bold">Description</th>
-                        <th class="px-4 py-2 bg-[#ffd6e0] text-[#3d405b] font-bold">Data</th>
+                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Date</th>
+                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">User</th>
+                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Type</th>
+                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Description</th>
+                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Data</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                                     </div>
                                     @if($isLong)
                                         <button type="button" class="show-more-btn text-xs text-[#ef476f] underline mt-1" onclick="toggleLogData(this)">Show More</button>
-                                        <div class="event-log-data-full hidden" style="background: #ffd6e0; border-radius: 6px; padding: 8px; font-size: 0.85rem; font-family: 'Fira Mono', 'Consolas', monospace; word-break: break-all; margin-top: 4px; max-height: 300px; overflow: auto;">
+                                        <div class="event-log-data-full hidden" style="background: #ffffff; border-radius: 6px; padding: 8px; font-size: 0.85rem; font-family: 'Fira Mono', 'Consolas', monospace; word-break: break-all; margin-top: 4px; max-height: 300px; overflow: auto;">
                                             {{ $jsonData }}
                                         </div>
                                     @endif

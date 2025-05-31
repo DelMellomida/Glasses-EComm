@@ -1,10 +1,10 @@
 <x-admin-layout>
     <div class="flex h-screen bg-gradient-to-br from-[#ffe5ec] to-[#b8c6db]">
         <div class="flex-1 flex items-start justify-center py-12">
-            <div class="w-full max-w-5xl mx-auto bg-[#fff1f1] rounded-xl shadow-lg p-6 mt-12 border border-[#ffd6e0]">
+            <div class="w-full max-w-5xl mx-auto bg-[#ffffff] rounded-xl shadow-lg p-6 mt-12 border border-[#ffd6e0]">
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('admin.product.create') }}"
-                       class="bg-[#ef476f] hover:bg-[#ffd166] text-white hover:text-[#3d405b] font-bold py-2 px-4 rounded transition border border-[#ef476f] hover:border-[#ffd166] shadow">
+                       class="bg-[#055970] hover:bg-[#ffd166] text-white hover:text-[#ffffff] font-bold py-2 px-4 rounded transition border border-[#055970] hover:border-[#ffd166] shadow">
                         + Add Product
                     </a>
                 </div>
@@ -12,13 +12,13 @@
                 <table id="product_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Images</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Description</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Price</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Gender</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#ffd6e0] text-[#3d405b] uppercase tracking-wider border-b-2 border-[#ef476f]">Action</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Images</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Gender</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,17 +32,17 @@
 
     <style>
         #product_list tbody tr:nth-child(even) {
-            background-color: #ffe5ec !important;
+            background-color: #ededed !important;
         }
         #product_list tbody tr:nth-child(odd) {
-            background-color: #fff1f1 !important;
+            background-color: #ffffff !important;
         }
         #product_list tbody tr {
             color: #3d405b !important;
             border-bottom: 1px solid #ffd6e0 !important;
         }
         #product_list tbody tr:hover {
-            background-color: #ffd6e0 !important;
+            background-color: #b6d8e2 !important;
             transition: background 0.2s;
         }
         #product_list th, #product_list td {
@@ -67,9 +67,9 @@
             color: #3d405b !important;
         }
         .dataTables_filter input {
-            background: #ffd6e0 !important;
+            background: #ffffff !important;
             color: #3d405b !important;
-            border: 1px solid #ef476f !important;
+            border: 1px solid #055970 !important;
             border-radius: 6px;
             padding: 0.5rem 1rem;
         }
@@ -77,16 +77,16 @@
             color: #3d405b !important;
         }
         .dt-button, .dt-buttons .btn {
-            background: #ef476f !important;
+            background: #055970 !important;
             color: #fff !important;
             border-radius: 6px !important;
-            border: 1px solid #ef476f !important;
+            border: 1px solid #055970 !important;
             margin-right: 0.5rem;
         }
         .dt-button:hover, .dt-buttons .btn:hover {
-            background: #ffd166 !important;
-            color: #3d405b !important;
-            border: 1px solid #ffd166 !important;
+            background: #055970 !important;
+            color: #ffffff !important;
+            border: 1px solid #055970 !important;
         }
     </style>
 

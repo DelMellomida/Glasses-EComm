@@ -75,6 +75,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/checkout', [PaymentMethodController::class, 'showPayment'])->name('payment.method');
 
     Route::post('/payment', [OrderController::class, 'processPayment'])->name('payment.process');
+
+    Route::get('/order-history', [OrderController::class, 'userOrderHistory'])->name('order.history');
 });
 
 Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');

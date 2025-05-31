@@ -320,6 +320,25 @@ class OrderController extends Controller
             'message' => 'Your payment has been processed successfully. Thank you for your order!',
         ]);
     }
+    public function userOrderHistory(Request $request)
+    {
+        $userId = Auth::id();
+        $status = $request->query('status');
 
+        $ordersQuery = Order::whereHas('details', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })
+            ->with(['details' => function($q) use ($userId) {
+                $q->where('user_id', $userId)->with('product');
+            }])
+            ->orderByDesc('purchase_date');
 
+        if ($status && in_array($status, ['successful', 'pending', 'cancelled'])) {
+            $ordersQuery->where('status', $status);
+        }
+
+        $orders = $ordersQuery->paginate(5)->withQueryString(); // 5 per page
+
+        return view('order.history', compact('orders', 'status'));
+    }
 }

@@ -12,7 +12,6 @@
                 <table id="product_list" class="min-w-full w-full table-auto rounded-lg overflow-hidden custom-table">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Images</th>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Name</th>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Description</th>
                             <th class="px-6 py-3 text-left text-xs font-bold bg-[#055970] text-[#ffffff] uppercase tracking-wider border-b-2 border-[#055970]">Price</th>
@@ -101,7 +100,7 @@
                     url: "{{ route('admin.list-products') }}",
                 },
                 columns: [
-                    { data: "images", name: "images", orderable: false, searchable: false, responsivePriority: 5 },
+                    // { data: "images", name: "images", orderable: false, searchable: false, responsivePriority: 5 },
                     { data: "product_name", name: "product_name", responsivePriority: 1 },
                     { data: "product_description", name: "product_description", responsivePriority: 3 },
                     { data: "price", name: "price" , responsivePriority: 2 },

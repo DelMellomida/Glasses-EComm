@@ -52,12 +52,16 @@ class CartController extends Controller
 
     public function showCart()
     {
-        $cart = Cart::with('items.product') // Eager load the product relationship
+        $cart = Cart::with('items.product')
             ->where('user_id', Auth::id())
             ->orWhere('session_id', session()->getId())
             ->first();
 
-        $productImages = ProductImage::whereIn('product_id', $cart->items->pluck('product.product_id'))->get();
+        $productImages = collect(); // default empty collection
+
+        if ($cart && $cart->items && $cart->items->count()) {
+            $productImages = ProductImage::whereIn('product_id', $cart->items->pluck('product.product_id'))->get();
+        }
 
         return view('cart.cart-home', compact('cart', 'productImages'));
     }

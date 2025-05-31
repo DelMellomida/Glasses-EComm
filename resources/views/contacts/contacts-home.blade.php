@@ -14,7 +14,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-96">
                 <div class="p-8 lg:p-12 flex flex-col justify-center">
                     <p class="text-gray-600 leading-relaxed mb-6">
-                    We’d love to hear from you! If you have any questions about our eye care services, optical products, eye exams, or if you need help with a previous visit or purchase, don’t hesitate to reach out. You can send us a message directly through this page, and we’ll get back to you as soon as possible. You can also contact us via our official Facebook and Instagram pages for updates, inquiries, or faster communication. At Sarabia Optical, we’re committed to providing clear vision and excellent customer service, your satisfaction and eye health are our top priorities.
+                    We'd love to hear from you! If you have any questions about our eye care services, optical products, eye exams, or if you need help with a previous visit or purchase, don't hesitate to reach out. You can send us a message directly through this page, and we'll get back to you as soon as possible. You can also contact us via our official Facebook and Instagram pages for updates, inquiries, or faster communication. At Sarabia Optical, we're committed to providing clear vision and excellent customer service, your satisfaction and eye health are our top priorities.
                     </p>
                     
                     
@@ -35,7 +35,7 @@
                 <div class="bg-gray-50 p-8 lg:p-12 border-l border-gray-200">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Send us a message</h3>
                     
-                    <form action="/#" method="POST" class="space-y-4">
+                    <form id="contactForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
                         @csrf
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -123,16 +123,18 @@
                             </button>
                         </div>
 
-                        @if(session('success'))
-                            <div class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function handleFormSubmit(event) {
+                alert('message sent!');
+        }
+    </script>
 </x-guest-layout>
 
 <x-footer></x-footer>

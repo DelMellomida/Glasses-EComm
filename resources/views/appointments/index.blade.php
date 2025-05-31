@@ -52,16 +52,16 @@
                 @csrf
                 <input type="hidden" name="appointment_date" id="appointment_date">
                 <div class="mb-4">
-                    <label for="branch_id" class="block font-semibold mb-1 text-gray-700">Branch</label>
+                    <label for="branch_id" class="block font-semibold mb-1 text-gray-700">Branch<span class="text-red-500">*</span></label>
                     <select name="branch_id" id="branch_id" class="border rounded px-3 py-2 w-full text-gray-900" required>
-                        <option value="">Select Branch</option>
+                        <option value="">Select branch</option>
                         @foreach($branches as $branch)
                             <option value="{{ $branch->id }}">{{ $branch->branch_name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="appointment_time" class="block font-semibold mb-1 text-gray-700">Time</label>
+                    <label for="appointment_time" class="block font-semibold mb-1 text-gray-700">Time<span class="text-red-500">*</span></label>
                     <select name="appointment_time" id="appointment_time" class="border rounded px-3 py-2 w-full" required>
                         <option value="">Select Time</option>
                         <!-- Options will be filled by JS -->
@@ -73,8 +73,10 @@
                     </div>
                 @endif
                 <div class="mb-4">
-                    <label for="type" class="block font-semibold mb-1 text-gray-700">Type</label>
-                    <input type="text" name="type" id="type" class="border rounded px-3 py-2 w-full" required>
+                    <label for="type" class="block font-semibold mb-1 text-gray-700">
+                        Type <span class="text-red-500">*</span>
+                    </label>
+                    <textarea name="type" id="type" class="border rounded px-3 py-2 w-full" required rows="2"></textarea>
                 </div>
                 @if($productId)
                     <input type="hidden" name="product_id" value="{{ $productId }}">
@@ -89,7 +91,11 @@
 
     <!-- Edit Appointment Modal -->
     <div id="edit-appointment-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
-        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-8 w-full max-w-md">
+        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-8 w-full max-w-md relative">
+            <!-- X (close) button in top right -->
+            <button type="button" id="close-edit-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold focus:outline-none" title="Close">
+                &times;
+            </button>
             <div class="flex items-center mb-6">
                 <svg class="h-6 w-6 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h3l8-8a2.828 2.828 0 00-4-4l-8 8v3z"/>
@@ -102,7 +108,7 @@
                 @method('PUT')
                 <input type="hidden" name="appointment_id" id="edit_appointment_id">
                 <div class="mb-4">
-                    <label for="edit_branch_id" class="block font-semibold mb-1 text-gray-700">Branch</label>
+                    <label for="edit_branch_id" class="block font-semibold mb-1 text-gray-700">Branch<span class="text-red-500">*</span></label>
                     <select name="branch_id" id="edit_branch_id" class="border rounded px-3 py-2 w-full text-gray-900" required>
                         <option value="">Select Branch</option>
                         @foreach($branches as $branch)
@@ -111,26 +117,30 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="edit_appointment_date" class="block font-semibold mb-1 text-gray-700">Date</label>
-                    <input type="date" name="appointment_date" id="edit_appointment_date" class="border rounded px-3 py-2 w-full" required readonly>
+                    <label for="edit_appointment_date" class="block font-semibold mb-1 text-gray-700">Date<span class="text-red-500">*</span></label>
+                    <input type="date" name="appointment_date" id="edit_appointment_date" class="border rounded px-3 py-2 w-full text-gray-400" required readonly min="{{ date('Y-m-d') }}">
                 </div>
                 <div class="mb-4">
-                    <label for="edit_appointment_time" class="block font-semibold mb-1 text-gray-700">Time</label>
+                    <label for="edit_appointment_time" class="block font-semibold mb-1 text-gray-700">Time<span class="text-red-500">*</span></label>
                     <select name="appointment_time" id="edit_appointment_time" class="border rounded px-3 py-2 w-full" required>
                         <option value="">Select Time</option>
                         <!-- Options will be filled by JS -->
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="edit_type" class="block font-semibold mb-1 text-gray-700">Type</label>
-                    <input type="text" name="type" id="edit_type" class="border rounded px-3 py-2 w-full" required>
+                    <label for="edit_type" class="block font-semibold mb-1 text-gray-700">Type<span class="text-red-500">*</span></label>
+                    <textarea name="type" id="edit_type" class="border rounded px-3 py-2 w-full" required rows="2"></textarea>
                 </div>
                 <!-- Product name display (filled by JS) -->
                 <div id="edit-product-name" class="mb-4 p-3 bg-blue-50 rounded text-blue-700 font-semibold" style="display:none"></div>
                 <div class="flex items-center justify-between mt-6">
-                    <button type="button" id="delete-appointment-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+                    <!-- Delete as icon button -->
+                    <button type="button" id="delete-appointment-btn" class="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 flex items-center justify-center" title="Delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                     <div class="flex gap-2">
-                        <button type="button" id="close-edit-modal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
                         <button type="submit" style="background-color:#2563eb!important;color:white!important;padding:0.5rem 1rem!important;border-radius:0.375rem!important;" class="hover:bg-blue-700">Update</button>
                     </div>
                 </div>
@@ -203,6 +213,9 @@
                 themeSystem: 'bootstrap5',
                 initialView: 'dayGridMonth',
                 selectable: true,
+                validRange: {
+                    start: new Date().toISOString().split('T')[0] // today
+                },
                 events: "{{ route('appointments.json') }}",
                 eventDisplay: 'block',
                 eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },

@@ -2,7 +2,7 @@
 <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-12 lg:py-16 mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <!-- Page Header -->
-        <div class="text-center mb-12">
+        <!-- <div class="text-center mb-12">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl mb-6 shadow-lg">
                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
@@ -11,7 +11,7 @@
             </div>
             <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Secure Payment</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Choose your preferred payment method and complete your transaction securely</p>
-        </div>
+        </div> -->
 
         <!-- Main Payment Container -->
         <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
@@ -33,6 +33,10 @@
                     <div class="p-8 lg:p-10">
                         <form method="POST" action="{{ route('payment.process') }}" id="paymentForm" class="space-y-8">
                             @csrf
+
+                            @foreach($selectedCartItems as $item)
+                                <input type="hidden" name="cart_items[{{ $item['id'] }}]" value="{{ $item['quantity'] }}">
+                            @endforeach
 
                             <!-- Payment Options Grid -->
                             <div class="grid gap-6">
@@ -98,7 +102,7 @@
                                     </div>
                                 </div>
 
-                                <!-- PayPal Option -->
+                                <!-- PayPal Option
                                 <div class="payment-option group border-2 border-gray-200 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-yellow-400 hover:shadow-lg hover:bg-gradient-to-r hover:from-yellow-50 hover:to-transparent" data-method="paypal">
                                     <label class="flex items-center cursor-pointer">
                                         <input type="radio" name="payment_method" value="paypal" class="sr-only payment-radio">
@@ -125,38 +129,58 @@
                                             </svg>
                                         </div>
                                     </label>
-                                </div>
+                                </div> -->
 
-                                <!-- PayPal Fields -->
-                                <div class="payment-fields hidden transition-all duration-300" id="paypal-fields">
-                                    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 border-2 border-yellow-200 ml-11">
-                                        <div>
-                                            <label class="block text-sm font-bold text-gray-800 mb-3">PayPal Email Address</label>
-                                            <input type="email" name="paypal_email" class="w-full border-2 border-gray-300 rounded-xl p-4 text-lg focus:border-yellow-500 focus:ring-4 focus:ring-yellow-200 focus:outline-none transition-all duration-200" placeholder="your@email.com">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Bank Transfer Option -->
-                                <div class="payment-option group border-2 border-gray-200 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-green-400 hover:shadow-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-transparent" data-method="bank_transfer">
+                                <div class="payment-option group border-2 border-gray-200 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-blue-400 hover:shadow-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-transparent" data-method="gcash">
                                     <label class="flex items-center cursor-pointer">
-                                        <input type="radio" name="payment_method" value="bank_transfer" class="sr-only payment-radio">
+                                        <input type="radio" name="payment_method" value="gcash" class="sr-only payment-radio">
+                                        <div class="flex items-center w-full">
+                                            <div class="flex-shrink-0 w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center radio-indicator transition-all duration-200 mr-5">
+                                                <div class="w-3 h-3 bg-blue-600 rounded-full opacity-0 scale-0 transition-all duration-200"></div>
+                                            </div>
+                                            <div class="flex items-center flex-1">
+                                                <div class="bg-blue-100 p-4 rounded-xl group-hover:bg-blue-200 transition-colors mr-5">
+                                                    <!-- GCash SVG Icon -->
+                                                    <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" fill="#0076FF"/>
+                                                        <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial" dy=".3em">GCash</text>
+                                                    </svg>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h3 class="font-bold text-gray-900 text-xl mb-1">GCash</h3>
+                                                    <p class="text-gray-600">Pay with your GCash account</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">Instant</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors ml-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="payment-option group border-2 border-gray-200 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-green-400 hover:shadow-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-transparent" data-method="cod">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="payment_method" value="cod" class="sr-only payment-radio">
                                         <div class="flex items-center w-full">
                                             <div class="flex-shrink-0 w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center radio-indicator transition-all duration-200 mr-5">
                                                 <div class="w-3 h-3 bg-blue-600 rounded-full opacity-0 scale-0 transition-all duration-200"></div>
                                             </div>
                                             <div class="flex items-center flex-1">
                                                 <div class="bg-green-100 p-4 rounded-xl group-hover:bg-green-200 transition-colors mr-5">
+                                                    <!-- Cash SVG Icon -->
                                                     <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586l-2 2V6H5v2.586l-2-2V4z"/>
-                                                        <path d="M5 8.414V17a1 1 0 001 1h12a1 1 0 001-1V8.414l-8 8-8-8z"/>
+                                                        <rect x="2" y="7" width="20" height="10" rx="2" fill="#34D399"/>
+                                                        <circle cx="12" cy="12" r="3" fill="#fff"/>
                                                     </svg>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <h3 class="font-bold text-gray-900 text-xl mb-1">Bank Transfer</h3>
-                                                    <p class="text-gray-600">Direct bank to bank transfer</p>
+                                                    <h3 class="font-bold text-gray-900 text-xl mb-1">Cash on Delivery</h3>
+                                                    <p class="text-gray-600">Pay with cash upon delivery</p>
                                                     <div class="flex items-center mt-2">
-                                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">1-3 Business Days</span>
+                                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">No upfront payment</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,7 +191,7 @@
                                     </label>
                                 </div>
 
-                                <!-- Bank Transfer Fields -->
+                                <!-- Bank Transfer Fields
                                 <div class="payment-fields hidden transition-all duration-300" id="bank-fields">
                                     <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200 ml-11">
                                         <div class="grid lg:grid-cols-2 gap-6">
@@ -185,7 +209,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                     </div>
@@ -204,22 +228,39 @@
                             Order Summary
                         </h3>
                         
+                        <div class="space-y-2 mb-6">
+                            @if(isset($selectedCartItems) && count($selectedCartItems))
+                                @foreach($selectedCartItems as $item)
+                                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                        <div>
+                                            <div class="font-semibold text-gray-900">{{ $item['product_name'] }}</div>
+                                            <div class="text-xs text-gray-500">Qty: {{ $item['quantity'] }}</div>
+                                        </div>
+                                        <div class="font-semibold text-gray-900">
+                                            ₱{{ number_format($item['subtotal'], 2) }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-gray-400 text-sm">No items selected.</div>
+                            @endif
+                        </div>
                         <div class="space-y-4 mb-6">
                             <div class="flex justify-between items-center py-3 border-b border-gray-100">
                                 <span class="text-gray-600">Subtotal</span>
-                                <span class="font-semibold text-gray-900">$99.99</span>
+                                <span class="font-semibold text-gray-900">₱{{ number_format($subtotal ?? 0, 2) }}</span>
                             </div>
                             <div class="flex justify-between items-center py-3 border-b border-gray-100">
                                 <span class="text-gray-600">Processing Fee</span>
-                                <span class="font-semibold text-gray-900">$2.99</span>
+                                <span class="font-semibold text-gray-900">₱{{ number_format($processingFee ?? 0, 2) }}</span>
                             </div>
                             <div class="flex justify-between items-center py-3 border-b border-gray-100">
                                 <span class="text-gray-600">Tax</span>
-                                <span class="font-semibold text-gray-900">$8.50</span>
+                                <span class="font-semibold text-gray-900">₱{{ number_format($tax ?? 0, 2) }}</span>
                             </div>
                             <div class="flex justify-between items-center py-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl px-4">
                                 <span class="text-xl font-bold text-gray-900">Total</span>
-                                <span class="text-2xl font-bold text-blue-600">$111.48</span>
+                                <span class="text-2xl font-bold text-blue-600">₱{{ number_format($subtotal ?? 0, 2) }}</span>
                             </div>
                         </div>
 
@@ -417,6 +458,10 @@
                     alert('Please fill in all bank transfer fields.');
                     return;
                 }
+            } else if (selectedMethod.value === 'gcash') {
+                // Optionally, validate GCash number if you add a field
+            } else if (selectedMethod.value === 'cod') {
+                // No extra validation needed for COD
             }
         });
 

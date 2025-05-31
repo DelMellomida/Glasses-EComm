@@ -15,6 +15,7 @@ use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\PaymentMethodController;
 
 use function PHPUnit\Framework\isNull;
 
@@ -69,7 +70,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::resource('appointments', AppointmentController::class);
     Route::get('/appointments/json', [AppointmentController::class, 'appointments'])->name('appointments.json');
 
-    Route::view('/payment-method', 'payment.method')->name('payment.method');
+    // Route::view('/payment-method', 'payment.method')->name('payment.method');
+
+    Route::post('/checkout', [PaymentMethodController::class, 'showPayment'])->name('payment.method');
 
     Route::post('/payment', [OrderController::class, 'processPayment'])->name('payment.process');
 });

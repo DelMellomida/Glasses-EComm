@@ -16,6 +16,43 @@ class PaymentMethodController extends Controller
         return view('cart.checkout');
     }
 
+    public function showPayment(Request $request)
+    {
+        $cartItemIds = $request->input('cart_items', []);
+        $selectedCartItems = [];
+        $subtotal = 0;
+
+        if (!empty($cartItemIds)) {
+            $cartItems = \App\Models\CartItem::with('product')
+                ->whereIn('id', $cartItemIds)
+                ->get();
+
+            foreach ($cartItems as $item) {
+                $itemSubtotal = $item->product->price * $item->quantity;
+                $selectedCartItems[] = [
+                    'id' => $item->id,
+                    'product_name' => $item->product->product_name,
+                    'quantity' => $item->quantity,
+                    'subtotal' => $itemSubtotal,
+                ];
+                $subtotal += $itemSubtotal;
+            }
+        }
+
+        // Example fees (customize as needed)
+        $processingFee = $subtotal > 0 ? 20 : 0;
+        $tax = $subtotal * 0.05;
+        $total = $subtotal + $processingFee + $tax;
+
+        return view('payment.method', [
+            'selectedCartItems' => $selectedCartItems,
+            'subtotal' => $subtotal,
+            'processingFee' => $processingFee,
+            'tax' => $tax,
+            'total' => $total,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

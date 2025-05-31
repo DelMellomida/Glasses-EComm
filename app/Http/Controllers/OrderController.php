@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Yajra\DataTables\Facades\DataTables;
 use App\Helpers\EventLogger;
 
@@ -256,11 +258,68 @@ class OrderController extends Controller
         return redirect()->route('all-transaction.index')->with('success', 'Order deleted successfully.');
     }
 
-    public function processPayment(){
+    public function processPayment(Request $request)
+    {
+        $cartItems = $request->input('cart_items', []); 
+        Log::info('Cart items received for payment', ['cartItems' => $cartItems]);
+
+        $orderTotal = 0;
+        $orderDetails = [];
+
+        foreach ($cartItems as $cartItemId => $quantityToBuy) {
+            $cartItem = \App\Models\CartItem::with('product')->find($cartItemId);
+
+            if ($cartItem) {
+                Log::info('CartItem found', [
+                    'cartItemId' => $cartItemId,
+                    'quantityToBuy' => $quantityToBuy,
+                    'product' => $cartItem->product,
+                    'price' => $cartItem->product ? $cartItem->product->price : null,
+                ]);
+                // ...rest of your code
+            }
+
+            if ($cartItem) {
+                $itemSubtotal = $cartItem->product->price * $quantityToBuy;
+                $orderTotal += $itemSubtotal;
+
+                $orderDetails[] = [
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $quantityToBuy,
+                ];
+
+                $cartItem->quantity -= $quantityToBuy;
+                if ($cartItem->quantity <= 0) {
+                    $cartItem->delete();
+                } else {
+                    $cartItem->save();
+                }
+            }
+        }
+
+        // Create the order with the calculated total
+        $order = Order::create([
+            'order_total' => $orderTotal,
+            'purchase_date' => now(),
+            'status' => 'successful',
+        ]);
+
+        // Create order details
+        foreach ($orderDetails as $detail) {
+            OrderDetail::create([
+                'order_id' => $order->order_id,
+                'user_id' => Auth::id(),
+                'product_id' => $detail['product_id'],
+                'quantity' => $detail['quantity'],
+            ]);
+        }
+
         return redirect()->route('guest.guest-home')->with('notification', [
-        'type' => 'success',
-        'title' => 'Process Payment',
-        'message' => 'Your payment has been processed successfully. Thank you for your order!',
+            'type' => 'success',
+            'title' => 'Process Payment',
+            'message' => 'Your payment has been processed successfully. Thank you for your order!',
         ]);
     }
+
+
 }

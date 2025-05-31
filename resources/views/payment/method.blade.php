@@ -1,3 +1,9 @@
 <x-app-layout>
-    <x-payment-card />
+    <x-payment-card 
+    :selectedCartItems="$selectedCartItems"
+    :subtotal="$subtotal"
+    :processingFee="0"
+    :tax="0"
+    :total="$total"
+/>
 </x-app-layout>

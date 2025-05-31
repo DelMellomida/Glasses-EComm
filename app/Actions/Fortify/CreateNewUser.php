@@ -43,7 +43,7 @@ class CreateNewUser implements CreatesNewUsers
             'user_id' => $user->id,
             'address' => '',
             'phone_number' => '',
-            'gender' => 'male', // default as per migration
+            'gender' => 'male',
             'date_of_birth' => null,
         ]);
 

@@ -13,7 +13,7 @@
                     <option value="">All</option>
                     <option value="successful" {{ request('status') == 'successful' ? 'selected' : '' }}>Successful</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="cancelled" {{ request('status') == 'failed' ? 'selected' : '' }}>Cancelled</option>
+                    <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>Failed</option>
                 </select>
             </form>
         </div>

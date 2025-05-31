@@ -95,7 +95,7 @@ class ProductController extends Controller
         try {
             if (empty(env('CLOUDINARY_CLOUD_NAME')) || empty(env('CLOUDINARY_API_KEY')) || empty(env('CLOUDINARY_API_SECRET'))) {
                 Log::error('Cloudinary configuration missing');
-                return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
+                // return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
             }
 
             $product = Product::create([

@@ -288,6 +288,16 @@ class OrderController extends Controller
                     'quantity' => $quantityToBuy,
                 ];
 
+                $product = $cartItem->product;
+                if ($product) {
+                    $product->stock = max(0, $product->stock - $quantityToBuy);
+                    // Set status to 'inactive' if stock is zero
+                    if ($product->stock == 0) {
+                        $product->status = 'inactive';
+                    }
+                    $product->save();
+                }
+
                 $cartItem->quantity -= $quantityToBuy;
                 if ($cartItem->quantity <= 0) {
                     $cartItem->delete();
@@ -333,7 +343,7 @@ class OrderController extends Controller
             }])
             ->orderByDesc('purchase_date');
 
-        if ($status && in_array($status, ['successful', 'pending', 'cancelled'])) {
+        if ($status && in_array($status, ['successful', 'pending', 'failed'])) {
             $ordersQuery->where('status', $status);
         }
 

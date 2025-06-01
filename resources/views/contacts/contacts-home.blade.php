@@ -43,7 +43,7 @@
                                 <input 
                                     type="text" 
                                     name="first_name" 
-                                    placeholder="First Name"
+                                    placeholder="First Name *"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 bg-white"
                                     value="{{ old('first_name') }}"
                                     required
@@ -56,7 +56,7 @@
                                 <input 
                                     type="text" 
                                     name="last_name" 
-                                    placeholder="Last Name"
+                                    placeholder="Last Name *"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 bg-white"
                                     value="{{ old('last_name') }}"
                                     required
@@ -71,7 +71,7 @@
                             <input 
                                 type="email" 
                                 name="email" 
-                                placeholder="Email Address"
+                                placeholder="Email Address *"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 bg-white"
                                 value="{{ old('email') }}"
                                 required
@@ -85,7 +85,7 @@
                             <input 
                                 type="text" 
                                 name="subject" 
-                                placeholder="Subject"
+                                placeholder="Subject *"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 bg-white"
                                 value="{{ old('subject') }}"
                                 required
@@ -99,7 +99,7 @@
                             <textarea 
                                 name="message" 
                                 rows="4" 
-                                placeholder="Your Message"
+                                placeholder="Your Message *"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 resize-vertical bg-white"
                                 required
                             >{{ old('message') }}</textarea>

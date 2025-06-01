@@ -192,6 +192,18 @@
             </a>
          </li>
 
+         <!-- Appoinments -->
+         <li>
+            <a href="{{ route("admin.appointments") }}" class="flex items-center p-2 pl-2 text-[#055970] rounded-lg hover:bg-[#055970] group">
+               <!-- Cog Icon -->
+               <svg class="w-5 h-5 text-[#055970] group-hover:text-[#ffffff]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0a1.724 1.724 0 002.573 1.01c.797-.46 1.757.38 1.297 1.176a1.724 1.724 0 001.01 2.573c.921.3.921 1.603 0 1.902a1.724 1.724 0 00-1.01 2.573c.46.797-.38 1.757-1.176 1.297a1.724 1.724 0 00-2.573 1.01c-.3.921-1.603.921-1.902 0a1.724 1.724 0 00-2.573-1.01c-.797.46-1.757-.38-1.297-1.176a1.724 1.724 0 00-1.01-2.573c-.921-.3-.921-1.603 0-1.902a1.724 1.724 0 001.01-2.573c-.46-.797.38-1.757 1.176-1.297a1.724 1.724 0 002.573-1.01z"/>
+                  <circle cx="12" cy="12" r="3"/>
+               </svg>
+               <span class="ms-2 group-hover:text-[#ffffff]">Appointments</span>
+            </a>
+         </li>
+
          <!-- Settings -->
          <li>
             <a href="#" class="flex items-center p-2 pl-2 text-[#055970] rounded-lg hover:bg-[#055970] group">

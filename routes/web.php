@@ -30,15 +30,12 @@ Route::get('/redirect-after-login', function () {
     ]);
 });
 
-// Route::get('/products', function () {
-//     return view('product.home');
-// })->name('product.home');
-
-// ✅ FIX: Assign product.home to /products only
 Route::get('/products', [ProductController::class, 'showAllProductsInProductsView'])->name('product.home');
 
-// ✅ FIX: Keep guest homepage on /
 Route::get('/', [ProductController::class, 'showAllProductsInGuestView'])->name('guest.guest-home');
+
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart-home');
+
 
 Route::get('/about-us', function () {
     return view('aboutus.about-home');
@@ -48,16 +45,18 @@ Route::get('/contacts', function () {
     return view('contacts.contacts-home');
 })->name('contacts');
 
-Route::get('/cart', [CartController::class, 'showCart'])->name('cart-home');
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::delete('/cart-item/{id}', [CartItemController::class, 'destroy'])->name('cart-item.destroy');
-Route::patch('/cart-item/{id}/increment', [CartItemController::class, 'increment'])->name('cart-item.increment');
-Route::patch('/cart-item/{id}/decrement', [CartItemController::class, 'decrement'])->name('cart-item.decrement');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart-item/{id}', [CartItemController::class, 'destroy'])->name('cart-item.destroy');
+    Route::patch('/cart-item/{id}/increment', [CartItemController::class, 'increment'])->name('cart-item.increment');
+    Route::patch('/cart-item/{id}/decrement', [CartItemController::class, 'decrement'])->name('cart-item.decrement');
+
+    Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
 
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
@@ -67,27 +66,23 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
     Route::get('/appointments/available-times', [AppointmentController::class, 'availableTimes']);
 
-    // Route::resource('appointments', AppointmentController::class);
     Route::get('/appointments/json', [AppointmentController::class, 'appointments'])->name('appointments.json');
 
-    // Route::view('/payment-method', 'payment.method')->name('payment.method');
-
     Route::post('/checkout', [PaymentMethodController::class, 'showPayment'])->name('payment.method');
-
     Route::post('/payment', [OrderController::class, 'processPayment'])->name('payment.process');
 
     Route::get('/order-history', [OrderController::class, 'userOrderHistory'])->name('order.history');
 });
-
-Route::get('/order-details', [OrderDetailController::class, 'getOrderDetailsByUserId'])->name('order-details.index');
-
-
 
 Route::middleware(['admin'])->group(function () {
 
     Route::get('/admin/home', [StatisticsController::class, 'index'])->name("admin.dashboard");
 
     Route::get('admin/statistics', [StatisticsController::class, 'extraDetails'])->name('admin.statistics');
+
+    Route::get('admin/appointments', [AppointmentController::class, 'adminIndex'])->name('admin.appointments');
+    Route::put('/admin/appointments/{id}', [AppointmentController::class, 'adminUpdate'])->name('admin.appointments.update');
+    Route::delete('/admin/appointments/{id}', [AppointmentController::class, 'adminDestroy'])->name('admin.appointments.destroy');
     
     Route::get('/admin/list-products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/admin/list-products/data', [ProductController::class, 'listProducts'])->name('admin.list-products');

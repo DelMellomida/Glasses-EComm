@@ -20,6 +20,21 @@ class AppointmentController extends Controller
         $branches = Branch::all();
         return view('appointments.index', compact('appointments', 'branches'));
     }
+    public function adminIndex(Request $request)
+    {
+        $query = Appointment::with(['branch', 'product', 'user'])
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time');
+
+        if ($request->filled('branch_id')) {
+            $query->where('branch_id', $request->branch_id);
+        }
+
+        $appointments = $query->paginate(5);
+        $branches = Branch::all();
+
+        return view("admin.appointments.list", compact('appointments', 'branches'));
+    }
 
     public function appointments(Request $request)
     {
@@ -161,7 +176,12 @@ class AppointmentController extends Controller
 
     public function edit($id)
     {
-        $appointment = Appointment::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+        if ($user->type === 'admin') {
+            $appointment = Appointment::findOrFail($id);
+        } else {
+            $appointment = Appointment::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        }
         return view('appointments.edit', compact('appointment'));
     }
 
@@ -235,7 +255,12 @@ class AppointmentController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            $appointment = Appointment::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+            $user = Auth::user();
+            if ($user->type === 'admin') {
+                $appointment = Appointment::findOrFail($id);
+            } else {
+                $appointment = Appointment::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+            }
 
             EventLogger::log('Appointment Deletion', 'Appointment deleted successfully', [
                 'appointment_id' => $appointment->id,
@@ -263,5 +288,103 @@ class AppointmentController extends Controller
             }
         }
         return redirect()->route('appointments.index')->with('success', 'Appointment deleted!');
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'appointment_date' => 'required|date',
+                'appointment_time' => 'required',
+                'type' => 'required|string',
+                'branch_id' => 'required|exists:branch,id',
+            ]);
+
+            $startTime = $request->appointment_time;
+            $endTime = date('H:i', strtotime($startTime) + 3600);
+
+            $conflict = Appointment::where('branch_id', $request->branch_id)
+                ->where('appointment_date', $request->appointment_date)
+                ->where('id', '!=', $id)
+                ->where(function($query) use ($startTime, $endTime) {
+                    $query->whereBetween('appointment_time', [$startTime, $endTime])
+                        ->orWhereRaw('? BETWEEN appointment_time AND ADDTIME(appointment_time, "01:00:00")', [$startTime]);
+                })
+                ->exists();
+
+            if ($conflict) {
+                if ($request->wantsJson()) {
+                    return response()->json(['success' => false, 'message' => 'This time slot is already booked for this branch.'], 409);
+                }
+                return back()->withErrors(['appointment_time' => 'This time slot is already booked for this branch. Please choose another time.'])->withInput();
+            }
+
+            $appointment = Appointment::findOrFail($id);
+            $appointment->update([
+                'appointment_date' => $request->appointment_date,
+                'appointment_time' => $request->appointment_time,
+                'type' => $request->type,
+                'branch_id' => $request->branch_id,
+            ]);
+
+            EventLogger::log('Admin Appointment Update', 'Appointment updated by admin', [
+                'appointment_id' => $appointment->id,
+                'admin_id' => Auth::id(),
+                'appointment_date' => $appointment->appointment_date,
+                'appointment_time' => $appointment->appointment_time,
+                'branch_id' => $appointment->branch_id,
+                'type' => $appointment->type,
+            ]);
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => true]);
+            }
+
+            return redirect()->route('admin.appointments')->with('success', 'Appointment updated!');
+        } catch (\Exception $e) {
+            EventLogger::log('Admin Appointment Update Failed', 'Failed to update appointment', [
+                'admin_id' => Auth::id(),
+                'appointment_id' => $id,
+                'input_data' => $request->except('_token'),
+                'error_message' => $e->getMessage(),
+            ]);
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'An error occurred while updating the appointment.'], 500);
+            }
+            return back()->withErrors(['error' => 'An error occurred while updating the appointment.'])->withInput();
+    }}
+
+    public function adminDestroy(Request $request, $id)
+    {
+        try {
+            $appointment = Appointment::findOrFail($id);
+
+            EventLogger::log('Admin Appointment Deletion', 'Appointment deleted by admin', [
+                'appointment_id' => $appointment->id,
+                'admin_id' => Auth::id(),
+                'appointment_date' => $appointment->appointment_date,
+                'appointment_time' => $appointment->appointment_time,
+                'branch_id' => $appointment->branch_id,
+                'type' => $appointment->type,
+            ]);
+
+            $appointment->delete();
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => true, 'message' => 'Appointment deleted!']);
+            }
+
+            return redirect()->route('admin.appointments')->with('success', 'Appointment deleted!');
+        } catch (\Exception $e) {
+            EventLogger::log('Admin Appointment Deletion Failed', 'Failed to delete appointment', [
+                'admin_id' => Auth::id(),
+                'error_message' => $e->getMessage(),
+            ]);
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['error' => true]);
+            }
+            return redirect()->route('admin.appointments')->with('error', 'Failed to delete appointment.');
+        }
     }
 }

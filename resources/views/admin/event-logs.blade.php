@@ -9,7 +9,7 @@
                         <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">User</th>
                         <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Type</th>
                         <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Description</th>
-                        <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Data</th>
+                        <!-- <th class="px-4 py-2 bg-[#055970] text-[#ffffff] font-bold">Data</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +23,7 @@
                             <td class="px-4 py-2">{{ $log->user?->name ?? 'N/A' }}</td>
                             <td class="px-4 py-2">{{ $log->event_type }}</td>
                             <td class="px-4 py-2">{{ $log->description }}</td>
-                            <td class="px-4 py-2 align-top">
+                            <!-- <td class="px-4 py-2 align-top">
                                 <div class="relative">
                                     <div class="event-log-data-preview" style="max-height: 90px; overflow: auto; background: #ffd6e0; border-radius: 6px; padding: 8px; font-size: 0.85rem; font-family: 'Fira Mono', 'Consolas', monospace; word-break: break-all;">
                                         {{ $isLong ? Str::limit($jsonData, 400, '...') : $jsonData }}
@@ -35,7 +35,7 @@
                                         </div>
                                     @endif
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     @endforeach
                 </tbody>

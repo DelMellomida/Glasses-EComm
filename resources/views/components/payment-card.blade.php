@@ -219,6 +219,14 @@
             <!-- Payment Summary Sidebar -->
             <div class="lg:col-span-1">
                 <div class="sticky top-8">
+                    <!-- Shipping Address Display -->
+                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Shipping Address</h3>
+                        <p class="text-gray-700">
+                            {{ $address }}
+                        </p>
+                    </div>
+
                     <!-- Order Summary -->
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 mb-8">
                         <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">

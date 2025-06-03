@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\PaymentMethod;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentMethodController extends Controller
 {
@@ -21,6 +23,8 @@ class PaymentMethodController extends Controller
         $cartItemIds = $request->input('cart_items', []);
         $selectedCartItems = [];
         $subtotal = 0;
+        $user = User::with('userDetail')->find(Auth::id());
+        $address = $user->userDetail->address ?? null;
 
         if (!empty($cartItemIds)) {
             $cartItems = \App\Models\CartItem::with('product')
@@ -50,6 +54,7 @@ class PaymentMethodController extends Controller
             'processingFee' => $processingFee,
             'tax' => $tax,
             'total' => $total,
+            'address' => $address,
         ]);
     }
 

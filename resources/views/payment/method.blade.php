@@ -5,5 +5,6 @@
     :processingFee="0"
     :tax="0"
     :total="$total"
+    :address="$address"
 />
 </x-app-layout>

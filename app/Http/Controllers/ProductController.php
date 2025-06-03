@@ -101,7 +101,11 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
-            if (empty(env('CLOUDINARY_CLOUD_NAME')) || empty(env('CLOUDINARY_API_KEY')) || empty(env('CLOUDINARY_API_SECRET'))) {
+
+            $CLOUDINARY_CLOUD_NAME="dckv0ylzi";
+            $CLOUDINARY_API_KEY="515883482712457";
+            $CLOUDINARY_API_SECRET="NZY96vHNPCScs5GcE8LcsifVz80";
+            if (empty($CLOUDINARY_CLOUD_NAME) || empty($CLOUDINARY_API_KEY) || empty($CLOUDINARY_API_SECRET)) {
                 Log::error('Cloudinary configuration missing');
                 // return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
             }
@@ -125,9 +129,9 @@ class ProductController extends Controller
             if ($request->hasFile('images')) {
                 $cloudinary = new \Cloudinary\Cloudinary([
                     'cloud' => [
-                        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                        'api_key' => env('CLOUDINARY_API_KEY'),
-                        'api_secret' => env('CLOUDINARY_API_SECRET')
+                        'cloud_name' => $CLOUDINARY_CLOUD_NAME,
+                        'api_key' => $CLOUDINARY_API_KEY,
+                        'api_secret' => $CLOUDINARY_API_SECRET
                     ],
                     'url' => [
                         'secure' => true,
@@ -308,17 +312,21 @@ class ProductController extends Controller
                 'status' => $request->status,
             ]);
 
+            $CLOUDINARY_CLOUD_NAME="dckv0ylzi";
+            $CLOUDINARY_API_KEY="515883482712457";
+            $CLOUDINARY_API_SECRET="NZY96vHNPCScs5GcE8LcsifVz80";
+
             if ($request->hasFile('images')) {
-                if (empty(env('CLOUDINARY_CLOUD_NAME')) || empty(env('CLOUDINARY_API_KEY')) || empty(env('CLOUDINARY_API_SECRET'))) {
+                if (empty($CLOUDINARY_CLOUD_NAME) || empty($CLOUDINARY_API_KEY) || empty($CLOUDINARY_API_SECRET)) {
                     Log::error('Cloudinary configuration missing');
                     return redirect()->route('products.index')->with('error', 'Image upload service not configured properly.');
                 }
 
                 $cloudinary = new \Cloudinary\Cloudinary([
                     'cloud' => [
-                        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                        'api_key' => env('CLOUDINARY_API_KEY'),
-                        'api_secret' => env('CLOUDINARY_API_SECRET')
+                        'cloud_name' => $CLOUDINARY_CLOUD_NAME,
+                        'api_key' => $CLOUDINARY_API_KEY,
+                        'api_secret' => $CLOUDINARY_API_SECRET
                     ],
                     'url' => [
                         'secure' => true,
@@ -415,13 +423,17 @@ class ProductController extends Controller
             $cloudinary = null;
             $cloudinaryConfigured = false;
 
-            if (!empty(env('CLOUDINARY_CLOUD_NAME')) && !empty(env('CLOUDINARY_API_KEY')) && !empty(env('CLOUDINARY_API_SECRET'))) {
+            $CLOUDINARY_CLOUD_NAME="dckv0ylzi";
+            $CLOUDINARY_API_KEY="515883482712457";
+            $CLOUDINARY_API_SECRET="NZY96vHNPCScs5GcE8LcsifVz80";
+
+            if (!empty($CLOUDINARY_CLOUD_NAME) && !empty($CLOUDINARY_API_KEY) && !empty($CLOUDINARY_API_SECRET)) {
                 try {
                     $cloudinary = new \Cloudinary\Cloudinary([
                         'cloud' => [
-                            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                            'api_key' => env('CLOUDINARY_API_KEY'),
-                            'api_secret' => env('CLOUDINARY_API_SECRET')
+                            'cloud_name' => $CLOUDINARY_CLOUD_NAME,
+                            'api_key' => $CLOUDINARY_API_KEY,
+                            'api_secret' => $CLOUDINARY_API_SECRET
                         ],
                         'url' => [
                             'secure' => true,

@@ -70,7 +70,7 @@
                         <div class="flex flex-wrap gap-2 mt-2">
                             @foreach($product->images as $img)
                                 <div class="relative group">
-                                    <img src="{{ $img->image_path }}" class="w-16 h-16 object-cover rounded border border-gray-300" alt="Product Image">
+                                    <img src="{{ $img->image_path }}" class="w-32 h-32 object-cover rounded border border-gray-300" alt="Product Image">
                                     <!-- Optionally add a delete button for each image here -->
                                 </div>
                             @endforeach

@@ -2,7 +2,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <img src="{{ asset('build/assets/Images/Sarabia-Logo-Blue-Row.jpg') }}" class="h-12" alt="Sarabia Logo" />
+            <img src="{{ asset('build/assets/Images/Sarabia-logo-white.png') }}" class="h-12" alt="Sarabia Logo" />
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -15,36 +15,48 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
+            <div class="grid grid-rows-2 gap-6 p-5">
+                <div>
+                    <x-label for="email" value="{{ __('') }}" />
+                    <input id="email" class="w-full rounded-lg border-5 backdrop-blur-md bg-transparent" type="email" name="email" :value="old('email')" placeholder="Email" required autofocus autocomplete="username" />
+                </div>
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <div>
+                    <x-label for="password" value="{{ __('') }}" />
+                    <input id="password" class="w-full rounded-lg border-5 bg-transparent" type="password" name="password" placeholder="Password" required autocomplete="current-password" />
+                </div>
+
+            </div>
+            <div class="grid grid-cols-2 gap-5 pl-5">
+                <div class="">
+                    <label for="remember_me" class="flex items-center">
+                        <x-checkbox id="remember_me" name="remember" />
+                        <span class="ms-2 text-sm text-white">{{ __('Remember me') }}</span>
+                    </label>
+                </div>
+
+                <div class="pl-5">
+                    @if (Route::has('password.request'))
+                        <a class="underline text-sm text-white hover:text-white-500 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
+                    @endif
+
+                </div>
             </div>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+            <div class="grid grid-rows-2 gap-3 justify-center">
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
+                <x-button class="mt-5 text-center">
                     {{ __('Log in') }}
                 </x-button>
-                    <a href="{{ route('register') }}" class="text-black ms-2 text-xs">REGISTER</a>
+
+
+                <div class="">
+                    <span class="text-white ms-2 text-sm">Not a member?</span> <a href="{{ route('register') }}" class="text-white ms-2 text-sm underline">Register here!</a>
+                </div>
             </div>
         </form>
     </x-authentication-card>
 </x-guest-layout>
+

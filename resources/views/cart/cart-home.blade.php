@@ -7,99 +7,103 @@
     <x-nav-guest></x-nav-guest>
 @endif
 
-<x-guest-layout>
-<div class="container mx-auto px-2 md:px-4 py-8 mt-16">
-    <h1 class="text-3xl font-bold mb-8 text-gray-800">Your Cart</h1>
-
+<x-app-layout>
+<div class="flex justify-center py-40">
+        <!-- <h1 class="text-3xl font-bold mb-8 text-gray-800">Your Cart</h1> -->
+    <div class="flex justify-center bg-white rounded-xl shadow-xl">
+    
     @if ($cart && $cart->items->count() > 0)
         <form id="cart-buy-form" method="POST" action="{{ route('payment.method') }}">
             @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach ($cart->items as $item)
-                    <div class="bg-white rounded-xl shadow-lg flex flex-col md:flex-row items-center p-6 gap-6 hover:shadow-2xl transition-shadow relative">
-                        <!-- Checkbox -->
-                        <input type="checkbox"
-                            class="cart-item-checkbox absolute top-4 left-4 w-5 h-5 accent-teal-500"
-                            name="cart_items[]"
-                            value="{{ $item->id }}"
-                            data-price="{{ $item->product->price * $item->quantity }}"
-                        >
-                        <!-- Product Image -->
-                        <div class="w-28 h-28 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden ml-8 md:ml-0">
-                            @if ($item->product->primaryImage && $item->product->primaryImage->image_path)
-                                <img src="{{ $item->product->primaryImage->image_path }}" 
-                                    alt="{{ $item->product->product_name }}" 
-                                    class="object-cover w-full h-full"
-                                    onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-full h-full text-gray-400 text-xs\'>No image</div>'">
-                            @elseif ($item->product->images->count() > 0)
-                                <img src="{{ $item->product->images->first()->image_path }}" 
-                                    alt="{{ $item->product->product_name }}" 
-                                    class="object-cover w-full h-full"
-                                    onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-full h-full text-gray-400 text-xs\'>No image</div>'">
-                            @else
-                                <div class="flex items-center justify-center w-full h-full text-gray-400 text-xs">No image</div>
-                            @endif
-                        </div>
+            <div class="grid grid-cols-2 bg-white overflow:auto rounded-xl py-15 px-15">
+                <div class="grid grid-rows-3">
+                    @foreach ($cart->items as $item)
+                        <div class="bg-white flex flex-col md:flex-row items-center px-18 py-6 gap-6 hover:shadow-2xl transition-shadow relative flex justify-center">
+                            <!-- Checkbox -->
+                            <input type="checkbox"
+                                class="cart-item-checkbox absolute top-4 left-4 w-5 h-5 accent-teal-500"
+                                name="cart_items[]"
+                                value="{{ $item->id }}"
+                                data-price="{{ $item->product->price * $item->quantity }}"
+                            >
+                            <!-- Product Image -->
+                            <div class="w-28 h-28 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden ml-8 md:ml-0">
+                                @if ($item->product->primaryImage && $item->product->primaryImage->image_path)
+                                    <img src="{{ $item->product->primaryImage->image_path }}" 
+                                        alt="{{ $item->product->product_name }}" 
+                                        class="object-cover w-full h-full"
+                                        onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-full h-full text-gray-400 text-xs\'>No image</div>'">
+                                @elseif ($item->product->images->count() > 0)
+                                    <img src="{{ $item->product->images->first()->image_path }}" 
+                                        alt="{{ $item->product->product_name }}" 
+                                        class="object-cover w-full h-full"
+                                        onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-full h-full text-gray-400 text-xs\'>No image</div>'">
+                                @else
+                                    <div class="flex items-center justify-center w-full h-full text-gray-400 text-xs">No image</div>
+                                @endif
+                            </div>
                         
-                        <!-- Product Info -->
-                        <div class="flex-1 flex flex-col justify-between w-full">
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ $item->product->product_name }}</h3>
-                                <p class="text-gray-500 text-sm mb-2">{{ $item->product->product_description ?? 'No description available' }}</p>
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-teal-600 font-bold text-base">₱{{ number_format($item->product->price, 2) }}</span>
-                                    <span class="text-xs text-gray-400">each</span>
+                            <!-- Product Info -->
+                            <div class="flex-1 flex flex-col justify-between w-full">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ $item->product->product_name }}</h3>
+                                    <p class="text-gray-500 text-sm mb-2">{{ $item->product->product_description ?? 'No description available' }}</p>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-teal-600 font-bold text-base">₱{{ number_format($item->product->price, 2) }}</span>
+                                        <span class="text-xs text-gray-400">each</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <!-- Quantity Controls -->
+                                    <button
+                                        type="button"
+                                        class="decrement-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-lg font-bold transition"
+                                        data-item-id="{{ $item->id }}"
+                                        aria-label="Decrease quantity"
+                                    >-</button>
+                                    <span class="text-lg font-semibold w-8 text-center">{{ $item->quantity }}</span>
+                                    <button
+                                        type="button"
+                                        class="increment-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-lg font-bold transition"
+                                        data-item-id="{{ $item->id }}"
+                                        aria-label="Increase quantity"
+                                    >+</button>
+                                    <span class="ml-4 text-gray-700 font-bold">Total: ₱{{ number_format($item->product->price * $item->quantity, 2) }}</span>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4 mt-2">
-                                <!-- Quantity Controls -->
-                                <button
-                                    type="button"
-                                    class="decrement-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-lg font-bold transition"
-                                    data-item-id="{{ $item->id }}"
-                                    aria-label="Decrease quantity"
-                                >-</button>
-                                <span class="text-lg font-semibold w-8 text-center">{{ $item->quantity }}</span>
-                                <button
-                                    type="button"
-                                    class="increment-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-lg font-bold transition"
-                                    data-item-id="{{ $item->id }}"
-                                    aria-label="Increase quantity"
-                                >+</button>
-                                <span class="ml-4 text-gray-700 font-bold">Total: ₱{{ number_format($item->product->price * $item->quantity, 2) }}</span>
-                            </div>
+                                                                                <div class="border-t border-gray-200"></div>
+                            <!-- Remove Button -->
+                            <button
+                                class="delete-cart-item-btn absolute top-4 right-4 bg-red-100 hover:bg-red-200 text-red-600 rounded-full p-2 transition"
+                                data-item-id="{{ $item->id }}"
+                                title="Remove from cart"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
                         </div>
-                        
-                        <!-- Remove Button -->
-                        <button
-                            class="delete-cart-item-btn absolute top-4 right-4 bg-red-100 hover:bg-red-200 text-red-600 rounded-full p-2 transition"
-                            data-item-id="{{ $item->id }}"
-                            title="Remove from cart"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            <!-- Cart Summary -->
-            <div class="max-w-lg mx-auto mt-12">
-                <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-4">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Cart Summary</h2>
-                    <div class="flex justify-between items-center text-lg">
-                        <span class="text-gray-700">Total:</span>
-                        <span id="cart-total" class="text-teal-600 font-bold text-2xl">₱0.00</span>
+                <!-- Cart Summary -->
+                <div class="">
+                    <div class="bg-white border-r-lg pl-60 py-3 flex justify-center flex-col gap-4">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Cart Summary</h2>
+                        <div class="flex justify-between items-center text-lg">
+                        <span class="text-gray-700">Total: </span>
+                        <span id="cart-total" class="text-teal-600 font-bold text-2xl"> ₱0.00</span>
                     </div>
+                    <div class="border-t border-gray-300"></div>
                     <button
                         id="buy-now-btn"
                         type="submit"
-                        class="mt-6 bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-300 w-full"
+                        class="mt-6 bg-teal-500 hover:bg-teal-600 text-white px-2 py-2 rounded-lg text-lg font-semibold transition-colors duration-300 w-full"
                         style="background-color: #14b8a6 !important;"
                     >
                         Buy Now
                     </button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -111,13 +115,13 @@
             <p class="text-gray-500 text-lg">Your cart is empty.</p>
         </div>
     @endif
+    </div>
 </div>
-
 <!-- <pre>
 {{ var_dump(auth()->user()->userDetail) }}
 </pre> -->
 
-</x-guest-layout>
+</x-app-layout>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>

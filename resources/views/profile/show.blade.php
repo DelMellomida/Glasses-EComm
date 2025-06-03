@@ -14,6 +14,7 @@
             @endif
 
             @livewire("profile.update-user-profile-information")
+                <x-section-border />
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                 <div class="mt-10 sm:mt-0">

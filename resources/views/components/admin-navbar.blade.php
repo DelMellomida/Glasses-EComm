@@ -2,8 +2,7 @@
     <div class="flex items-center justify-between px-6 py-3">
         <!-- Logo -->
         <a href="{{ route('guest.guest-home') }}" class="flex items-center space-x-3">
-            <img src="{{ asset('build/assets/Images/Sarabia-Logo-Blue-Col.jpg') }}" class="h-8" alt="Logo" />
-            <span class="text-2xl font-semibold text-[#ffffff]">SARABIA OPTICAL</span>
+            <img src="{{ asset('build/assets/Images/Sarabia-logo-white.png') }}" class="h-8" alt="Logo" />
         </a>
 
         <!-- Hamburger for mobile -->
@@ -49,27 +48,26 @@
               class="absolute right-0 top-full origin-top-right min-w-[12rem] bg-[#fff1f1] rounded-lg shadow-lg py-2 z-50 transition border border-[#ffd6e0]"
               x-cloak>
               <div class="px-4 py-3 border-b border-[#ffd6e0]">
-                  <span class="block text-sm font-semibold text-[#3d405b]">{{ Auth::user()->name ?? 'Admin User' }}</span>
+                  <span class="block text-sm font-semibold text-[#ffffff]">{{ Auth::user()->name ?? 'Admin User' }}</span>
                   <span class="block text-xs text-[#055970] truncate">{{ Auth::user()->email ?? 'admin@email.com' }}</span>
               </div>
               <ul class="py-2">
                   <li>
                       <a href="{{ route('admin.dashboard') }}"
-                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Dashboard</a>
+                        class="block px-4 py-2 text-sm text-[#ffffff] hover:bg-[#055970]">Dashboard</a>
                   </li>
                   <li>
                       <a href="#"
-                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Settings</a>
+                        class="block px-4 py-2 text-sm text-[#ffffff] hover:bg-[#055970]">Settings</a>
                   </li>
                   <li>
                       <a href="#"
-                        class="block px-4 py-2 text-sm text-[#3d405b] group-hover:text-[#ffffff] hover:bg-[#055970]">Earnings</a>
+                        class="block px-4 py-2 text-sm text-[#ffffff] hover:bg-[#055970]">Earnings</a>
                   </li>
                   <li>
                       <form method="POST" action="{{ route('logout') }}">
                           @csrf
-                          <button type="submit"
-                              class="w-full text-left px-4 py-2 text-sm text-[#ef476f] group-hover:text-[#ffffff] hover:bg-[#055970]">
+                          <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#ffffff] group-hover:text-[#ffffff] hover:bg-[#055970]">
                               Sign out
                           </button>
                       </form>

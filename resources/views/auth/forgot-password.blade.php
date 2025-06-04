@@ -1,4 +1,6 @@
+<x-nav-guest></x-nav-guest>
 <x-guest-layout>
+        <div class="bg-[url('../build/assets/images/LoginWallpaper.jpg')] bg-cover bg-center">
     <x-authentication-card>
         <x-slot name="logo">
             <img src="{{ asset('build/assets/Images/Sarabia-logo-white.png') }}" class="h-12" alt="Sarabia Logo" />
@@ -19,8 +21,8 @@
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
-            <div class="block text-white">
-                <x-label for="email" value="{{ __('Email') }}" />
+            <div class="block ">
+                <x-label for="email" value="{{ __('Email') }}" class="text-white"/>
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             </div>
 
@@ -31,4 +33,5 @@
             </div>
         </form>
     </x-authentication-card>
+    </div>
 </x-guest-layout>

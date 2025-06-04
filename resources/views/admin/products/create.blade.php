@@ -9,31 +9,31 @@
                 @csrf
                 <div class="grid grid-cols-1 gap-6">
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Product Name</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Product Name</label> <span class="text-md text-red-500">*</span>
                         <input type="text" name="product_name" value="{{ old('product_name') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('product_name') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Product Description</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Product Description</label> <span class="text-md text-red-500">*</span>
                         <textarea name="product_description" rows="3"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">{{ old('product_description') }}</textarea>
                         @error('product_description') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Price</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Price</label> <span class="text-md text-red-500">*</span>
                         <input type="number" name="price" value="{{ old('price') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" min="0" required>
                         @error('price') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Stock</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Stock</label> <span class="text-md text-red-500">*</span>
                         <input type="number" name="stock" value="{{ old('stock') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" min="0" required>
                         @error('stock') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Category</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Category</label> <span class="text-md text-red-500">*</span>
                         <select name="category_id" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                             <option value="">Select Category</option>
                             @foreach($categories as $category)
@@ -45,7 +45,7 @@
                         @error('category_id') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Gender</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Gender</label> <span class="text-md text-red-500">*</span>
                         <select name="gender" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                             <option value="unisex" {{ old('gender') == 'unisex' ? 'selected' : '' }} selected >Unisex</option>
                             <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }} >Male</option>
@@ -54,7 +54,7 @@
                         @error('gender') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Status</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Status</label> <span class="text-md text-red-500">*</span>
                         <select name="status" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                             <option value="active" {{ old('status') == 'active' ? 'selected' : '' }} selected >Active</option>
                             <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }} >Inactive</option>
@@ -62,7 +62,7 @@
                         @error('status') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Product Images</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Product Images</label> <span class="text-md text-red-500">*</span>
                         <input type="file" name="images[]" multiple class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">
                         @error('images') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                         @error('images.*') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror

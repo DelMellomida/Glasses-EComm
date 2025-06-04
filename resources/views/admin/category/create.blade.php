@@ -9,19 +9,19 @@
                 @csrf
                 <div class="grid grid-cols-1 gap-6">
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Category Name</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Category Name</label> <span class="text-md text-red-500">*</span>
                         <input type="text" name="category_name" value="{{ old('category_name') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('category_name') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Category Description</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Category Description</label> <span class="text-md text-red-500">*</span>
                         <textarea name="category_desc" rows="3"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">{{ old('category_desc') }}</textarea>
                         @error('category_desc') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Availability</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Availability</label> <span class="text-md text-red-500">*</span>
                         <select name="availability_type" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                             <option value="online" {{ old('availability_type') == 'online' ? 'selected' : '' }} selected >Online</option>
                             <option value="on-branch" {{ old('availability_type') == 'on-branch' ? 'selected' : '' }}>On-branch</option>

@@ -1,5 +1,5 @@
 <x-nav-guest></x-nav-guest>
-<x-guest-layout>
+<x-guest-layout class="bg-[url('../build/assets/images/LoginWallpaper.jpg')] bg-cover bg-center">
     <x-authentication-card>
         <x-slot name="logo">
             <img src="{{ asset('build/assets/Images/Sarabia-logo-white.png') }}" class="h-12" alt="Sarabia Logo" />

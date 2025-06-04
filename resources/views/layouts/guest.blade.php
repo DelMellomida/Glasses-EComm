@@ -23,7 +23,7 @@
     </head>
     <body>
         <x-notification />
-        <div class="font-sans text-gray-900 antialiased bg-[url('../build/assets/images/LoginWallpaper.jpg')] bg-cover bg-center">
+        <div class="font-sans text-gray-900 antialiased ">
             {{ $slot }}
         </div>
 

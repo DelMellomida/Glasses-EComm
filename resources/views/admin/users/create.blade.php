@@ -9,31 +9,31 @@
                 @csrf
                 <div class="grid grid-cols-1 gap-6">
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Name</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Name</label> <span class="text-md text-red-500">*</span>
                         <input type="text" name="name" value="{{ old('name') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('name') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Email</label> <span class="text-md text-red-500">*</span>
                         <input type="email" name="email" value="{{ old('email') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('email') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Phone Number</label> <span class="text-md text-red-500">*</span>
                         <input type="tel" name="tel" value="{{ old('tel') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('email') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Password</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Password</label> <span class="text-md text-red-500">*</span>
                         <input type="password" name="password"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                         @error('password') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Confirm Password</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Confirm Password</label> <span class="text-md text-red-500">*</span>
                         <input type="password" name="password_confirmation"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" required>
                     </div>
